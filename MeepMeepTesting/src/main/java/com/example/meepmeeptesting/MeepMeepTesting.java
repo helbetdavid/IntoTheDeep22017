@@ -14,7 +14,7 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 16.14)
                 .build();
-        int x = 3 ;
+        int x = 1 ;
         if (x == 1)
         {
             myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.6666667, 61.2, 0))
