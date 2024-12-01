@@ -30,20 +30,44 @@ public class textExtSum extends LinearOpMode {
 
         limeLight = new LimeLight(hwMap.limelight, telemetry);
 
+        servoCam = new ServoCam(hwMap.servoCam,limeLight);
+
 
         // Set a target position
 
         waitForStart();
 
         while (opModeIsActive()) {
-            // Continuously update motor power
-            extend.setTarget(target);
-            extend.setPower();
+//            // Continuously update motor power
+//            extend.setTarget(target);
+//            extend.setPower();
+//
+//            limeLight.logPipelineData();
+//
+//            if(gamepad1.a){
+//                servoCam.trackTarget();  // This will adjust the servo based on LimeLight's angle
+//            }
+//            else if(gamepad1.b){
+//                servoCam.setAngle(0.5);  // This will set the servo to a specific angle
+//            }
+//            telemetry.addData("Target Position", target);
+//            telemetry.addData("Current Position", hwMap.extendo.getCurrentPosition());
+//            telemetry.update();
+            if(gamepad1.a){
+                extend.setTarget(1000);
+                extend.setPower();
+                sleep(1000);
 
-            limeLight.logPipelineData();
-            telemetry.addData("Target Position", target);
-            telemetry.addData("Current Position", hwMap.extendo.getCurrentPosition());
-            telemetry.update();
+                limeLight.logPipelineData();
+                servoCam.trackTarget();
+
+            }
+            else if(gamepad1.b){
+                extend.setTarget(0);
+                extend.setPower();
+                limeLight.logPipelineData();
+                servoCam.setAngle(0.5);
+            }
         }
     }
 

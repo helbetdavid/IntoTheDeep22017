@@ -17,6 +17,7 @@ public class HwMap {
     public DcMotor extendo = null;
     private HardwareMap hwMap = null;
     public Limelight3A limelight;
+    public Servo servoCam;
 
 
     public void init(HardwareMap hwMap) {
@@ -40,6 +41,9 @@ public class HwMap {
         // Extendo
         extendo = hwMap.get(DcMotor.class, "extendo");
         extendo.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // ServoCam
+        servoCam = hwMap.get(Servo.class,"servoCam");
 
     }
     public HardwareMap getHwMap() {
