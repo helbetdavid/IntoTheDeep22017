@@ -14,6 +14,7 @@ public class HwMap {
     public DcMotor leftBack = null;
     public DcMotor rightBack = null;
     public DcMotor rightFront = null;
+    public DcMotor extendo = null;
     private HardwareMap hwMap = null;
     private Limelight3A limelight;
 
@@ -33,8 +34,14 @@ public class HwMap {
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        // LimeLight
-        limelight = hwMap.get(Limelight3A.class,"Limelight");
 
+
+        // Extendo
+        extendo = hwMap.get(DcMotor.class, "extendo");
+        extendo.setDirection(DcMotorSimple.Direction.REVERSE);
+
+    }
+    public HardwareMap getHwMap() {
+        return hwMap;
     }
 }
