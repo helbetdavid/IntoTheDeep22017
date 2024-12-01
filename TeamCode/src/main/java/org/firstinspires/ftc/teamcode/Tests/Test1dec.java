@@ -21,7 +21,7 @@ public final class Test1dec extends LinearOpMode {
 
             Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .turn(Math.toRadians(-90))
+                        .turn(Math.toRadians(-90))//caca maca horia
                         .strafeTo(new Vector2d(4.8, 33.3))
                 .waitSeconds(3)
                         .setTangent(1)
