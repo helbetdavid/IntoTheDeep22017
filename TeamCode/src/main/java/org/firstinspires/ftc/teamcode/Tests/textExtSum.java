@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.RR.TankDrive;
@@ -18,6 +19,8 @@ public class textExtSum extends LinearOpMode {
     private Extend extend;
     private LimeLight limeLight;
     private ServoCam servoCam;
+    double tx=0;
+    double ty=0;
     @Override
     public void runOpMode() {
         // Initialize hardware and telemetry
@@ -31,6 +34,9 @@ public class textExtSum extends LinearOpMode {
         limeLight = new LimeLight(hwMap.limelight, telemetry);
 
         servoCam = new ServoCam(hwMap.servoCam,limeLight);
+
+        Gamepad currentGamepad1 = new Gamepad();
+        Gamepad previousGamepad1 = new Gamepad();
 
 
         // Set a target position
@@ -53,20 +59,47 @@ public class textExtSum extends LinearOpMode {
 //            telemetry.addData("Target Position", target);
 //            telemetry.addData("Current Position", hwMap.extendo.getCurrentPosition());
 //            telemetry.update();
-            if(gamepad1.a){
+            previousGamepad1.copy(currentGamepad1);
+            currentGamepad1.copy(gamepad1);
+            if(currentGamepad1.a && !previousGamepad1.a){
                 extend.setTarget(1000);
                 extend.setPower();
-                sleep(1000);
+                if(extend.getPosition()>=990 && extend.getPosition()<=1010){
+                    servoCam.trackTarget();
+                    limeLight.logPipelineData();
+                    tx = limeLight.getTargetTx();
+                    ty = limeLight.getTargetTy();
+                    // Align the robot laterally (strafe left/right) until tx is 0
+                    double strafePower = -tx * 0.1; // Proportional control for tx
+                    strafePower = Math.max(Math.min(strafePower, 1), -1); // Limit power to [-1, 1]
 
-                limeLight.logPipelineData();
-                servoCam.trackTarget();
+                    // Deadband: Stop if tx is close to 0
+                    if (Math.abs(tx) < 1) {
+                        strafePower = 0;
+                    }
 
-            }
-            else if(gamepad1.b){
-                extend.setTarget(0);
-                extend.setPower();
-                limeLight.logPipelineData();
-                servoCam.setAngle(0.5);
+                    // Calculate motor powers for strafing
+                    double frontLeftPower = strafePower;
+                    double backLeftPower = -strafePower;
+                    double frontRightPower = -strafePower;
+                    double backRightPower = strafePower;
+
+                    // Set motor powers
+                    hwMap.leftFront.setPower(frontLeftPower);
+                    hwMap.leftBack.setPower(backLeftPower);
+                    hwMap.rightFront.setPower(frontRightPower);
+                    hwMap.rightBack.setPower(backRightPower);
+                    telemetry.update();
+                }
+                else if(currentGamepad1.b && !previousGamepad1.b){
+                    extend.setTarget(0);
+                    extend.setPower();
+                    if(extend.getPosition()>=-10 && extend.getPosition()<=10){
+                        servoCam.setAngle(0.5);
+                        telemetry.update();
+                    }
+
+                }
             }
         }
     }
