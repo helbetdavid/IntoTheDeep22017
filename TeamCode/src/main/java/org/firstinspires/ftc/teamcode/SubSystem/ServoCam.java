@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.SubSystem;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.Servo;
 public class ServoCam extends SubsystemBase {
@@ -13,7 +15,7 @@ public class ServoCam extends SubsystemBase {
     }
 
     public void trackTarget() {
-        double angle;
+        double angle=0;
         angle = limelight.getAngle();
         setAngle(angle/180);
     }
