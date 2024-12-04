@@ -21,16 +21,17 @@ public final class Test_AA extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-                        .turn(Math.toRadians(-90))
-                        .strafeTo(new Vector2d(-3.8, 33.3))
+                        //                        .turn(Math.toRadians(-90))
+//                        .strafeTo(new Vector2d(-3.8, 33.3))
+                        .strafeToLinearHeading(new Vector2d(-3.8, 33.3), -89.54)
 //              .waitSeconds(3)
                         .setTangent(1)
-                        .splineToSplineHeading(new Pose2d(-48, 54, 89.54), Math.PI / 2)
+                        .splineToSplineHeading(new Pose2d(-41, 56, 89.54), Math.PI / 2)
 //              .waitSeconds(3)
                         //.setTangent(0)
                         //.splineToConstantHeading(new Vector2d(  -36, 10), Math.PI/2.15)
-                        .strafeTo(new Vector2d(-35,38))
-                        .strafeTo(new Vector2d(-35,10))
+
+                        .strafeTo(new Vector2d(-35, 10))
                         .strafeTo(new Vector2d(-46, 13))
                         .strafeTo(new Vector2d(-46, 54))
 //                  .waitSeconds(3)
@@ -51,6 +52,5 @@ public final class Test_AA extends LinearOpMode {
                         .waitSeconds(999999999)
                         .turn(Math.toRadians(90))
                         .build());
-
-        }
     }
+}
