@@ -48,4 +48,7 @@ public class Extend extends SubsystemBase {
         telemetry.addData("Output", output);
         telemetry.update();
     }
+    public double getPosition(){
+        return extendo.getCurrentPosition();
+    }
 }

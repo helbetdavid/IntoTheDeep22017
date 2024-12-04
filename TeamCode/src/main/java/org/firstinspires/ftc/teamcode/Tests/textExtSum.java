@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.RR.TankDrive;
@@ -18,6 +19,8 @@ public class textExtSum extends LinearOpMode {
     private Extend extend;
     private LimeLight limeLight;
     private ServoCam servoCam;
+    double tx=0;
+    double ty=0;
     @Override
     public void runOpMode() {
         // Initialize hardware and telemetry
@@ -31,6 +34,9 @@ public class textExtSum extends LinearOpMode {
         limeLight = new LimeLight(hwMap.limelight, telemetry);
 
         servoCam = new ServoCam(hwMap.servoCam,limeLight);
+
+        Gamepad currentGamepad1 = new Gamepad();
+        Gamepad previousGamepad1 = new Gamepad();
 
 
         // Set a target position
@@ -53,22 +59,18 @@ public class textExtSum extends LinearOpMode {
 //            telemetry.addData("Target Position", target);
 //            telemetry.addData("Current Position", hwMap.extendo.getCurrentPosition());
 //            telemetry.update();
-            if(gamepad1.a){
-                extend.setTarget(1000);
-                extend.setPower();
-                sleep(1000);
-
-                limeLight.logPipelineData();
+            previousGamepad1.copy(currentGamepad1);
+            currentGamepad1.copy(gamepad1);
+            if(currentGamepad1.a && !previousGamepad1.a){
                 servoCam.trackTarget();
 
+                }
+            else if(currentGamepad1.b && !previousGamepad1.b){
+                    servoCam.setAngle(0.5);
+                }
             }
-            else if(gamepad1.b){
-                extend.setTarget(0);
-                extend.setPower();
-                limeLight.logPipelineData();
-                servoCam.setAngle(0.5);
-            }
+            limeLight.logPipelineData();
+            telemetry.update();
         }
     }
 
-}
