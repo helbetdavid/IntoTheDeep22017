@@ -18,6 +18,8 @@ public class HwMap {
     private HardwareMap hwMap = null;
     public Limelight3A limelight;
     public Servo servoCam;
+    public Servo claw;
+    public Servo clawRotator;
 
 
     public void init(HardwareMap hwMap) {
@@ -44,6 +46,12 @@ public class HwMap {
 
         // ServoCam
         servoCam = hwMap.get(Servo.class,"servoCam");
+
+        //Claw
+        claw = hwMap.get(Servo.class, "claw");
+
+        //Claw Rotator
+        clawRotator = hwMap.get(Servo.class, "clawRotator");
 
     }
     public HardwareMap getHwMap() {
