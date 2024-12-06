@@ -62,8 +62,12 @@ public class textExtSum extends LinearOpMode {
             previousGamepad1.copy(currentGamepad1);
             currentGamepad1.copy(gamepad1);
             if(currentGamepad1.a && !previousGamepad1.a){
+                extend.setTarget(target);
+                extend.setPower();
+                if(extend.getPosition()>target-5 && extend.getPosition()<target+5){
+                    servoCam.trackTarget();
+                }
                 servoCam.trackTarget();
-
                 }
             else if(currentGamepad1.b && !previousGamepad1.b){
                     servoCam.setAngle(0.5);
