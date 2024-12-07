@@ -14,10 +14,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
 @Config
-@Disabled
 public class testExt extends LinearOpMode {
     private PIDController controller;
-    public static double kP = 0, kI = 0 , kD = 0;
+    public static double kP = 0.008, kI = 0.00001 , kD = 0.0001;
     public static int target = 0;
 
     @Override
