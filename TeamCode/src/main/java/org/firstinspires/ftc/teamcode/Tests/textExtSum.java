@@ -31,7 +31,7 @@ public class textExtSum extends LinearOpMode {
         extend = new Extend(hwMap.extendo, telemetry);
         limeLight = new LimeLight(hwMap.limelight, telemetry);
         servoCam = new ServoCam(hwMap.servoCam, limeLight);
-        lift = new Lift(hwMap.rightLift, hwMap.leftLift, telemetry);
+        lift = new Lift(hwMap.rightLift, hwMap.leftLift,telemetry);
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
