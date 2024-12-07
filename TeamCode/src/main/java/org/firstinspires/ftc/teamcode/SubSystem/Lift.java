@@ -12,7 +12,7 @@ public class Lift extends SubsystemBase {
     private DcMotor rightLift;
     private DcMotor leftLift;
     private final Telemetry telemetry;
-    public static double kP = 0.01, kI=0, kD=0.0001, kF=0;
+    private double kP = 0.01, kI=0, kD=0.0001, kF=0;
     public static double target=0;
 
     public Lift(DcMotor rightLift, DcMotor leftLift, Telemetry telemetry) {
