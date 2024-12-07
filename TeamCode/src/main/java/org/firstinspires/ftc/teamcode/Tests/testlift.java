@@ -12,8 +12,8 @@ public class testlift extends LinearOpMode {
     public static double target =0.4;
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotor dreapta = hardwareMap.get(DcMotor.class, "perp");
-        DcMotor stanga = hardwareMap.get(DcMotor.class,"perp1");
+        DcMotor dreapta = hardwareMap.get(DcMotor.class, "rightLift");
+        DcMotor stanga = hardwareMap.get(DcMotor.class,"perp");
 
         stanga.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();

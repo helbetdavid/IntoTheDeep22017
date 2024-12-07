@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.HwMap;
 
 @TeleOp
 @Config
-@Disabled
 public class Servo extends LinearOpMode {
     private HwMap hwmap;
     public static double target =0;
@@ -20,7 +19,7 @@ public class Servo extends LinearOpMode {
         hwmap.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-            hwmap.servoCam.setPosition(target); //aici schimbi servo-ul
+            hwmap.clawRotator.setPosition(target); //aici schimbi servo-ul
             telemetry.addData("Target Position", target);
             telemetry.update();
         }

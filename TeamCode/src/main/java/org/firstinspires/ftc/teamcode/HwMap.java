@@ -14,6 +14,8 @@ public class HwMap {
     public DcMotor leftBack = null;
     public DcMotor rightBack = null;
     public DcMotor rightFront = null;
+    public DcMotor rightLift = null;
+    public DcMotor leftLift = null;
     public DcMotor extendo = null;
     private HardwareMap hwMap = null;
     public Limelight3A limelight;
@@ -52,6 +54,12 @@ public class HwMap {
 
         //Claw Rotator
         clawRotator = hwMap.get(Servo.class, "clawRotator");
+
+        //Lift
+        rightLift = hwMap.get(DcMotor.class, "rightLift");
+        leftLift = hwMap.get(DcMotor.class, "perp");
+
+        leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
     public HardwareMap getHwMap() {
