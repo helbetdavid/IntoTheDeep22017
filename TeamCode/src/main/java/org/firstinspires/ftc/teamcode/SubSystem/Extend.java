@@ -36,6 +36,7 @@ public class Extend extends SubsystemBase {
         controller.setI(kI);
         controller.setD(kD);
     }
+
     public void setTarget(double target) {
         this.target = target;
     }
@@ -49,7 +50,8 @@ public class Extend extends SubsystemBase {
         telemetry.addData("Output", output);
         telemetry.update();
     }
-    public double getPosition(){
+
+    public double getPosition() {
         return extendo.getCurrentPosition();
     }
 }
