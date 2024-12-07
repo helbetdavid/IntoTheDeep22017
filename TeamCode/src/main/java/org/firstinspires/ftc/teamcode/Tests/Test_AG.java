@@ -7,11 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
-import org.firstinspires.ftc.teamcode.RR.TankDrive;
-import org.firstinspires.ftc.teamcode.RR.tuning.TuningOpModes;
 
 @Autonomous
-public final class Test1dec extends LinearOpMode {
+public final class Test_AG extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(7.61, 61.2, 0);
@@ -25,15 +23,15 @@ public final class Test1dec extends LinearOpMode {
 //                        .strafeTo(new Vector2d(4.8, 30))
                         .strafeToLinearHeading(new Vector2d(4.8,30),Math.toRadians(-90))
 
-                .waitSeconds(1.5)
+
                         .setTangent(1)
-                        .splineToSplineHeading(new Pose2d(56, 52, 44.78), Math.PI / 2)
+                        .splineToSplineHeading(new Pose2d(48, 48, -89.54), Math.PI / 2)
                 .waitSeconds(1.5)
 //                        .turnTo(Math.toRadians(-90))
 //                        .strafeTo(new Vector2d(48, 48))
-                        .strafeToLinearHeading(new Vector2d(50,45),Math.toRadians(-90))
 
-                .waitSeconds(1.5)
+
+
 //                        .turnTo(Math.toRadians(44.78))
 //                        .strafeTo(new Vector2d(54, 54))
                         .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))

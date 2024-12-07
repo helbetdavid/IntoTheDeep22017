@@ -14,7 +14,7 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 16.14)
                 .build();
-        int x = 2 ;
+        int x = 1 ;
         if (x == 1)
         {
             myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.6666667, 61.2, 0))
@@ -22,12 +22,12 @@ public class MeepMeepTesting {
                     .strafeTo(new Vector2d(3.8, 33.3))
 //              .waitSeconds(3)
                     .setTangent(1)
-                    .splineToSplineHeading(new Pose2d(54, 54, 44.78), Math.PI / 2)
+                    .splineToSplineHeading(new Pose2d(48, 48, -89.54), Math.PI / 2)
 //              .waitSeconds(3)
 
 //                    .turnTo(Math.toRadians(-90))
 //                    .strafeTo(new Vector2d(48, 48))
-                    .strafeToLinearHeading(new Vector2d(48,48),Math.toRadians(-90))
+
 //                    .waitSeconds(10)
 //              .waitSeconds(3)
                     .turnTo(Math.toRadians(44.78))
