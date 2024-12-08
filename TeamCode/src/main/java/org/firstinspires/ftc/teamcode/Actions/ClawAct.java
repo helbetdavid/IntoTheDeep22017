@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.Claw;
 public class ClawAct {
     private HwMap hwMap;
     private Claw claw;
-    public ClawAct(){
+    public ClawAct(HardwareMap hardwareMap){
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
 

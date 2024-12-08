@@ -20,7 +20,7 @@ public class HwMap {
     private HardwareMap hwMap = null;
     public Limelight3A limelight;
     public Servo servoCam;
-    public Servo claw;
+    public Servo claw =null;
     public Servo clawRotator;
 
 
