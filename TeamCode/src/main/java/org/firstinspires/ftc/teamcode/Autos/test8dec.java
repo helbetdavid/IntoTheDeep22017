@@ -38,7 +38,7 @@ public final class test8dec extends LinearOpMode {
                 new SequentialAction(
 //                        clawAct.clawClose(),
 //                        clawRotateAct.clawRotateUp(),
-//                        servoCamAct.straight()
+//                        servoCamAct.straight() Dvid vrea dick
                             extendAct.extendToPosition(600)
 
                             
