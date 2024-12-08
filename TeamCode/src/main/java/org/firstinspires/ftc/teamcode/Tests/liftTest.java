@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 @Config
 public class liftTest extends LinearOpMode {
-
+    
     private PIDFController controller;
     public static double kP = 0, kI=0, kD=0, kF=0;
     public static double target=0;
