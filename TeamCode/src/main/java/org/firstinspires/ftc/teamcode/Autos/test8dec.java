@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autos;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -19,7 +21,9 @@ import org.firstinspires.ftc.teamcode.SubSystem.Extend;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @Autonomous
+@Config
 public final class test8dec extends LinearOpMode {
+    public static double target = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(7.61, 61.2, 0);
@@ -31,12 +35,11 @@ public final class test8dec extends LinearOpMode {
 
 
         Actions.runBlocking(
-                new ParallelAction(
+                new SequentialAction(
 //                        clawAct.clawClose(),
 //                        clawRotateAct.clawRotateUp(),
 //                        servoCamAct.straight()
-                        extendAct.setTarget(200),
-                        extendAct.setPower()
+                            extendAct.extendToPosition(600)
 
                             
                 )
