@@ -49,9 +49,8 @@ public final class test8dec extends LinearOpMode {
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
                         .strafeToLinearHeading(new Vector2d(4.8,30),Math.toRadians(-90))
-//                        .setTangent(1)
-//                        .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
-                        .strafeTo(new Vector2d(48,46))
+                        .setTangent(1)
+                        .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
 //                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
 //                        .waitSeconds(1.5)
 //                        .strafeToLinearHeading(new Vector2d(58.5,45),Math.toRadians(-90))
