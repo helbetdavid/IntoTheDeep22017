@@ -9,38 +9,38 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.HwMap;
-import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
-import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
+import org.firstinspires.ftc.teamcode.SubSystem.ClawRotate;
 
-public class ServoCamAct {
+public class ClawRotateAct {
     private HwMap hwMap;
-    private ServoCam servoCam;
-    private LimeLight limelight;
-    public ServoCamAct(HardwareMap hardwareMap){
+    private ClawRotate clawRotate;
+    public ClawRotateAct(HardwareMap hardwareMap){
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
 
-        servoCam = new ServoCam(hwMap.servoCam, limelight);
+        clawRotate = new ClawRotate(hwMap.clawRotator);
     }
 
-    public class Straigt implements Action {
+    public class ClawRotateUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket){
-            servoCam.setAngle(0.5);
+            clawRotate.rotateUp();
             return false;
         }
     }
-    public class Lateral implements Action {
+
+    public class ClawRotateDown implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket){
-            servoCam.setAngle(0.0);
+            clawRotate.rotateDown();
             return false;
         }
     }
-    public Action straight(){
-        return new Straigt();
+
+    public Action  clawRotateUp(){
+        return new ClawRotateUp();
     }
-    public Action lateral(){
-        return new Lateral();
+    public Action clawRotateDown(){
+        return new ClawRotateDown();
     }
 }
