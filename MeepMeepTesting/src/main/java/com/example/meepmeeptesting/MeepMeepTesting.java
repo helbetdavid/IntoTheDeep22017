@@ -21,8 +21,9 @@ public class MeepMeepTesting {
                     .turn(Math.toRadians(-90))
                     .strafeTo(new Vector2d(3.8, 33.3))
 //              .waitSeconds(3)
-                    .setTangent(1)
-                    .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
+//                    .setTangent(1)
+//                    .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
+                                    .strafeTo(new Vector2d(48,46))
 ////              .waitSeconds(3)
 //
 ////                    .turnTo(Math.toRadians(-90))
