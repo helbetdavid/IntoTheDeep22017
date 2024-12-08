@@ -39,21 +39,21 @@ public final class test8dec extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-//                        clawAct.clawClose(),
-//                        clawRotateAct.clawRotateUp(),
-//                        servoCamAct.straight() Dvid vrea dick mult
-//                            extendAct.extendToPosition(600)
-                        liftAct.liftToPosition(1000)
-
+                        clawAct.clawClose(),
+                        clawRotateAct.clawRotateUp(),
+                        servoCamAct.straight()
                 )
         );
         waitForStart();
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
+
                         .strafeToLinearHeading(new Vector2d(4.8, 30), Math.toRadians(-90))
-                        .setTangent(1)
-                        .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
+
+//                        .setTangent(1)
+//                        .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
+//                        .waitSeconds(1.5)
 //                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
 //                        .waitSeconds(1.5)
 //                        .strafeToLinearHeading(new Vector2d(58.5,45),Math.toRadians(-90))
@@ -66,8 +66,8 @@ public final class test8dec extends LinearOpMode {
 //                        .waitSeconds(1.5)
 //                        .strafeTo(new Vector2d(33, 10))
 //                        .turnTo(Math.toRadians(0))
-                        .waitSeconds(999999999)
-                        .turn(Math.toRadians(90))
+//                        .waitSeconds(999999999)
+//                        .turn(Math.toRadians(90))
                         .build());
     }
 }

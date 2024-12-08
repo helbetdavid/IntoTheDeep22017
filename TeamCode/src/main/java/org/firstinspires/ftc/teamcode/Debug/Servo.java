@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.HwMap;
 @Config
 public class Servo extends LinearOpMode {
     private HwMap hwmap;
-    public static double target =0;
+    public static double rotat =0;
+    public static double cheata =0;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -19,9 +20,8 @@ public class Servo extends LinearOpMode {
         hwmap.init(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
-            hwmap.clawRotator.setPosition(target); //aici schimbi servo-ul
-            telemetry.addData("Target Position", target);
-            telemetry.update();
+            hwmap.clawRotator.setPosition(rotat);
+            hwmap.claw.setPosition(cheata);
         }
     }
 }
