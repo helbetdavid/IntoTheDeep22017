@@ -11,62 +11,35 @@ import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.Extend;
 
 public class ExtendAct {
+    private final Extend extend;
 
-    private HwMap hwMap;
-    private Extend extender;
-    public double position;
-    private Telemetry telemetry;
-
-    public ExtendAct(HardwareMap hardwareMap,Telemetry telemetry) {
-        hwMap = new HwMap();
+    public ExtendAct(HardwareMap hardwareMap, Telemetry telemetry) {
+        HwMap hwMap = new HwMap();
         hwMap.init(hardwareMap);
-
-        extender = new Extend(hwMap.extendo,telemetry);
+        this.extend = new Extend(hwMap.extendo, telemetry);
     }
 
-    public Action getPosition() {
+    public Action extendToPosition(double targetPosition) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                position = extender.getPosition();
+                double currentPosition = extend.getPosition();
 
-                return false;
-            }
-        };
-    }
+                // Set the target position
+                extend.setTarget(targetPosition);
 
-    public Action updatePIDGains(double kP, double kI, double kD) {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                extender.updatePIDGains(kP, kI, kD);
-                // telemetry bla bla
-                return false;
-            }
-        };
-    }
-
-    public Action setPower() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if (extender.getPosition() < extender.target) {
-                    extender.setPower();
-                    return true;
+                // Stop when the target is reached
+                if (Math.abs(targetPosition - currentPosition) <= 10) {
+                    extend.setPowerMan(0); // Stop the motor
+                    telemetryPacket.put("Reached Target", currentPosition);
+                    return false; // Action completed
                 }
-                extender.setPower();
-                return false;
-            }
-        };
-    }
 
-    public Action setTarget(double target) {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                extender.target = target;
-                telemetryPacket.put("Set target to: ", target);
-                return false;
+                // Otherwise, drive toward the target
+                extend.setPower();
+                telemetryPacket.put("Current Position", currentPosition);
+                telemetryPacket.put("Target Position", targetPosition);
+                return true; // Action still running
             }
         };
     }
