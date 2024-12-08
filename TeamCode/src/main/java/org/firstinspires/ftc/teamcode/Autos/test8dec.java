@@ -37,13 +37,13 @@ public final class test8dec extends LinearOpMode {
         LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
 
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        clawAct.clawClose(),
-                        clawRotateAct.clawRotateUp(),
-                        servoCamAct.straight()
-                )
-        );
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        clawAct.clawClose(),
+//                        clawRotateAct.clawRotateUp(),
+//                        servoCamAct.straight()
+//                )
+//        );
         waitForStart();
 
         Actions.runBlocking(
