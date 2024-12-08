@@ -22,10 +22,10 @@ public class Lift extends SubsystemBase {
         this.motorStanga = stanga;
         this.controller = new PIDFController(kP, kI, kD, kF);
 
-        this.motorStanga.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.motorDreapta.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.motorStanga.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.motorDreapta.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        this.motorStanga.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.motorDreapta.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        this.motorStanga.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        this.motorDreapta.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void updatePIDFGains(double kP, double kI, double kD, double kF) {
@@ -37,6 +37,7 @@ public class Lift extends SubsystemBase {
         controller.setP(kP);
         controller.setI(kI);
         controller.setD(kD);
+        controller.setF(kF);
     }
 
     public void setTarget(double target) {
@@ -53,6 +54,13 @@ public class Lift extends SubsystemBase {
         telemetry.addData("target", target);
         telemetry.addData("pos", position);
         telemetry.update();
+    }
+
+    public void setPower(double power) {
+        double position = motorDreapta.getCurrentPosition();
+
+        motorDreapta.setPower(power);
+        motorStanga.setPower(power);
     }
 
     public double getPosition(){
