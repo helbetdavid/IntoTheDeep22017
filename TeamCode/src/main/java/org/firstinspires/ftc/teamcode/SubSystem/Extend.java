@@ -50,6 +50,7 @@ public class Extend extends SubsystemBase {
         telemetry.addData("Output", output);
         telemetry.update();
     }
+
     public void setPowerMan(double power) {
         double currentPosition = extendo.getCurrentPosition();
         extendo.setPower(power);
