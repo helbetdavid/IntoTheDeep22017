@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Actions.ClawAct;
 import org.firstinspires.ftc.teamcode.Actions.ClawRotateAct;
 import org.firstinspires.ftc.teamcode.Actions.ExtendAct;
+import org.firstinspires.ftc.teamcode.Actions.ExtendAction;
 import org.firstinspires.ftc.teamcode.Actions.LiftAct;
 import org.firstinspires.ftc.teamcode.Actions.ServoCamAct;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
@@ -37,13 +38,14 @@ public final class test8dec extends LinearOpMode {
         LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
 
 
-//        Actions.runBlocking(
-//                new SequentialAction(
+        Actions.runBlocking(
+                new SequentialAction(
 //                        clawAct.clawClose(),
-//                        clawRotateAct.clawRotateUp(),
-//                        servoCamAct.straight()
-//                )
-//        );
+                        clawRotateAct.clawRotateInit(),
+                        servoCamAct.straight()
+
+                )
+        );
         waitForStart();
 
         Actions.runBlocking(
@@ -51,24 +53,35 @@ public final class test8dec extends LinearOpMode {
 
                         .strafeToLinearHeading(new Vector2d(4.8, 38.5), Math.toRadians(-90))
                         .strafeTo(new Vector2d(50.5,46))
+                        .build());
+        Actions.runBlocking(
+                new SequentialAction(
+                        clawAct.clawOpen(),
+                        clawRotateAct.clawRotateDown(),
+                        extendAct.extendToPosition(1290),
+                        clawAct.clawClose(),
+                        clawRotateAct.clawRotateUp(),
+                        extendAct.extendToPosition(0)
 
+                )
+        );
 //                        .setTangent(1)
 //                        .splineToSplineHeading(new Pose2d(48.5, 36, -89.54), Math.PI / 16)
-                        .waitSeconds(1.5)
-                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
-                        .waitSeconds(1.5)
-                        .strafeToLinearHeading(new Vector2d(60.5,46),Math.toRadians(-90))
-                        .waitSeconds(1.5)
-                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
-                        .waitSeconds(1.5)
-                        .strafeToLinearHeading(new Vector2d(55,24),Math.toRadians(0))
-                        .waitSeconds(15)
+//                        .waitSeconds(1.5)
+//                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
+//                        .waitSeconds(1.5)
+//                        .strafeToLinearHeading(new Vector2d(60.5,46),Math.toRadians(-90))
+//                        .waitSeconds(1.5)
+//                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
+//                        .waitSeconds(1.5)
+//                        .strafeToLinearHeading(new Vector2d(55,24),Math.toRadians(0))
+//                        .waitSeconds(15)
 //                        .strafeToLinearHeading(new Vector2d(56,52),Math.toRadians(44.78))
 //                        .waitSeconds(1.5)
 //                        .strafeTo(new Vector2d(33, 10))
 //                        .turnTo(Math.toRadians(0))
 //                        .waitSeconds(999999999)
 //                        .turn(Math.toRadians(90))
-                        .build());
+//                        .build());
     }
 }
