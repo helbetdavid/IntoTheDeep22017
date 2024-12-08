@@ -3,33 +3,29 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.Extend;
-import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 
 @TeleOp
 @Config
-public class teleopLift extends LinearOpMode {
+public class subsystemext extends LinearOpMode {
+    HwMap hwMap;
+    Extend extend;
 
-    private HwMap hwMap;
-    private Lift lift;
-    private Extend extend;
-    public static double target=0;
+    public static double target =200;
     @Override
     public void runOpMode() throws InterruptedException {
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
-
-        lift = new Lift(hwMap.rightLift,hwMap.leftLift,telemetry);
-        extend = new Extend(hwMap.extendo,telemetry);
-
-        extend.setTarget(200);
-
+        extend = new Extend(hwMap.extendo,this.telemetry);
         waitForStart();
-        while(opModeIsActive()){
+        extend.setTarget(target);
 
+        while(opModeIsActive()){
             extend.setPower();
         }
+
     }
 }

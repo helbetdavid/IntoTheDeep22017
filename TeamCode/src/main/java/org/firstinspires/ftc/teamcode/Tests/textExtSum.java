@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.Extend;
-import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
@@ -19,7 +18,6 @@ public class textExtSum extends LinearOpMode {
     private Extend extend;
     private LimeLight limeLight;
     private ServoCam servoCam;
-    private Lift lift;
     double tx=0;
     double ty=0;
     @Override
@@ -31,7 +29,6 @@ public class textExtSum extends LinearOpMode {
         extend = new Extend(hwMap.extendo, telemetry);
         limeLight = new LimeLight(hwMap.limelight, telemetry);
         servoCam = new ServoCam(hwMap.servoCam, limeLight);
-        lift = new Lift(hwMap.rightLift, hwMap.leftLift, telemetry);
 
         Gamepad currentGamepad1 = new Gamepad();
         Gamepad previousGamepad1 = new Gamepad();
@@ -53,8 +50,6 @@ public class textExtSum extends LinearOpMode {
 
             // Display telemetry
             limeLight.logPipelineData();
-            telemetry.addData("Lift Target", lift.target);
-            telemetry.addData("Lift Position", lift.getPosition());
             telemetry.update();
         }
     }
