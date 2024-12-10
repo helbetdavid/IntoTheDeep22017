@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.OpMode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -43,23 +46,39 @@ public class TeleOp extends LinearOpMode {
         ExtendAct extendAct = new ExtendAct(hardwareMap, this.telemetry);
         LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        clawAct.clawClose(),
-                        clawRotateAct.clawRotateInit(),
-                        servoCamAct.straight()
-                )
-        );
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        clawAct.clawClose(),
+//                        clawRotateAct.clawRotateInit(),
+//                        servoCamAct.straight()
+//                )
+//        );
         waitForStart();
         while(opModeIsActive()){
+            TelemetryPacket packet = new TelemetryPacket();
             switch (roboState){
                 case Neutral:
-
-                    if(gamepad1.a){
-                        roboState = RoboState.CollectingSum;
-                    }
+                    runningActions.add(new SequentialAction(
+                            clawAct.clawClose(),
+                            clawRotateAct.clawRotateInit(),
+                            servoCamAct.straight()
+                    ));
                     break;
             }
+
+
+
+            // update running actions
+            List<Action> newActions = new ArrayList<>();
+            for (Action action : runningActions) {
+                action.preview(packet.fieldOverlay());
+                if (action.run(packet)) {
+                    newActions.add(action);
+                }
+            }
+            runningActions = newActions;
+
+            dash.sendTelemetryPacket(packet);
         }
     }
 }
