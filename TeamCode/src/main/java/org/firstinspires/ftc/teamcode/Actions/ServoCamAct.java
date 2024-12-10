@@ -37,10 +37,20 @@ public class ServoCamAct {
             return false;
         }
     }
+    public class TrackTarget implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            servoCam.trackTarget();
+            return false;
+        }
+    }
     public Action straight(){
         return new Straigt();
     }
     public Action lateral(){
         return new Lateral();
+    }
+    public Action trackTarget(){
+        return new TrackTarget();
     }
 }
