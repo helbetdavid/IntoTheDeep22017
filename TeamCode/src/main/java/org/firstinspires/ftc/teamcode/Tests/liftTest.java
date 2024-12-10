@@ -49,7 +49,6 @@ public class liftTest extends LinearOpMode {
             double calcul = controller.calculate(pos,target);
             Actions.runBlocking(
                     new SequentialAction(
-
                             clawAct.clawClose(),
                             clawRotateAct.clawRotateUp(),
                             servoCamAct.straight()

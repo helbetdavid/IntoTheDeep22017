@@ -25,7 +25,6 @@ public class HwMap {
 
 
     public void init(HardwareMap hwMap) {
-        // Save reference to hardware map
         this.hwMap = hwMap;
 
         // Drivetrain motors
@@ -39,7 +38,13 @@ public class HwMap {
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        //set zero power behavior
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // Limelight
         limelight = hwMap.get(Limelight3A.class, "limelight");
 
         // Extendo

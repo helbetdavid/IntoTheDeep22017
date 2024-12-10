@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autos;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -11,21 +10,16 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Actions.ClawAct;
 import org.firstinspires.ftc.teamcode.Actions.ClawRotateAct;
 import org.firstinspires.ftc.teamcode.Actions.ExtendAct;
-import org.firstinspires.ftc.teamcode.Actions.ExtendAction;
 import org.firstinspires.ftc.teamcode.Actions.LiftAct;
 import org.firstinspires.ftc.teamcode.Actions.ServoCamAct;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
-import org.firstinspires.ftc.teamcode.SubSystem.Claw;
-import org.firstinspires.ftc.teamcode.SubSystem.Extend;
-import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @Autonomous
 @Config
-public final class test8dec extends LinearOpMode {
+public final class AlbGalb extends LinearOpMode {
     public static double target = 0;
 
     @Override
@@ -61,7 +55,7 @@ public final class test8dec extends LinearOpMode {
         Actions.runBlocking(
             new SequentialAction(
                             liftAct.liftToPosition(1700),
-                            new SleepAction(0.5),
+                            new SleepAction(0.3), // Am modificat de la 0.5 la 0.3
                             clawAct.clawOpen()
             )
         );
@@ -190,16 +184,5 @@ public final class test8dec extends LinearOpMode {
                         liftAct.liftToPosition(0)
 
                 ));
-
-
-//
-//                        .strafeTo(new Vector2d(35, 8))
-//                        .turnTo(Math.toRadians(0))
-//                        .waitSeconds(100)
-//                        .build());
-
-
-
-
     }
 }
