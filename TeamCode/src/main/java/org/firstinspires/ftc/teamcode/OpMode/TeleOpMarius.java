@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.Claw;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 @TeleOp
 public class TeleOpMarius extends LinearOpMode {
 
+    ElapsedTime timer;
     public enum RobotState {
         Neutral,
         CollectingSum,
@@ -42,6 +44,8 @@ public class TeleOpMarius extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        timer = new ElapsedTime();
+
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
 
@@ -100,6 +104,7 @@ public class TeleOpMarius extends LinearOpMode {
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
                     }
+                    timer.reset();
                     break;
 
                 case CollectingSum:
@@ -159,8 +164,10 @@ public class TeleOpMarius extends LinearOpMode {
                 case RetractScoringSum:
                     lift.setTarget(1700);
                     lift.setPower();
-                    sleep(300);
-                    claw.open();
+                    // sleep(300);
+                    if (timer.milliseconds() > 300) {
+                        claw.open();
+                    }
                     if(gamepad2.dpad_down){
                         robotState = RobotState.Neutral;
                     }
@@ -174,12 +181,13 @@ public class TeleOpMarius extends LinearOpMode {
                         robotState = RobotState.RetractScoringBasket;
                     }
                     break;
+
                 case RetractScoringBasket:
                     extend.setTarget(300);
                     extend.setPower();
                     if(gamepad2.dpad_down) {
-                        claw.open();
                         sleep(300);
+                        claw.open();
                         robotState = RobotState.Neutral;
                     }
                     break;
