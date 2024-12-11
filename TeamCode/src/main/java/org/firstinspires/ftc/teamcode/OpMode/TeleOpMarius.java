@@ -84,7 +84,7 @@ public class TeleOpMarius extends LinearOpMode {
 
             switch (robotState) {
                 case Neutral:
-                    claw.open();
+                    claw.close();
                     clawRotate.rotateInit();
                     servoCam.straight();
                     lift.setTarget(0);
@@ -151,7 +151,7 @@ public class TeleOpMarius extends LinearOpMode {
                     servoCam.straight();
                     lift.setTarget(2300);
                     lift.setPower();
-                    if (gamepad2.dpad_down) {
+                    if (gamepad2.start) {
                         robotState = RobotState.RetractScoringSum;
                     }
                     break;
@@ -159,19 +159,27 @@ public class TeleOpMarius extends LinearOpMode {
                 case RetractScoringSum:
                     lift.setTarget(1700);
                     lift.setPower();
-                    sleep(1000);
+                    sleep(300);
                     claw.open();
-                    sleep(1000);
-                    robotState = RobotState.Neutral;
+                    if(gamepad2.dpad_down){
+                        robotState = RobotState.Neutral;
+                    }
                     break;
+
 
                 case ScoringBasket:
                     lift.setTarget(4450);
                     lift.setPower();
+                    if(gamepad2.start){
+                        robotState = RobotState.RetractScoringBasket;
+                    }
+                    break;
+                case RetractScoringBasket:
                     extend.setTarget(300);
                     extend.setPower();
-                    claw.open();
-                    if (gamepad2.dpad_down) {
+                    if(gamepad2.dpad_down) {
+                        claw.open();
+                        sleep(300);
                         robotState = RobotState.Neutral;
                     }
                     break;

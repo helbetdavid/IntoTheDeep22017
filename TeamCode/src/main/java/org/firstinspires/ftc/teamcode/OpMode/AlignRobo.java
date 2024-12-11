@@ -34,6 +34,7 @@ public class AlignRobo extends LinearOpMode {
             double tx = limeLight.getTargetTx();
             double ty = limeLight.getTargetTy();
 
+
             // Calculate adjustments based on tx and ty
             double x = Math.abs(tx) > tolerance ? -kStrafe * tx : 0; // Strafe adjustment
             double y = Math.abs(ty) > tolerance ? -kArmExtension * ty : 0; // Arm extension adjustment
