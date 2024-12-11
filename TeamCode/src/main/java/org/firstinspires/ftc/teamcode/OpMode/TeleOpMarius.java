@@ -104,30 +104,90 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case CollectingSum:
-                    double tx = limeLight.getTargetTx();
-                    double ty = limeLight.getTargetTy();
-
-                    claw.open();
-                    lift.startLiftToPosition(200);
-                    lift.updateLiftToPosition();
-                    extend.startExtendToPosition(1200);
-                    extend.updateExtendToPosition();
-                    clawRotate.rotateDown();
-                    servoCam.trackTarget();
+//                    double tx = limeLight.getTargetTx();
+//                    double ty = limeLight.getTargetTy();
+//
+//                    claw.open();
+//                    lift.startLiftToPosition(200);
+//                    lift.updateLiftToPosition();
+//                    extend.startExtendToPosition(1200);
+//                    extend.updateExtendToPosition();
+//                    clawRotate.rotateDown();
+//                    servoCam.trackTarget();
+//                    if(gamepad2.start){
+//                        robotState = RobotState.RetractCollectingSum;
+//                    }
+                    break;
 
                 case RetractCollectingSum:
+//                    claw.close();
+//                    lift.startLiftToPosition(0);
+//                    lift.updateLiftToPosition();
+//                    extend.startExtendToPosition(0);
+//                    extend.updateExtendToPosition();
+//                    clawRotate.rotateInit();
+//                    servoCam.straight();
+//                    robotState = RobotState.Neutral;
+                    break;
 
                 case CollectingGate:
+//                    claw.open();
+//                    lift.startLiftToPosition(200);
+//                    lift.updateLiftToPosition();
+//                    extend.startExtendToPosition(1200);
+//                    extend.updateExtendToPosition();
+//                    clawRotate.rotateDown();
+//                    servoCam.trackTarget();
+//                    if(gamepad2.start){
+//                        robotState = RobotState.RetractCollectingGate;
+//                    }
+                    break;
 
                 case RetractCollectingGate:
+                    break;
 
                 case ScoringSum:
+                    claw.close();
+                    clawRotate.rotateUp();
+                    servoCam.straight();
+                    lift.startLiftToPosition(2300);
+                    lift.updateLiftToPosition();
+                    if(gamepad2.start){
+                        robotState = RobotState.RetractScoringSum;
+                    }
+                    break;
+
 
                 case RetractScoringSum:
+                    lift.startLiftToPosition(1700);
+                    lift.updateLiftToPosition();
+                    claw.open();
+                    if(gamepad2.dpad_down){
+                        robotState = RobotState.Neutral;
+                    }
+
 
                 case ScoringBasket:
+                    lift.startLiftToPosition(4450);
+                    lift.updateLiftToPosition();
+                    extend.startExtendToPosition(300);
+                    extend.updateExtendToPosition();
+                    claw.open();
+                    if(gamepad2.start){
+                        robotState = RobotState.RetractScoringBasket;
+                    }
+                    break;
 
                 case RetractScoringBasket:
+                    extend.startExtendToPosition(0);
+                    extend.updateExtendToPosition();
+                    lift.startLiftToPosition(0);
+                    lift.updateLiftToPosition();
+                    claw.close();
+                    if(gamepad2.dpad_down){
+                        robotState = RobotState.Neutral;
+                    }
+                    break;
 
             }
         }
