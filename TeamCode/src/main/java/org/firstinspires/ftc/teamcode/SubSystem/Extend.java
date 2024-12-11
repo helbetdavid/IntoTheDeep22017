@@ -81,7 +81,7 @@ public class Extend extends SubsystemBase {
         double currentPosition = extendo.getCurrentPosition();
 
         // Check if the target is reached
-        if (Math.abs(targetPosition - currentPosition) <= 30) {
+        if (Math.abs(targetPosition - currentPosition) <= 10) {
             extendo.setPower(0); // Stop the motor
             isMovingToTarget = false; // Mark as complete
             telemetry.addData("Reached Target", currentPosition);

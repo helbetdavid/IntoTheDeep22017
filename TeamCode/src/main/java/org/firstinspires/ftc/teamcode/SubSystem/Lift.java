@@ -61,6 +61,10 @@ public class Lift extends SubsystemBase {
 
         motorDreapta.setPower(power);
         motorStanga.setPower(power);
+
+        telemetry.addData("target", target);
+        telemetry.addData("pos", position);
+        telemetry.update();
     }
 
     public double getPosition(){
@@ -85,7 +89,7 @@ public class Lift extends SubsystemBase {
         double currentPosition = motorDreapta.getCurrentPosition();
 
         // Check if the target is reached
-        if (Math.abs(targetPosition - currentPosition) <= 30) {
+        if (Math.abs(targetPosition - currentPosition) <= 10) {
             motorDreapta.setPower(0); // Stop the motor
             motorStanga.setPower(0); // Stop the motor
             isMovingToTarget = false; // Mark as complete

@@ -87,10 +87,10 @@ public class TeleOpMarius extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateInit();
                     servoCam.straight();
-                    lift.startLiftToPosition(0);
-                    extend.startExtendToPosition(0);
-                    lift.updateLiftToPosition();
-                    extend.updateExtendToPosition();
+                    lift.setTarget(0);
+                    extend.setTarget(0);
+                    lift.setPower();
+                    extend.setPower();
                     if (gamepad2.a) {
                         robotState = RobotState.CollectingSum;
                     } else if (gamepad2.b) {
@@ -149,27 +149,27 @@ public class TeleOpMarius extends LinearOpMode {
                     claw.close();
                     clawRotate.rotateUp();
                     servoCam.straight();
-                    lift.startLiftToPosition(2300);
-                    lift.updateLiftToPosition();
+                    lift.setTarget(2300);
+                    lift.setPower();
                     if (gamepad2.dpad_down) {
                         robotState = RobotState.RetractScoringSum;
                     }
                     break;
 
                 case RetractScoringSum:
-                    lift.startLiftToPosition(1700);
-                    lift.updateLiftToPosition();
-                    sleep(500);
+                    lift.setTarget(1700);
+                    lift.setPower();
+                    sleep(1000);
                     claw.open();
-                    sleep(300);
+                    sleep(1000);
                     robotState = RobotState.Neutral;
                     break;
 
                 case ScoringBasket:
-                    lift.startLiftToPosition(4450);
-                    lift.updateLiftToPosition();
-                    extend.startExtendToPosition(300);
-                    extend.updateExtendToPosition();
+                    lift.setTarget(4450);
+                    lift.setPower();
+                    extend.setTarget(300);
+                    extend.setPower();
                     claw.open();
                     if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
