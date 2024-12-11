@@ -47,6 +47,7 @@ public class TeleOpMarius extends LinearOpMode {
         timer = new ElapsedTime();
 
         boolean done = false; // trebuie ceva mai elegant
+        boolean done1= false;
 
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
@@ -107,6 +108,7 @@ public class TeleOpMarius extends LinearOpMode {
                         robotState = RobotState.ScoringBasket;
                     }
                     done = false;
+                    done1 =false;
                     break;
 
                 case CollectingSum:
@@ -140,8 +142,10 @@ public class TeleOpMarius extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateUp();
                     servoCam.straight();
-                    lift.startLiftToPosition(430);
+                    lift.startLiftToPosition(410);
                     lift.updateLiftToPosition();
+
+
 
                     if(gamepad2.start){
                         robotState = RobotState.RetractCollectingGate;
@@ -149,8 +153,12 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case RetractCollectingGate:
-                    claw.close();
-                    lift.setTarget(570);
+                    if(!done1){
+                        claw.close();
+                        sleep(200);
+                        done1=true;
+                    }
+                    lift.setTarget(700);
                     lift.setPower();
                     if(gamepad2.dpad_down){
                         robotState = RobotState.Neutral;
