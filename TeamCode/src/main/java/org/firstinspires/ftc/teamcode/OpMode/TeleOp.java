@@ -63,11 +63,11 @@ public class TeleOp extends LinearOpMode {
             switch (roboState){
                 case Neutral:
                     runningActions.add(new SequentialAction(
-                            clawAct.clawOpen(),
+                            clawAct.clawClose(),
                             clawRotateAct.clawRotateInit(),
-                            servoCamAct.straight(),
-                            liftAct.liftToPosition(0),
-                            extendAct.extendToPosition(0)
+                            servoCamAct.straight()
+//                            liftAct.liftToPosition(0),
+//                            extendAct.extendToPosition(0)
                     ));
                     if(gamepad2.a){
                         roboState = RoboState.CollectingSum;
@@ -85,7 +85,7 @@ public class TeleOp extends LinearOpMode {
 
                     runningActions.add(new SequentialAction(
                             clawAct.clawOpen(),
-                            liftAct.liftToPosition(200),
+//                            liftAct.liftToPosition(200),
                             extendAct.extendToPosition(1200),
                             clawRotateAct.clawRotateDown(),
                             servoCamAct.trackTarget()
@@ -99,7 +99,7 @@ public class TeleOp extends LinearOpMode {
                 case RetractCollectingSum:
                     runningActions.add(
                             new SequentialAction(
-                                    liftAct.liftToPosition(0),
+//                                    liftAct.liftToPosition(0),
 
                                     clawAct.clawClose(),
                                     servoCamAct.straight(),
@@ -133,11 +133,11 @@ public class TeleOp extends LinearOpMode {
                             new SequentialAction(
                                     clawAct.clawClose(),
                                     clawRotateAct.clawRotateUp(),
-                                    servoCamAct.straight(),
-                                    liftAct.liftToPosition(2300)
+                                    servoCamAct.straight()
+//                                    liftAct.liftToPosition(2300)
                             )
                     );
-                    if(gamepad2.start){
+                    if(gamepad2.dpad_down){
                         roboState = RoboState.RetractScoringSum;
 
                     }
@@ -145,32 +145,35 @@ public class TeleOp extends LinearOpMode {
                 case RetractScoringSum:
                     runningActions.add(
                             new SequentialAction(
-                                    liftAct.liftToPosition(1700),
+//                                    liftAct.liftToPosition(1700),
                                     new SleepAction(0.3),
-                                    clawAct.clawOpen()
+                                    clawAct.clawOpen(),
+                                    new SleepAction(0.3),
+                                    new InstantAction(() -> roboState = roboState.Neutral)
 
                             )
                     );
-                    roboState = RoboState.Neutral;
                     break;
                 case ScoringBasket:
                     runningActions.add(
                             new SequentialAction(
-
                                     liftAct.liftToPosition(4450),
                                     extendAct.extendToPosition(300),
-
                                     clawAct.clawOpen()
                                     )
                     );
-                    if(gamepad2.dpad_down){
+                    if(gamepad2.start){
                         roboState = RoboState.RetractScoringBasket;
                     }
                     break;
                 case RetractScoringBasket:
                     runningActions.add(
                             new SequentialAction(
-                                    extendAct.extendToPosition(0),
+                                    extendAct.extendToPosition(0)
+                            )
+                    );
+                    runningActions.add(
+                            new SequentialAction(
                                     liftAct.liftToPosition(0)
                             )
                     );

@@ -78,18 +78,7 @@ public class TeleOpMarius extends LinearOpMode {
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
 
-            if(gamepad2.a){
-                robotState = RobotState.CollectingSum;
-            }
-            else if (gamepad2.b) {
-                robotState = RobotState.CollectingGate;
-            }
-            else if (gamepad2.x) {
-                robotState = RobotState.ScoringSum;
-            }
-            else if (gamepad2.y) {
-                robotState = RobotState.ScoringBasket;
-            }
+
 
             switch (robotState){
                 case Neutral:
@@ -100,6 +89,18 @@ public class TeleOpMarius extends LinearOpMode {
                     extend.startExtendToPosition(0);
                     lift.updateLiftToPosition();
                     extend.updateExtendToPosition();
+                    if(gamepad2.a){
+                        robotState = RobotState.CollectingSum;
+                    }
+                    else if (gamepad2.b) {
+                        robotState = RobotState.CollectingGate;
+                    }
+                    else if (gamepad2.x) {
+                        robotState = RobotState.ScoringSum;
+                    }
+                    else if (gamepad2.y) {
+                        robotState = RobotState.ScoringBasket;
+                    }
                     break;
 
                 case CollectingSum:

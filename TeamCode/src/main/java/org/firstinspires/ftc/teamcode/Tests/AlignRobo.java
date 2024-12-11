@@ -1,64 +1,67 @@
-package org.firstinspires.ftc.teamcode.Tests;
+package org.firstinspires.ftc.teamcode.OpMode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import org.firstinspires.ftc.teamcode.Actions.AlignAct;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "Aligning OpMode", group = "Test")
 @Config
+@TeleOp(name = "Align", group = "Testing")
 public class AlignRobo extends LinearOpMode {
 
-    private HwMap hwMap;
-    private LimeLight limeLight;
-    private AlignAct alignAct;
-
-    // Tuning Parameters - can be adjusted via the FTC Dashboard
-
-    public static double tolerance = 2.0;          // Tolerance for tx and ty
-    public static double kStrafe = 0;            // Strafe coefficient for adjustment
-    public static double kArmExtension = 0;      // Arm extension coefficient for adjustment
+    public static double tolerance = 3.0;
+    public static double kStrafe = 0;
+    public static double kArmExtension = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        // Initialize hardware
-        hwMap = new HwMap();
+        // Initialize hardware and subsystems
+        HwMap hwMap = new HwMap();
         hwMap.init(hardwareMap);
-        limeLight = new LimeLight(hwMap.limelight, telemetry);
 
-        // Create the AlignAct action with initial tuning values
-        alignAct = new AlignAct(hwMap, telemetry, 0, 0, tolerance, kStrafe, kArmExtension);
+        LimeLight limeLight = new LimeLight(hwMap.limelight, telemetry);
 
+        // Optimize telemetry for LimeLight
+        telemetry.setMsTransmissionInterval(11);
+
+        // Wait for the start signal
         waitForStart();
 
-        while (opModeIsActive()) {
-            TelemetryPacket packet = new TelemetryPacket();
-
-            // Get current tx and ty values from the Limelight camera
+        while (opModeIsActive() && !isStopRequested()) {
+            // Get the LimeLight target offsets
             double tx = limeLight.getTargetTx();
             double ty = limeLight.getTargetTy();
 
-            // Update the action with the current tx and ty
-            alignAct = new AlignAct(hwMap, telemetry, tx, ty, tolerance, kStrafe, kArmExtension);
+            // Calculate adjustments based on tx and ty
+            double x = Math.abs(tx) > tolerance ? -kStrafe * tx : 0; // Strafe adjustment
+            double y = Math.abs(ty) > tolerance ? -kArmExtension * ty : 0; // Arm extension adjustment
 
-            // Run the alignment action (non-blocking)
-            boolean isAligned = alignAct.run(packet);
+            // Calculate motor powers for strafing
+            double denominator = Math.max(Math.abs(y) + Math.abs(x), 1);
+            double frontLeftPower = (y + x) / denominator;
+            double backLeftPower = (y - x) / denominator;
+            double frontRightPower = (y - x) / denominator;
+            double backRightPower = (y + x) / denominator;
 
-            // Send telemetry data to the FTC Dashboard
-            telemetry.addData("Aligned?", isAligned ? "Yes" : "No");
-            telemetry.addData("TX", tx);
-            telemetry.addData("TY", ty);
+            // Set motor powers
+            hwMap.leftFront.setPower(frontLeftPower);
+            hwMap.leftBack.setPower(backLeftPower);
+            hwMap.rightFront.setPower(frontRightPower);
+            hwMap.rightBack.setPower(backRightPower);
+
+            // Telemetry for debugging
+            telemetry.addData("Aligning", "tx: %.2f, ty: %.2f", tx, ty);
+            telemetry.addData("Motor Powers", "FL: %.2f, BL: %.2f, FR: %.2f, BR: %.2f",
+                    frontLeftPower, backLeftPower, frontRightPower, backRightPower);
             telemetry.addData("Tolerance", tolerance);
             telemetry.addData("kStrafe", kStrafe);
             telemetry.addData("kArmExtension", kArmExtension);
             telemetry.update();
 
-            // Send telemetry to FTC Dashboard
-            FtcDashboard.getInstance().sendTelemetryPacket(packet);
-
+            // Prevent robot from running indefinitely if stop is requested
+            if (isStopRequested()) break;
         }
     }
 }

@@ -31,7 +31,7 @@ public class LiftAct {
                 lift.setTarget(targetPosition);
 
                 // Stop when the target is reached
-                if (Math.abs(targetPosition - currentPosition) <= 20) {
+                if (Math.abs(targetPosition - currentPosition) <= 50) {
                     lift.setTarget(currentPosition);
                     lift.setPower(); // Maintain position
                     telemetryPacket.put("Reached Target", currentPosition);
