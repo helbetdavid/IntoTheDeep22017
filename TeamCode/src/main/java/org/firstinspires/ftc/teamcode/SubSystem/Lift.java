@@ -66,4 +66,38 @@ public class Lift extends SubsystemBase {
     public double getPosition(){
         return motorDreapta.getCurrentPosition();
     }
+
+    private boolean isMovingToTarget = false; // Track if the motor is moving
+    private double targetPosition = 0.0;      // Store the target position
+
+    // Initialize the motion to a target position
+    public void startLiftToPosition(double targetPosition) {
+        this.targetPosition = targetPosition;
+        isMovingToTarget = true; // Indicate that the motion is in progress
+    }
+
+    // Update motor control during periodic updates
+    public void updateLiftToPosition() {
+        if (!isMovingToTarget) {
+            return; // Do nothing if not actively moving to target
+        }
+
+        double currentPosition = motorDreapta.getCurrentPosition();
+
+        // Check if the target is reached
+        if (Math.abs(targetPosition - currentPosition) <= 30) {
+            motorDreapta.setPower(0); // Stop the motor
+            motorStanga.setPower(0); // Stop the motor
+            isMovingToTarget = false; // Mark as complete
+            telemetry.addData("Reached Target", currentPosition);
+            return;
+        }
+
+        // Otherwise, drive toward the target
+        motorDreapta.setPower(controller.calculate(currentPosition, targetPosition));
+        motorStanga.setPower(controller.calculate(currentPosition, targetPosition));
+        telemetry.addData("Current Position", currentPosition);
+        telemetry.addData("Target Position", targetPosition);
+    }
+
 }

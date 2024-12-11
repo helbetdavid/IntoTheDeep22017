@@ -15,6 +15,9 @@ public class Extend extends SubsystemBase {
     public double kP = 0.008, kI = 0.00001, kD = 0.0001;
     public double target = 0;
 
+    private boolean isMovingToTarget = false; // Track if the motor is moving
+    private double targetPosition = 0.0;      // Store the target position
+
 
     public Extend(DcMotor extendo, Telemetry telemetry) {
         this.extendo = extendo;
@@ -50,6 +53,7 @@ public class Extend extends SubsystemBase {
         telemetry.addData("Output", output);
         telemetry.update();
     }
+
     public void setPower(double power) {
         double currentPosition = extendo.getCurrentPosition();
         extendo.setPower(power);
@@ -61,4 +65,33 @@ public class Extend extends SubsystemBase {
     public double getPosition(){
         return extendo.getCurrentPosition();
     }
+
+    // Initialize the motion to a target position
+    public void startExtendToPosition(double targetPosition) {
+        this.targetPosition = targetPosition;
+        isMovingToTarget = true; // Indicate that the motion is in progress
+    }
+
+    // Update motor control during periodic updates
+    public void updateExtendToPosition() {
+        if (!isMovingToTarget) {
+            return; // Do nothing if not actively moving to target
+        }
+
+        double currentPosition = extendo.getCurrentPosition();
+
+        // Check if the target is reached
+        if (Math.abs(targetPosition - currentPosition) <= 30) {
+            extendo.setPower(0); // Stop the motor
+            isMovingToTarget = false; // Mark as complete
+            telemetry.addData("Reached Target", currentPosition);
+            return;
+        }
+
+        // Otherwise, drive toward the target
+        extendo.setPower(controller.calculate(currentPosition, targetPosition));
+        telemetry.addData("Current Position", currentPosition);
+        telemetry.addData("Target Position", targetPosition);
+    }
+
 }
