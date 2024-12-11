@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpMode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.HwMap;
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
+@TeleOp
 public class TeleOpMarius extends LinearOpMode {
 
     public enum RobotState {
@@ -25,6 +27,7 @@ public class TeleOpMarius extends LinearOpMode {
         ScoringBasket,
         RetractScoringBasket
     }
+
     private HwMap hwMap;
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
@@ -79,8 +82,7 @@ public class TeleOpMarius extends LinearOpMode {
             rightBack.setPower(backRightPower);
 
 
-
-            switch (robotState){
+            switch (robotState) {
                 case Neutral:
                     claw.open();
                     clawRotate.rotateInit();
@@ -89,16 +91,13 @@ public class TeleOpMarius extends LinearOpMode {
                     extend.startExtendToPosition(0);
                     lift.updateLiftToPosition();
                     extend.updateExtendToPosition();
-                    if(gamepad2.a){
+                    if (gamepad2.a) {
                         robotState = RobotState.CollectingSum;
-                    }
-                    else if (gamepad2.b) {
+                    } else if (gamepad2.b) {
                         robotState = RobotState.CollectingGate;
-                    }
-                    else if (gamepad2.x) {
+                    } else if (gamepad2.x) {
                         robotState = RobotState.ScoringSum;
-                    }
-                    else if (gamepad2.y) {
+                    } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
                     }
                     break;
@@ -152,20 +151,19 @@ public class TeleOpMarius extends LinearOpMode {
                     servoCam.straight();
                     lift.startLiftToPosition(2300);
                     lift.updateLiftToPosition();
-                    if(gamepad2.start){
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.RetractScoringSum;
                     }
                     break;
 
-
                 case RetractScoringSum:
                     lift.startLiftToPosition(1700);
                     lift.updateLiftToPosition();
+                    sleep(500);
                     claw.open();
-                    if(gamepad2.dpad_down){
-                        robotState = RobotState.Neutral;
-                    }
-
+                    sleep(300);
+                    robotState = RobotState.Neutral;
+                    break;
 
                 case ScoringBasket:
                     lift.startLiftToPosition(4450);
@@ -173,22 +171,10 @@ public class TeleOpMarius extends LinearOpMode {
                     extend.startExtendToPosition(300);
                     extend.updateExtendToPosition();
                     claw.open();
-                    if(gamepad2.start){
-                        robotState = RobotState.RetractScoringBasket;
-                    }
-                    break;
-
-                case RetractScoringBasket:
-                    extend.startExtendToPosition(0);
-                    extend.updateExtendToPosition();
-                    lift.startLiftToPosition(0);
-                    lift.updateLiftToPosition();
-                    claw.close();
-                    if(gamepad2.dpad_down){
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
-
             }
         }
 
