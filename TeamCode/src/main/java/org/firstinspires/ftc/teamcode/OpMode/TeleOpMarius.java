@@ -46,6 +46,8 @@ public class TeleOpMarius extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         timer = new ElapsedTime();
 
+        boolean done = false; // trebuie ceva mai elegant
+
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
 
@@ -104,7 +106,7 @@ public class TeleOpMarius extends LinearOpMode {
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
                     }
-                    timer.reset();
+                    done = false;
                     break;
 
                 case CollectingSum:
@@ -135,19 +137,24 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case CollectingGate:
-//                    claw.open();
-//                    lift.startLiftToPosition(200);
-//                    lift.updateLiftToPosition();
-//                    extend.startExtendToPosition(1200);
-//                    extend.updateExtendToPosition();
-//                    clawRotate.rotateDown();
-//                    servoCam.trackTarget();
-//                    if(gamepad2.start){
-//                        robotState = RobotState.RetractCollectingGate;
-//                    }
+                    claw.open();
+                    clawRotate.rotateUp();
+                    servoCam.straight();
+                    lift.startLiftToPosition(430);
+                    lift.updateLiftToPosition();
+
+                    if(gamepad2.start){
+                        robotState = RobotState.RetractCollectingGate;
+                    }
                     break;
 
                 case RetractCollectingGate:
+                    claw.close();
+                    lift.setTarget(570);
+                    lift.setPower();
+                    if(gamepad2.dpad_down){
+                        robotState = RobotState.Neutral;
+                    }
                     break;
 
                 case ScoringSum:
@@ -162,11 +169,12 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case RetractScoringSum:
-                    lift.setTarget(1700);
+                    timer.reset();
+                    lift.setTarget(0);
                     lift.setPower();
-                    // sleep(300);
-                    if (timer.milliseconds() > 300) {
+                    if (Math.abs(lift.getPosition() - 1700) <= 30 && !done) {
                         claw.open();
+                        done = true;
                     }
                     if(gamepad2.dpad_down){
                         robotState = RobotState.Neutral;
