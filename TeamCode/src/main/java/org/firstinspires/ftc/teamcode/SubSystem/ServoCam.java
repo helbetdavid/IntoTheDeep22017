@@ -15,8 +15,7 @@ public class ServoCam extends SubsystemBase {
     }
 
     public void trackTarget() {
-        double angle=0;
-        angle = limelight.getAngle();
+        double angle = limelight.getAngle();
         setAngle(angle/180);
     }
     public void setAngle(double angle) {

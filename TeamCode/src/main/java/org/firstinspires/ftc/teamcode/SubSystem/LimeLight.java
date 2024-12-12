@@ -12,11 +12,12 @@ public class LimeLight extends SubsystemBase {
     private  Limelight3A limelight = null;
     private final Telemetry telemetry;
     private LLResult lastResult;
-    private int pipeline = 0;
+    private int pipeline = 1;
 
     public LimeLight(Limelight3A limelight, Telemetry telemetry) {
         this.limelight = limelight;
         this.telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetry.setMsTransmissionInterval(11);
 
         limelight.pipelineSwitch(pipeline);
         limelight.start();

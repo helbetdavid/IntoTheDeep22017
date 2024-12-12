@@ -50,7 +50,8 @@ public class TeleOpMarius extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         timer = new ElapsedTime();
-
+        boolean did = false;
+        boolean did1 = false;
         boolean done = false; // trebuie ceva mai elegant
         boolean done1= false;
         boolean done2= false;
@@ -126,19 +127,37 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case CollectingSum:
-//                    double tx = limeLight.getTargetTx();
-//                    double ty = limeLight.getTargetTy();
-//
-//                    claw.open();
+                    double tx = limeLight.getTargetTx();
+                    double ty = limeLight.getTargetTy();
+
+                    claw.open();
+
+                    lift.setTarget(300);
+                    lift.setPower();
+                    clawRotate.rotateDown();
+                    if(!did){
+                        extend.setTarget(1300);
+                        extend.setPower();
+                        sleep(200);
+                        did=true;
+                    }
+
+                    servoCam.trackTarget();
+
+                    double yr = 0.45*ty+0.135;
+                    extend.setTarget(1300-((yr/11.3)*537.7));
+                    extend.setPower();
+
+
 //                    lift.startLiftToPosition(200);
 //                    lift.updateLiftToPosition();
 //                    extend.startExtendToPosition(1200);
 //                    extend.updateExtendToPosition();
 //                    clawRotate.rotateDown();
 //                    servoCam.trackTarget();
-//                    if(gamepad2.start){
-//                        robotState = RobotState.RetractCollectingSum;
-//                    }
+                    if(gamepad2.start) {
+                        robotState = RobotState.RetractCollectingSum;
+                    }
                     break;
 
                 case RetractCollectingSum:
@@ -149,7 +168,7 @@ public class TeleOpMarius extends LinearOpMode {
 //                    extend.updateExtendToPosition();
 //                    clawRotate.rotateInit();
 //                    servoCam.straight();
-//                    robotState = RobotState.Neutral;
+                    robotState = RobotState.Neutral;
                     break;
 
                 case CollectingGate:
