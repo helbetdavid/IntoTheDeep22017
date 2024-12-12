@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpMode;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @TeleOp
+@Config
 public class TeleOpMarius extends LinearOpMode {
 
     ElapsedTime timer;
@@ -33,6 +35,8 @@ public class TeleOpMarius extends LinearOpMode {
     private HwMap hwMap;
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
+    public static double servo =0;
+
     Claw claw;
     ClawRotate clawRotate;
     Extend extend;
@@ -44,10 +48,12 @@ public class TeleOpMarius extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
         timer = new ElapsedTime();
 
         boolean done = false; // trebuie ceva mai elegant
         boolean done1= false;
+        boolean done2= false;
 
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
@@ -84,10 +90,10 @@ public class TeleOpMarius extends LinearOpMode {
             double backRightPower = (y + x - rx) / denominator;
 
             if(gamepad1.right_bumper){
-                frontLeftPower *= 0.5;
-                backLeftPower *= 0.5;
-                frontRightPower *= 0.5;
-                backRightPower *= 0.5;
+                frontLeftPower *= 0.3;
+                backLeftPower *= 0.3;
+                frontRightPower *= 0.3;
+                backRightPower *= 0.3;
             }
 
             leftFront.setPower(frontLeftPower);
@@ -95,22 +101,16 @@ public class TeleOpMarius extends LinearOpMode {
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
 
-            if(gamepad2.right_trigger > 0.1){
-                claw.open();
-            } else if(gamepad2.right_trigger < 0.1){
-                claw.close();
-            }
+
 
 
             switch (robotState) {
                 case Neutral:
-                    claw.close();
+//                    claw.close();
                     clawRotate.rotateInit();
                     servoCam.straight();
                     lift.setTarget(0);
-                    extend.setTarget(0);
                     lift.setPower();
-                    extend.setPower();
                     if (gamepad2.a) {
                         robotState = RobotState.CollectingSum;
                     } else if (gamepad2.b) {
@@ -122,6 +122,7 @@ public class TeleOpMarius extends LinearOpMode {
                     }
                     done = false;
                     done1 =false;
+                    done2 = false;
                     break;
 
                 case CollectingSum:
@@ -212,11 +213,12 @@ public class TeleOpMarius extends LinearOpMode {
                     break;
 
                 case RetractScoringBasket:
-                    extend.setTarget(300);
-                    extend.setPower();
-                    if(gamepad2.dpad_down) {
-                        sleep(300);
+                    clawRotate.rotateUp();
+                    if(Math.abs(lift.getPosition() - 300) <= 30 && !done2){
                         claw.open();
+                        done2 = true;
+                    }
+                    if(gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
