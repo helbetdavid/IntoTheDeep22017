@@ -35,21 +35,27 @@ public class FormulaCamera extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            xCam = limeLight.getTargetTx();
-            yCam = limeLight.getTargetTy();
+            limeLight.logPipelineData();
+//            servoCam.straight();
+//            sleep(3000);
+//
+//            xCam = limeLight.getTargetTx();
+//            yCam = limeLight.getTargetTy();
+//
+//            xReal = 0.45 * xCam + 0.135;
+//            yReal = 0.46 * yCam + 0.23;
+//
+//
+//            servoCam.trackTarget();
+//            sleep(5000);
+//
+//            extend.setTarget(1300-((yReal/11.3)*537.7));
+//            extend.setPower();
 
-            xReal = 0.45 * xCam + 0.135;
-            yReal = 0.46 * yCam + 0.23;
-
-            servoCam.trackTarget();
-
-            extend.setTarget(1300-((yReal/11.3)*537.7));
-            extend.setPower();
-
-            telemetry.addData("xCam", xCam);
-            telemetry.addData("yCam", yCam);
-            telemetry.addData("xReal", xReal);
-            telemetry.addData("yReal", yReal);
+//            telemetry.addData("xCam", xCam);
+//            telemetry.addData("yCam", yCam);
+//            telemetry.addData("xReal", xReal);
+//            telemetry.addData("yReal", yReal);
             telemetry.update();
         }
     }

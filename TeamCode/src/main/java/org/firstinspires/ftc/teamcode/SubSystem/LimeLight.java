@@ -56,16 +56,21 @@ public class LimeLight extends SubsystemBase {
     }
 
     public void logPipelineData() {
-        double angle = getAngle();
-        double tx = getTargetTx();
-        double ty = getTargetTy();
+        LLResult result = limelight.getLatestResult();
+        if (result == null)
+            telemetry.addLine("bag pl in capu lu david");
+        else {
+            double angle = getAngle();
+            double tx = getTargetTx();
+            double ty = getTargetTy();
 
-        telemetry.addData("angle", angle);
-        telemetry.addData("tx", tx);
-        telemetry.addData("ty", ty);
-        telemetry.addData("Pipeline", pipeline);
+            telemetry.addData("angle", angle);
+            telemetry.addData("tx", tx);
+            telemetry.addData("ty", ty);
+            telemetry.addData("Pipeline", pipeline);
 
-        telemetry.update();
+            telemetry.update();
+        }
     }
 
 }
