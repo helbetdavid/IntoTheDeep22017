@@ -83,10 +83,23 @@ public class TeleOpMarius extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
+            if(gamepad1.right_bumper){
+                frontLeftPower *= 0.5;
+                backLeftPower *= 0.5;
+                frontRightPower *= 0.5;
+                backRightPower *= 0.5;
+            }
+
             leftFront.setPower(frontLeftPower);
             leftBack.setPower(backLeftPower);
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
+
+            if(gamepad2.right_trigger > 0.1){
+                claw.open();
+            } else if(gamepad2.right_trigger < 0.1){
+                claw.close();
+            }
 
 
             switch (robotState) {
