@@ -24,7 +24,7 @@ public final class AlbGalb extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(7.61, 61.2, 0);
+        Pose2d beginPose = new Pose2d(7.61, 62.3, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         ClawAct clawAct = new ClawAct(hardwareMap);
         ClawRotateAct clawRotateAct = new ClawRotateAct(hardwareMap);
@@ -72,7 +72,8 @@ public final class AlbGalb extends LinearOpMode {
                 new SequentialAction(
                         clawAct.clawOpen(),
                         clawRotateAct.clawRotateDown(),
-                        extendAct.extendToPosition(1200),
+                        extendAct.extendToPosition(1100),
+                        new SleepAction(0.3),
                         clawAct.clawClose(),
                         clawRotateAct.clawRotateUp(),
                         extendAct.extendToPosition(0)
@@ -112,7 +113,8 @@ public final class AlbGalb extends LinearOpMode {
                 new SequentialAction(
                         clawAct.clawOpen(),
                         clawRotateAct.clawRotateDown(),
-                        extendAct.extendToPosition(1200),
+                        extendAct.extendToPosition(1100),
+                        new SleepAction(0.3),
                         clawAct.clawClose(),
                         clawRotateAct.clawRotateUp(),
                         extendAct.extendToPosition(0)
@@ -163,7 +165,7 @@ public final class AlbGalb extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                 drive.actionBuilder(new Pose2d(57,24,Math.toRadians(0)))
-                        .strafeToLinearHeading(new Vector2d(54.5,50),Math.toRadians(44.78))
+                        .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
                         .build(),
                 liftAct.liftToPosition(4450)
         ));
@@ -178,7 +180,7 @@ public final class AlbGalb extends LinearOpMode {
         );
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(54.5,50,Math.toRadians(0)))
+                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(0)))
                                 .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(0))
                                 .build(),
                         liftAct.liftToPosition(0)
