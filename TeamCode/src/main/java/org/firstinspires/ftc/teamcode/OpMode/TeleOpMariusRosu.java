@@ -36,7 +36,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
     public static double servo =0;
-    public static double const1 =18.33;
+    public static double const1 =18.6;
     public static double const2 = 0;
     double inches = 0;
     double ticks =0;
@@ -101,7 +101,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
             xCam = limeLight.getTargetTx();
             yCam = limeLight.getTargetTy();
 //
-            xReal = 0.41 * xCam; //0.135
+            xReal = 0.42 * xCam; //0.135
 
             inches = 0.3937 * xReal;
             ticks = inches /0.0010494745962278;
@@ -232,7 +232,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     double targetPosition = perp.getCurrentPosition() + ticks;
 
                     // Loop until the encoder value is within ±300 ticks of the target
-                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 1100 && !isStopRequested() && !done3) {
+                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 100 && !isStopRequested() && !done3) {
                         double error = targetPosition - perp.getCurrentPosition();
 
                         // Determine motor power based on the error direction
