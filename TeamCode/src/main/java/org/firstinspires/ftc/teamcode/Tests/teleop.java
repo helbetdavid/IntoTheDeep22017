@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+
+
 @TeleOp
 public class teleop extends LinearOpMode {
 
@@ -23,17 +25,15 @@ public class teleop extends LinearOpMode {
          * Starts polling for data.
          */
         limelight.start();
+
         waitForStart();
         while (opModeIsActive()) {
-            telemetry.addLine("test telemetry");
             LLResult result = limelight.getLatestResult();
             if (result != null) {
-                if (result.isValid()) {
                     telemetry.addData("tx", result.getTx());
                     telemetry.addData("ty", result.getTy());
-                } else telemetry.addLine("david sooge 2");
-            } else telemetry.addLine("david sooge");
-            telemetry.addLine("test 2");
-            telemetry.update();
-        }}
+                    telemetry.update();
+            }
+        }
+    }
 }

@@ -233,10 +233,15 @@ public class TeleOpMarius extends LinearOpMode {
 
                 case RetractScoringBasket:
                     clawRotate.rotateUp();
-                    if(Math.abs(lift.getPosition() - 300) <= 30 && !done2){
+
+                    if(Math.abs(lift.getPosition() - 4450) <= 50 && !done2){
+                        sleep(200);
                         claw.open();
+                        sleep(200);
                         done2 = true;
+                        clawRotate.rotateInit();
                     }
+
                     if(gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }

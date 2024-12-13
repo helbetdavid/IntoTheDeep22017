@@ -40,6 +40,9 @@ public class liftTest extends LinearOpMode {
         ExtendAct extendAct = new ExtendAct(hardwareMap, this.telemetry);
         LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
 
+        DcMotor extendo = hardwareMap.get(DcMotor.class, "extendo");
+        extendo.setDirection(DcMotorSimple.Direction.REVERSE);
+
         leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
         waitForStart();
 
@@ -49,8 +52,8 @@ public class liftTest extends LinearOpMode {
             double calcul = controller.calculate(pos,target);
             Actions.runBlocking(
                     new SequentialAction(
-                            clawAct.clawClose(),
-                            clawRotateAct.clawRotateUp(),
+                            clawAct.clawOpen(),
+                            clawRotateAct.clawRotateDown(),
                             servoCamAct.straight()
                     )
             );
@@ -60,6 +63,7 @@ public class liftTest extends LinearOpMode {
 
             telemetry.addData("target",target);
             telemetry.addData("pos",pos);
+            telemetry.addData("posext",extendo.getCurrentPosition());
             telemetry.update();
         }
     }
