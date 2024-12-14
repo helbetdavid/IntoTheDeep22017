@@ -70,6 +70,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
         boolean done5=false;
         boolean done6=false;
         boolean done7=false;
+        boolean mihneaserv = false;
 
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
@@ -101,7 +102,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
             xCam = limeLight.getTargetTx();
             yCam = limeLight.getTargetTy();
 //
-            xReal = 0.41 * xCam; //0.135
+            xReal = 0.42 * xCam; //0.135
 
             inches = 0.3937 * xReal;
             ticks = inches /0.0010494745962278;
@@ -120,6 +121,16 @@ public class TeleOpMariusAlb extends LinearOpMode {
             double backLeftPower = (y - x + rx) / denominator;
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
+
+            if(gamepad2.right_trigger>0.1){
+                mihneaserv=true;
+            }
+            else{
+                mihneaserv=false;
+            }
+            if(mihneaserv){
+                claw.setPosition(0.4);
+            }
 
             if(gamepad1.right_bumper){
                 frontLeftPower *= 0.3;
@@ -222,7 +233,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                     double targetPosition = perp.getCurrentPosition() + ticks;
 
                     // Loop until the encoder value is within ±300 ticks of the target
-                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 1100 && !isStopRequested() && !done3) {
+                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 200 && !isStopRequested() && !done3) {
                         double error = targetPosition - perp.getCurrentPosition();
 
                         // Determine motor power based on the error direction
@@ -296,7 +307,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                 case RetractCollectingGate:
                     if(!done1){
                         claw.close();
-
+                        sleep(200);
                         done1=true;
 
                     }
