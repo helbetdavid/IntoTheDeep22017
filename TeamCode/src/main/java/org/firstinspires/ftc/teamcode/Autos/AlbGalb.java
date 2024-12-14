@@ -72,6 +72,7 @@ public final class AlbGalb extends LinearOpMode {
                 new SequentialAction(
                         clawAct.clawOpen(),
                         clawRotateAct.clawRotateDown(),
+                        servoCamAct.straight(),
                         extendAct.extendToPosition(1100),
                         new SleepAction(0.3),
                         clawAct.clawClose(),
@@ -154,7 +155,7 @@ public final class AlbGalb extends LinearOpMode {
                 new SequentialAction(
                         clawRotateAct.clawRotateDown(),
                         clawAct.clawOpen(),
-                        extendAct.extendToPosition(750),
+                        extendAct.extendToPosition(450),
                         servoCamAct.lateral(),
                         new SleepAction(1),
                         clawAct.clawClose(),

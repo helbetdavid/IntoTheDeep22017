@@ -36,7 +36,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
     public static double servo =0;
-    public static double const1 =18.6;
+    public static double const1 =18.33;
     public static double const2 = 0;
     double inches = 0;
     double ticks =0;
@@ -296,7 +296,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateUp();
                     servoCam.straight();
-                    lift.setTarget(350);
+                    lift.setTarget(150);
 //                    lift.setPower();
                     if(gamepad2.start){
                         robotState = RobotState.RetractCollectingGate;
