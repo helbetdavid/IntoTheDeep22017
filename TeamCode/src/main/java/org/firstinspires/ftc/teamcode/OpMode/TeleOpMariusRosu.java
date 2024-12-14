@@ -234,7 +234,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     double targetPosition = perp.getCurrentPosition() + ticks;
 
                     // Loop until the encoder value is within ±300 ticks of the target
-                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 200 && !isStopRequested() && !done3) {
+                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 1000 && !isStopRequested() && !done3) {
                         double error = targetPosition - perp.getCurrentPosition();
 
                         // Determine motor power based on the error direction
