@@ -29,7 +29,8 @@ public class TeleOpMariusAlb extends LinearOpMode {
         ScoringSum,
         RetractScoringSum,
         ScoringBasket,
-        RetractScoringBasket
+        RetractScoringBasket,
+        Level
     }
 
     private HwMap hwMap;
@@ -162,6 +163,9 @@ public class TeleOpMariusAlb extends LinearOpMode {
                         robotState = RobotState.ScoringSum;
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
+                    }
+                    else if(gamepad2.share){
+                        robotState = RobotState.Level;
                     }
                     done = false;
                     done1 =false;
@@ -297,7 +301,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateUp();
                     servoCam.straight();
-                    lift.setTarget(350);
+                    lift.setTarget(150);
 //                    lift.setPower();
                     if(gamepad2.start){
                         robotState = RobotState.RetractCollectingGate;
@@ -306,6 +310,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
 
                 case RetractCollectingGate:
                     if(!done1){
+                        sleep(200);
                         claw.close();
                         sleep(200);
                         done1=true;
@@ -363,6 +368,13 @@ public class TeleOpMariusAlb extends LinearOpMode {
                     }
 
                     if(gamepad2.dpad_down) {
+                        robotState = RobotState.Neutral;
+                    }
+                    break;
+                case Level:
+                    lift.setTarget(1500);
+                    clawRotate.rotateCollect();
+                    if(gamepad2.dpad_down){
                         robotState = RobotState.Neutral;
                     }
                     break;

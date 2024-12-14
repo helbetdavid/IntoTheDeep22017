@@ -29,7 +29,8 @@ public class TeleOpMariusRosu extends LinearOpMode {
         ScoringSum,
         RetractScoringSum,
         ScoringBasket,
-        RetractScoringBasket
+        RetractScoringBasket,
+        Level
     }
 
     private HwMap hwMap;
@@ -70,7 +71,6 @@ public class TeleOpMariusRosu extends LinearOpMode {
         boolean done5=false;
         boolean done6=false;
         boolean done7=false;
-        boolean mihneaserv = false;
 
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
@@ -121,15 +121,8 @@ public class TeleOpMariusRosu extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
-            if(gamepad2.right_trigger>0.1){
-                mihneaserv=true;
-            }
-            else{
-                mihneaserv=false;
-            }
-            if(mihneaserv){
-                claw.setPosition(0.4);
-            }
+
+
 
             if(gamepad1.right_bumper){
                 frontLeftPower *= 0.3;
@@ -146,13 +139,19 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
 
 
+
+
             switch (robotState) {
                 case Neutral:
-//                    claw.close();
+
+                    claw.close();
+
                     clawRotate.rotateInit();
+
                     servoCam.straight();
+
                     lift.setTarget(0);
-//                    lift.setPower();
+
                     if (gamepad2.a) {
                         robotState = RobotState.CollectingSum;
                     } else if (gamepad2.b) {
@@ -161,6 +160,9 @@ public class TeleOpMariusRosu extends LinearOpMode {
                         robotState = RobotState.ScoringSum;
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
+                    }
+                    else if(gamepad2.share){
+                        robotState = RobotState.Level;
                     }
                     done = false;
                     done1 =false;
@@ -361,6 +363,13 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     }
 
                     if(gamepad2.dpad_down) {
+                        robotState = RobotState.Neutral;
+                    }
+                    break;
+                case Level:
+                    lift.setTarget(1500);
+                    clawRotate.rotateCollect();
+                    if(gamepad2.dpad_down){
                         robotState = RobotState.Neutral;
                     }
                     break;

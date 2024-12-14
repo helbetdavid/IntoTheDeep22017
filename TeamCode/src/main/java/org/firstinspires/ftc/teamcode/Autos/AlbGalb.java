@@ -24,7 +24,7 @@ public final class AlbGalb extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(7.61, 62.3, 0);
+        Pose2d beginPose = new Pose2d(7.61, 62.8, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         ClawAct clawAct = new ClawAct(hardwareMap);
         ClawRotateAct clawRotateAct = new ClawRotateAct(hardwareMap);
@@ -68,123 +68,125 @@ public final class AlbGalb extends LinearOpMode {
 
                 ));
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        clawAct.clawOpen(),
-                        clawRotateAct.clawRotateDown(),
-                        servoCamAct.straight(),
-                        extendAct.extendToPosition(1100),
-                        new SleepAction(0.3),
-                        clawAct.clawClose(),
-                        clawRotateAct.clawRotateUp(),
-                        extendAct.extendToPosition(0)
-
-                )
-        );
-        Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(50,46,Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(54.5,50),Math.toRadians(44.78))
-
-                                .build(),
-                        liftAct.liftToPosition(4450)
-                ));
-        Actions.runBlocking(
-                new SequentialAction(
-                        extendAct.extendToPosition(300),
-                        clawAct.clawOpen(),
-                        extendAct.extendToPosition(0),
-                        new SleepAction(0.3)
-
-
-                )
-        );
-
-        Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(54.5,50,Math.toRadians(44.78)))
-                         .strafeToLinearHeading(new Vector2d(60.5,46),Math.toRadians(-90))
-                                .build(),
-                        liftAct.liftToPosition(0)
-
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        clawAct.clawOpen(),
-                        clawRotateAct.clawRotateDown(),
-                        extendAct.extendToPosition(1100),
-                        new SleepAction(0.3),
-                        clawAct.clawClose(),
-                        clawRotateAct.clawRotateUp(),
-                        extendAct.extendToPosition(0)
-                )
-        );
-
-        Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(60.5,46,Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(54.5,50),Math.toRadians(44.78))
-
-                                .build(),
-                        liftAct.liftToPosition(4450)
-
-                ));
-                Actions.runBlocking(
-                        new SequentialAction(
-                                extendAct.extendToPosition(350),
-                                clawAct.clawOpen(),
-                                extendAct.extendToPosition(0)
-
-
-                        )
-                );
-        Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(54.5,50,Math.toRadians(44.78)))
-                        .strafeToLinearHeading(new Vector2d(57,24),Math.toRadians(0))
-                                .build(),
-                        liftAct.liftToPosition(0)
-
-                )
-        );
-
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        clawRotateAct.clawRotateDown(),
-                        clawAct.clawOpen(),
-                        extendAct.extendToPosition(450),
-                        servoCamAct.lateral(),
-                        new SleepAction(1),
-                        clawAct.clawClose(),
-                        extendAct.extendToPosition(0),
-                        clawRotateAct.clawRotateUp()
-                        )
-        );
-        Actions.runBlocking(
-                new ParallelAction(
-                drive.actionBuilder(new Pose2d(57,24,Math.toRadians(0)))
-                        .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
-                        .build(),
-                liftAct.liftToPosition(4450)
-        ));
-        Actions.runBlocking(
-                new SequentialAction(
-                        extendAct.extendToPosition(350),
-                        clawAct.clawOpen(),
-                        extendAct.extendToPosition(0)
-
-
-                )
-        );
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        clawAct.clawOpen(),
+//                        clawRotateAct.clawRotateDown(),
+//                        servoCamAct.straight(),
+//                        extendAct.extendToPosition(950),
+//                        new SleepAction(0.5),
+//                        clawAct.clawClose(),
+//                        clawRotateAct.clawRotateUp(),
+//                        extendAct.extendToPosition(0)
+//
+//                )
+//        );
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                        drive.actionBuilder(new Pose2d(50,46,Math.toRadians(-90)))
+//                                .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
+//
+//                                .build(),
+//                        liftAct.liftToPosition(4450)
+//                ));
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        extendAct.extendToPosition(950),
+//                        clawAct.clawOpen(),
+//                        extendAct.extendToPosition(0),
+//                        new SleepAction(0.3)
+//
+//
+//                )
+//        );
+//
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(44.78)))
+//                         .strafeToLinearHeading(new Vector2d(60.5,46),Math.toRadians(-90))
+//                                .build(),
+//                        liftAct.liftToPosition(0)
+//
+//                )
+//        );
+//
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        clawAct.clawOpen(),
+//                        clawRotateAct.clawRotateDown(),
+//                        servoCamAct.straight(),
+//
+//                        extendAct.extendToPosition(950),
+//                        new SleepAction(0.3),
+//                        clawAct.clawClose(),
+//                        clawRotateAct.clawRotateUp(),
+//                        extendAct.extendToPosition(0)
+//                )
+//        );
+//
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                        drive.actionBuilder(new Pose2d(60.5,46,Math.toRadians(-90)))
+//                                .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
+//
+//                                .build(),
+//                        liftAct.liftToPosition(4450)
+//
+//                ));
+//                Actions.runBlocking(
+//                        new SequentialAction(
+//                                extendAct.extendToPosition(400),
+//                                clawAct.clawOpen(),
+//                                extendAct.extendToPosition(0)
+//
+//
+//                        )
+//                );
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(44.78)))
+//                        .strafeToLinearHeading(new Vector2d(57,24),Math.toRadians(0))
+//                                .build(),
+//                        liftAct.liftToPosition(0)
+//
+//                )
+//        );
+//
+//
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        clawRotateAct.clawRotateDown(),
+//                        clawAct.clawOpen(),
+//                        extendAct.extendToPosition(400),
+//                        servoCamAct.lateral(),
+//                        new SleepAction(1),
+//                        clawAct.clawClose(),
+//                        extendAct.extendToPosition(0),
+//                        clawRotateAct.clawRotateUp()
+//                        )
+//        );
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                drive.actionBuilder(new Pose2d(57,24,Math.toRadians(0)))
+//                        .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
+//                        .build(),
+//                liftAct.liftToPosition(4450)
+//        ));
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        extendAct.extendToPosition(400),
+//                        clawAct.clawOpen(),
+//                        extendAct.extendToPosition(0)
+//
+//
+//                )
+//        );
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(54,50,Math.toRadians(0)))
                                 .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(0))
-                                .build(),
-                        liftAct.liftToPosition(0)
+                                .build()
+//                        liftAct.liftToPosition(0)
 
                 ));
     }

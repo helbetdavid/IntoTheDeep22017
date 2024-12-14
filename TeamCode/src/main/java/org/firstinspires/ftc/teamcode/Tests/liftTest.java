@@ -50,13 +50,13 @@ public class liftTest extends LinearOpMode {
             controller.setPIDF(kP,kI,kD,kF);
             double pos = rightLift.getCurrentPosition();
             double calcul = controller.calculate(pos,target);
-            Actions.runBlocking(
-                    new SequentialAction(
-                            clawAct.clawOpen(),
-                            clawRotateAct.clawRotateDown(),
-                            servoCamAct.straight()
-                    )
-            );
+//            Actions.runBlocking(
+//                    new SequentialAction(
+//                            clawAct.clawOpen(),
+//                            clawRotateAct.clawRotateDown(),
+//                            servoCamAct.straight()
+//                    )
+//            );
 
             rightLift.setPower(calcul);
             leftLift.setPower(calcul);
