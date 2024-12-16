@@ -24,7 +24,7 @@ public final class RosuGalben extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(-14, 62.3, 0);
+        Pose2d beginPose = new Pose2d(-14, 62.8, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         ClawAct clawAct = new ClawAct(hardwareMap);
         ClawRotateAct clawRotateAct = new ClawRotateAct(hardwareMap);
@@ -59,34 +59,13 @@ public final class RosuGalben extends LinearOpMode {
                         clawAct.clawOpen()
                 )
         );
-        Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(4.8, 38, Math.toRadians(-90)))
-                                .strafeTo(new Vector2d(50, 46))
-                                .build(),
-                        liftAct.liftToPosition(0)
 
-                )
-        );
-        Actions.runBlocking(
-                new SequentialAction(
-                        drive.actionBuilder(new Pose2d(50, 46, Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(-3.8, 33.3), -89.54)
-                                .strafeTo(new Vector2d(-31, 43))
-                                .setTangent(60)
-                                .splineToSplineHeading(new Pose2d(-46, 13, 89.54), Math.PI)
-                                .strafeTo(new Vector2d(-45, 55))
-                                .setTangent(-1)
-                                .splineToLinearHeading(new Pose2d(-58, 13, 89.54), Math.PI)
-                                .strafeTo(new Vector2d(-58, 50))
-                                .setTangent(-1)
-                                .splineToLinearHeading(new Pose2d(-60, 13, 89.54), Math.PI)
-                                .strafeTo(new Vector2d(-60, 50))
-                                .strafeTo(new Vector2d(-37, 50))
-                                .strafeTo(new Vector2d(-37, 55))
-                                .build()
-                )
-        );
+        Actions.runBlocking(new SequentialAction(
+                drive.actionBuilder(new Pose2d(4.8, 38, Math.toRadians(-90)))
+                        .strafeTo(new Vector2d(-42, 57))
+                        .build(),
+                liftAct.liftToPosition(0)
+        ));
 
     }
 }
