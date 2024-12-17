@@ -54,5 +54,6 @@ public class ClawRotateAction {
     public Action clawTotateInit(){
         return clawRotateInit();
     }
+    public Action clawRotateCollect(){ return clawRotateCollect();}
 
 }
