@@ -12,7 +12,7 @@ public class Extend extends SubsystemBase {
     private final PIDController controller;
     private DcMotor extendo;
     private final Telemetry telemetry;
-    public double kP = 0.008, kI = 0.00001, kD = 0.0001;
+    public double kP = 0.045, kI = 0, kD = 0.0007;
     public double target = 0;
 
     private boolean isMovingToTarget = false; // Track if the motor is moving
