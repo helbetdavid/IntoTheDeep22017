@@ -10,7 +10,7 @@ public class ClawRotate extends SubsystemBase {
         this.clawRotate = clawRotate;
     }
 
-    public void rotate(double position) {
+    public void setPosition(double position) {
         clawRotate.setPosition(position);
     }
 

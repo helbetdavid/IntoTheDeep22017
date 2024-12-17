@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpMode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -17,9 +17,10 @@ import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @TeleOp
 @Config
-public class TeleOpMariusAlb extends LinearOpMode {
+public class TeleOpMariusAlbastru extends LinearOpMode {
 
     ElapsedTime timer;
+
     public enum RobotState {
         Neutral,
         CollectingSum,
@@ -36,11 +37,11 @@ public class TeleOpMariusAlb extends LinearOpMode {
     private HwMap hwMap;
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
-    public static double servo =0;
-    public static double const1 =18.33;
+    public static double servo = 0;
+    public static double const1 = 18.33;
     public static double const2 = 0;
     double inches = 0;
-    double ticks =0;
+    double ticks = 0;
     double anglecam;
 
     Claw claw;
@@ -64,13 +65,13 @@ public class TeleOpMariusAlb extends LinearOpMode {
         boolean did1 = false;
         boolean did2 = false;
         boolean done = false; // trebuie ceva mai elegant
-        boolean done1= false;
-        boolean done2= false;
+        boolean done1 = false;
+        boolean done2 = false;
         boolean done3 = false;
         boolean done4 = false;
-        boolean done5=false;
-        boolean done6=false;
-        boolean done7=false;
+        boolean done5 = false;
+        boolean done6 = false;
+        boolean done7 = false;
         boolean mihneaserv = false;
 
         hwMap = new HwMap();
@@ -106,9 +107,9 @@ public class TeleOpMariusAlb extends LinearOpMode {
             xReal = 0.42 * xCam; //0.135
 
             inches = 0.3937 * xReal;
-            ticks = inches /0.0010494745962278;
+            ticks = inches / 0.0010494745962278;
 
-            target1 = const1*yCam+const2;
+            target1 = const1 * yCam + const2;
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
@@ -123,17 +124,16 @@ public class TeleOpMariusAlb extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
-            if(gamepad2.right_trigger>0.1){
-                mihneaserv=true;
+            if (gamepad2.right_trigger > 0.1) {
+                mihneaserv = true;
+            } else {
+                mihneaserv = false;
             }
-            else{
-                mihneaserv=false;
-            }
-            if(mihneaserv){
+            if (mihneaserv) {
                 claw.setPosition(0.4);
             }
 
-            if(gamepad1.right_bumper){
+            if (gamepad1.right_bumper) {
                 frontLeftPower *= 0.3;
                 backLeftPower *= 0.3;
                 frontRightPower *= 0.3;
@@ -144,8 +144,6 @@ public class TeleOpMariusAlb extends LinearOpMode {
             leftBack.setPower(backLeftPower);
             rightFront.setPower(frontRightPower);
             rightBack.setPower(backRightPower);
-
-
 
 
             switch (robotState) {
@@ -163,19 +161,18 @@ public class TeleOpMariusAlb extends LinearOpMode {
                         robotState = RobotState.ScoringSum;
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
-                    }
-                    else if(gamepad2.share){
+                    } else if (gamepad2.share) {
                         robotState = RobotState.Level;
                     }
                     done = false;
-                    done1 =false;
+                    done1 = false;
                     done2 = false;
                     did2 = false;
-                    done3 =false;
+                    done3 = false;
                     done4 = false;
-                    done5=false;
-                    done6=false;
-                    done7=false;
+                    done5 = false;
+                    done6 = false;
+                    done7 = false;
 
                     break;
 
@@ -221,7 +218,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
 ////                    servoCam.trackTarget();
 //                    lift.setTarget(750);
 //                    lift.setPower();
-                    if(gamepad2.start){
+                    if (gamepad2.start) {
                         robotState = robotState.RetractCollectingSum;
                     }
                     break;
@@ -244,8 +241,8 @@ public class TeleOpMariusAlb extends LinearOpMode {
                         double power = 0.4 * Math.signum(error); // Positive for right, negative for left
 
                         // Set motor powers for strafing
-                        hwMap.rightFront.setPower(-power*1.1);
-                        hwMap.leftFront.setPower(power*1.1);
+                        hwMap.rightFront.setPower(-power * 1.1);
+                        hwMap.leftFront.setPower(power * 1.1);
                         hwMap.rightBack.setPower(power);
                         hwMap.leftBack.setPower(-power);
 
@@ -263,34 +260,34 @@ public class TeleOpMariusAlb extends LinearOpMode {
                     hwMap.leftFront.setPower(0);
                     hwMap.rightBack.setPower(0);
                     hwMap.leftBack.setPower(0);
-                    done3 =true;
-                    telemetry.addData("ycam",yCam);
-                    telemetry.addData("xcam",xCam);
+                    done3 = true;
+                    telemetry.addData("ycam", yCam);
+                    telemetry.addData("xcam", xCam);
                     telemetry.update();
-                    if(!done4){
-                        extend.setTarget(extend.getPosition()+target1);
+                    if (!done4) {
+                        extend.setTarget(extend.getPosition() + target1);
 
-                        done4=true;
+                        done4 = true;
 
                     }
-                    if(!done5){
+                    if (!done5) {
                         servoCam.trackTarget();
-                        done5=true;
+                        done5 = true;
                     }
-                    if(done5 && !done6){
+                    if (done5 && !done6) {
                         lift.setTarget(0);
-                        done6=true;
+                        done6 = true;
                     }
-                    if(Math.abs(lift.getPosition())<=20 ){
+                    if (Math.abs(lift.getPosition()) <= 20) {
                         sleep(200);
                         claw.close();
-                        done7=true;
+                        done7 = true;
                     }
-                    if(done7){
+                    if (done7) {
                         clawRotate.rotateInit();
-                        done7=false;
+                        done7 = false;
                     }
-                    if(gamepad2.dpad_down){
+                    if (gamepad2.dpad_down) {
                         extend.setTarget(0);
                         extend.setPower();
                         robotState = RobotState.Neutral;
@@ -303,22 +300,22 @@ public class TeleOpMariusAlb extends LinearOpMode {
                     servoCam.straight();
                     lift.setTarget(150);
 //                    lift.setPower();
-                    if(gamepad2.start){
+                    if (gamepad2.start) {
                         robotState = RobotState.RetractCollectingGate;
                     }
                     break;
 
                 case RetractCollectingGate:
-                    if(!done1){
+                    if (!done1) {
                         sleep(200);
                         claw.close();
                         sleep(200);
-                        done1=true;
+                        done1 = true;
 
                     }
                     lift.setTarget(700);
 //                    lift.setPower();
-                    if(gamepad2.dpad_down){
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
@@ -342,7 +339,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                         claw.open();
                         done = true;
                     }
-                    if(gamepad2.dpad_down){
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
@@ -351,7 +348,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                 case ScoringBasket:
                     lift.setTarget(4450);
 //                    lift.setPower();
-                    if(gamepad2.start){
+                    if (gamepad2.start) {
                         robotState = RobotState.RetractScoringBasket;
                     }
                     break;
@@ -359,7 +356,7 @@ public class TeleOpMariusAlb extends LinearOpMode {
                 case RetractScoringBasket:
                     clawRotate.rotateUp();
 
-                    if(Math.abs(lift.getPosition() - 4450) <= 50 && !done2){
+                    if (Math.abs(lift.getPosition() - 4450) <= 50 && !done2) {
                         sleep(200);
                         claw.open();
                         sleep(200);
@@ -367,14 +364,14 @@ public class TeleOpMariusAlb extends LinearOpMode {
                         clawRotate.rotateInit();
                     }
 
-                    if(gamepad2.dpad_down) {
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
                 case Level:
                     lift.setTarget(1500);
                     clawRotate.rotateCollect();
-                    if(gamepad2.dpad_down){
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;

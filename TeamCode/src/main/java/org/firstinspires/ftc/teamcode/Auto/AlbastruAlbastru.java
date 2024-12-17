@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autos;
+package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -10,34 +10,34 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Actions.ClawAct;
-import org.firstinspires.ftc.teamcode.Actions.ClawRotateAct;
-import org.firstinspires.ftc.teamcode.Actions.ExtendAct;
-import org.firstinspires.ftc.teamcode.Actions.LiftAct;
-import org.firstinspires.ftc.teamcode.Actions.ServoCamAct;
+import org.firstinspires.ftc.teamcode.Actions.ClawAction;
+import org.firstinspires.ftc.teamcode.Actions.ClawRotateAction;
+import org.firstinspires.ftc.teamcode.Actions.ExtendAction;
+import org.firstinspires.ftc.teamcode.Actions.LiftAction;
+import org.firstinspires.ftc.teamcode.Actions.ServoCamAction;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
 
 @Autonomous
 @Config
-public final class RosuGalben extends LinearOpMode {
+public final class AlbastruAlbastru extends LinearOpMode {
     public static double target = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-14, 62.8, 0);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
-        ClawAct clawAct = new ClawAct(hardwareMap);
-        ClawRotateAct clawRotateAct = new ClawRotateAct(hardwareMap);
-        ServoCamAct servoCamAct = new ServoCamAct(hardwareMap);
-        ExtendAct extendAct = new ExtendAct(hardwareMap, this.telemetry);
-        LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
+        ClawAction clawAction = new ClawAction(hardwareMap);
+        ClawRotateAction clawRotateAction = new ClawRotateAction(hardwareMap);
+        ServoCamAction servoCamAction = new ServoCamAction(hardwareMap);
+        ExtendAction extendAction = new ExtendAction(hardwareMap, this.telemetry);
+        LiftAction liftAction = new LiftAction(hardwareMap, this.telemetry);
 
 
         Actions.runBlocking(
                 new SequentialAction(
-                        clawAct.clawClose(),
-                        clawRotateAct.clawRotateInit(),
-                        servoCamAct.straight()
+                        clawAction.clawClose(),
+                        clawRotateAction.clawRotateInit(),
+                        servoCamAction.straight()
 
                 )
         );
@@ -45,8 +45,8 @@ public final class RosuGalben extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        liftAct.liftToPosition(2300),
-                        clawRotateAct.clawRotateUp(),
+                        liftAction.liftToPosition(2300),
+                        clawRotateAction.clawRotateUp(),
                         drive.actionBuilder(beginPose)
                                 .strafeToLinearHeading(new Vector2d(4.8, 38), Math.toRadians(-90))
                                 .build()
@@ -54,9 +54,9 @@ public final class RosuGalben extends LinearOpMode {
         );
         Actions.runBlocking(
                 new SequentialAction(
-                        liftAct.liftToPosition(1700),
+                        liftAction.liftToPosition(1700),
                         new SleepAction(0.3), // Am modificat de la 0.5 la 0.3
-                        clawAct.clawOpen()
+                        clawAction.clawOpen()
                 )
         );
 
@@ -64,7 +64,7 @@ public final class RosuGalben extends LinearOpMode {
                 drive.actionBuilder(new Pose2d(4.8, 38, Math.toRadians(-90)))
                         .strafeTo(new Vector2d(-42, 57))
                         .build(),
-                liftAct.liftToPosition(0)
+                liftAction.liftToPosition(0)
         ));
 
     }

@@ -4,43 +4,55 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.ClawRotate;
 
 public class ClawRotateAction {
-    private ClawRotate servo;
+    private HwMap hwMap;
+    private ClawRotate clawRotate;
+    public ClawRotateAction(HardwareMap hardwareMap){
+        hwMap = new HwMap();
+        hwMap.init(hardwareMap);
 
-    public ClawRotateAction(ClawRotate clawRotate) {
-        this.servo = clawRotate;
+        clawRotate = new ClawRotate(hwMap.clawRotator);
     }
 
-    public Action rotate(double position) {
+    public class ClawRotateUp implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            clawRotate.rotateUp();
+            return false;
+        }
+    }
+
+    public class ClawRotateDown implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            clawRotate.rotateDown();
+            return false;
+        }
+    }
+    public Action clawRotateInit(){
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                servo.rotate(position);
+                clawRotate.rotateInit();
                 return false;
             }
         };
     }
 
-    public Action goUp() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                servo.rotateUp();
-                return false;
-            }
-        };
+
+    public Action  clawRotateUp(){
+        return new ClawRotateUp();
+    }
+    public Action clawRotateDown(){
+        return new ClawRotateDown();
+    }
+    public Action clawTotateInit(){
+        return clawRotateInit();
     }
 
-    public Action goDown() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                servo.rotateDown();
-                return false;
-            }
-        };
-    }
 }

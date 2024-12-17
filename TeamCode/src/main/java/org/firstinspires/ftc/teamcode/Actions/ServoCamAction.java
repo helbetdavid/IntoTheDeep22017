@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Actions;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -12,11 +10,11 @@ import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
-public class ServoCamAct {
+public class ServoCamAction {
     private HwMap hwMap;
     private ServoCam servoCam;
     private LimeLight limelight;
-    public ServoCamAct(HardwareMap hardwareMap){
+    public ServoCamAction(HardwareMap hardwareMap){
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
 

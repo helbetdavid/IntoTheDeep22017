@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpMode;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -24,17 +24,17 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
     public enum RobotState {
         Neutral,
-        CollectingSum,
-        RetractCollectingSum,
+        CollectingSubmersible,
+        RetractCollectingSubmersible,
         CollectingGate,
         RetractCollectingGate,
-        ScoringSum,
-        RetractScoringSum,
+        ScoringSubmersible,
+        RetractScoringSubmersible,
         ScoringBasket,
         RetractScoringBasket
     }
 
-    PIDController pidSasiu, pidExtendo;
+    PIDController pidSasiu;
     private HwMap hwMap;
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
@@ -45,7 +45,6 @@ public class TeleOpMariusRosu extends LinearOpMode {
     double ticks = 0;
     double anglecam;
     public static double kPsasiu = 0, kIsasiu = 0, kDsasiu = 0;
-    public static double kPextendo = 0, kIextendo = 0, kDextendo = 0;
 
     Claw claw;
     ClawRotate clawRotate;
@@ -66,7 +65,6 @@ public class TeleOpMariusRosu extends LinearOpMode {
         timer = new ElapsedTime();
 
         pidSasiu = new PIDController(kPsasiu, kIsasiu, kDsasiu);
-        pidExtendo = new PIDController(kPextendo, kIextendo, kDextendo);
         boolean did = false;
         boolean did1 = false;
         boolean did2 = false;
@@ -153,11 +151,11 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     lift.setTarget(0);
                     extend.setTarget(0);
                     if (gamepad2.a) {
-                        robotState = RobotState.CollectingSum;
+                        robotState = RobotState.CollectingSubmersible;
                     } else if (gamepad2.b) {
                         robotState = RobotState.CollectingGate;
                     } else if (gamepad2.x) {
-                        robotState = RobotState.ScoringSum;
+                        robotState = RobotState.ScoringSubmersible;
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
                     }
@@ -173,7 +171,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
                     break;
 
-                case CollectingSum:
+                case CollectingSubmersible:
                     claw.openSum();
                     clawRotate.rotateDown();
                     servoCam.straight();
@@ -181,11 +179,11 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     lift.setTarget(750);
 
                     if (gamepad2.start) {
-                        robotState = RobotState.RetractCollectingSum;
+                        robotState = RobotState.RetractCollectingSubmersible;
                     }
                     break;
 
-                case RetractCollectingSum:
+                case RetractCollectingSubmersible:
                     // Intai ne miscam pe x
                     while (Math.abs(limeLight.getTargetTx()) > 1) {
                         double currentPos = limeLight.getTargetTx();
@@ -247,17 +245,17 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     }
                     break;
 
-                case ScoringSum:
+                case ScoringSubmersible:
                     claw.close();
                     clawRotate.rotateUp();
                     servoCam.straight();
                     lift.setTarget(2300);
                     if (gamepad2.start) {
-                        robotState = RobotState.RetractScoringSum;
+                        robotState = RobotState.RetractScoringSubmersible;
                     }
                     break;
 
-                case RetractScoringSum:
+                case RetractScoringSubmersible:
                     // nu ma mai obosesc sa schimb, oricum trb modificat pt prins sampleuri orizontal
                     // va rog eu sa gasiti o modalitate sa nu mai faceti cu done
                     lift.setTarget(0);

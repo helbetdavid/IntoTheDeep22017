@@ -3,19 +3,17 @@ package org.firstinspires.ftc.teamcode.Tests;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.Actions.ClawAct;
-import org.firstinspires.ftc.teamcode.Actions.ClawRotateAct;
-import org.firstinspires.ftc.teamcode.Actions.ExtendAct;
-import org.firstinspires.ftc.teamcode.Actions.LiftAct;
-import org.firstinspires.ftc.teamcode.Actions.ServoCamAct;
+import org.firstinspires.ftc.teamcode.Actions.ClawAction;
+import org.firstinspires.ftc.teamcode.Actions.ClawRotateAction;
+import org.firstinspires.ftc.teamcode.Actions.ExtendAction;
+import org.firstinspires.ftc.teamcode.Actions.LiftAction;
+import org.firstinspires.ftc.teamcode.Actions.ServoCamAction;
 
 @TeleOp
 @Config
@@ -34,11 +32,11 @@ public class liftTest extends LinearOpMode {
         DcMotor rightLift = hardwareMap.get(DcMotor.class, "rightLift");
         DcMotor leftLift = hardwareMap.get(DcMotor.class, "perp");
 
-        ClawAct clawAct = new ClawAct(hardwareMap);
-        ClawRotateAct clawRotateAct = new ClawRotateAct(hardwareMap);
-        ServoCamAct servoCamAct = new ServoCamAct(hardwareMap);
-        ExtendAct extendAct = new ExtendAct(hardwareMap, this.telemetry);
-        LiftAct liftAct = new LiftAct(hardwareMap, this.telemetry);
+        ClawAction clawAction = new ClawAction(hardwareMap);
+        ClawRotateAction clawRotateAction = new ClawRotateAction(hardwareMap);
+        ServoCamAction servoCamAction = new ServoCamAction(hardwareMap);
+        ExtendAction extendAction = new ExtendAction(hardwareMap, this.telemetry);
+        LiftAction liftAction = new LiftAction(hardwareMap, this.telemetry);
 
         DcMotor extendo = hardwareMap.get(DcMotor.class, "extendo");
         extendo.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -52,9 +50,9 @@ public class liftTest extends LinearOpMode {
             double calcul = controller.calculate(pos,target);
 //            Actions.runBlocking(
 //                    new SequentialAction(
-//                            clawAct.clawOpen(),
-//                            clawRotateAct.clawRotateDown(),
-//                            servoCamAct.straight()
+//                            clawAction.clawOpen(),
+//                            clawRotateAction.clawRotateDown(),
+//                            servoCamAction.straight()
 //                    )
 //            );
 

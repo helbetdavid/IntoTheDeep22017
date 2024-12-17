@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 
-public class AlignAct implements Action {
+public class AlignAction implements Action {
     private final HwMap hwMap;
     private final Telemetry telemetry;
     private final LimeLight limeLight;
@@ -17,7 +17,7 @@ public class AlignAct implements Action {
     private final double kStrafe;
     private final double kArmExtension;
 
-    public AlignAct(HwMap hwMap, Telemetry telemetry, LimeLight limeLight, double tolerance, double kStrafe, double kArmExtension) {
+    public AlignAction(HwMap hwMap, Telemetry telemetry, LimeLight limeLight, double tolerance, double kStrafe, double kArmExtension) {
         this.hwMap = hwMap;
         this.telemetry = telemetry;
         this.limeLight = limeLight;
