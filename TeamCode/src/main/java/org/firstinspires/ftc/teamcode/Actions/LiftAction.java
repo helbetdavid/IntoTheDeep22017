@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Actions;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -8,6 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.HwMap;
+import org.firstinspires.ftc.teamcode.SubSystem.Extend;
 import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 
 public class LiftAction {
@@ -28,7 +31,7 @@ public class LiftAction {
                 lift.setTarget(targetPosition);
 
                 // Stop when the target is reached
-                if (Math.abs(targetPosition - currentPosition) <= 50) {
+                if (Math.abs(targetPosition - currentPosition) <= 30) {
                     lift.setTarget(currentPosition);
                     lift.setPower(); // Maintain position
                     telemetryPacket.put("Reached Target", currentPosition);
