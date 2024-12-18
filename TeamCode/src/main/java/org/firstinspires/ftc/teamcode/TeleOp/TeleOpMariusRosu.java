@@ -39,12 +39,12 @@ public class TeleOpMariusRosu extends LinearOpMode {
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
     public static double servo = 0;
-    public static double const1 = 18.33;
+    public static double const1 = 1;
     public static double const2 = 0;
     double inches = 0;
     double ticks = 0;
     double anglecam;
-    public static double kPsasiu = 0, kIsasiu = 0, kDsasiu = 0;
+    public static double kPsasiu = 0.04, kIsasiu = 0.00001, kDsasiu = 0.0001;
 
     Claw claw;
     ClawRotate clawRotate;
@@ -175,7 +175,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.openSum();
                     clawRotate.rotateDown();
                     servoCam.straight();
-                    extend.setTarget(1000);
+                    extend.setTarget(250);
                     lift.setTarget(750);
 
                     if (gamepad2.start) {
@@ -185,15 +185,21 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
                 case RetractCollectingSubmersible:
                     // Intai ne miscam pe x
-                    while (Math.abs(limeLight.getTargetTx()) > 1) {
+                    while (Math.abs(limeLight.getTargetTx()) > 0.5 && !done1) {
                         double currentPos = limeLight.getTargetTx();
                         double target = 0;
                         double power = pidSasiu.calculate(currentPos, target);
 
-                        leftFront.setPower(power);
-                        leftBack.setPower(-power);
-                        rightFront.setPower(-power);
-                        rightBack.setPower(power);
+                        leftFront.setPower(-power*1.1);
+                        leftBack.setPower(power*1.1);
+                        rightFront.setPower(power*1.1);
+                        rightBack.setPower(-power*1.1);
+                        telemetry.addData("tx: ", limeLight.getTargetTx());
+                        telemetry.addData("ty: ", limeLight.getTargetTy());
+                        telemetry.update();
+                    }
+                    if (Math.abs(limeLight.getTargetTx()) <= 0.5) {
+                        done1 = true;
                     }
                     leftFront.setPower(0);
                     leftBack.setPower(0);
@@ -203,26 +209,32 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     // Apoi ne miscam pe y, la fel ca inainte
                     // doar ca mergem pana la o eroare mult mai mica
 
-                    while (Math.abs(limeLight.getTargetTy()) > 1) {
-                        double target = const1 * limeLight.getTargetTy() + const2;
+                    while (Math.abs(limeLight.getTargetTy()) > 0.5 && !done2) {
+                        double target = const1 * limeLight.getTargetTy();
                         extend.setTarget(extend.getPosition() + target);
+                        extend.setPower();
+                        telemetry.addData("tx: ", limeLight.getTargetTx());
+                        telemetry.addData("ty: ", limeLight.getTargetTy());
+                        telemetry.update();
                     }
-
-                    // Ne invartim
-                    servoCam.trackTarget();
+                    if (Math.abs(limeLight.getTargetTy()) <= 0.5) {
+                        done2 = true;
+                        servoCam.trackTarget();
+                    }
 
                     // Coboram, prindem si ne intoarcem
                     lift.setTarget(0);
-                    if (lift.getPosition() < 20) {
+
+                    if (gamepad2.dpad_down) {
+//                        clawRotate.rotateInit();
                         claw.close();
                         extend.setTarget(0);
                         servoCam.straight();
-                        clawRotate.rotateInit();
-                    }
-
-                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
+                    telemetry.addData("tx: ", limeLight.getTargetTx());
+                    telemetry.addData("ty: ", limeLight.getTargetTy());
+                    telemetry.update();
                     break;
 
                 case CollectingGate:

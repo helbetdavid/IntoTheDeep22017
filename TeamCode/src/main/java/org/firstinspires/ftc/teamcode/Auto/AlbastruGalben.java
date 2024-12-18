@@ -44,18 +44,18 @@ public final class AlbastruGalben extends LinearOpMode {
         waitForStart();
 
         Actions.runBlocking(
-                        new ParallelAction(
-                                liftAction.liftToPosition(1440),
-                                drive.actionBuilder(beginPose)
-                                        .strafeTo(new Vector2d(4.8, 34.5 ))
-                                        .build()
-                        )
+                new ParallelAction(
+                        liftAction.liftToPosition(1440),
+                        drive.actionBuilder(beginPose)
+                                .strafeTo(new Vector2d(4.8, 34.5))
+                                .build()
+                )
         );
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(4.8,34,Math.toRadians(-90)))
-                                        .strafeTo(new Vector2d(4.8,33))
-                                        .build(),
+                        drive.actionBuilder(new Pose2d(4.8, 34, Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(4.8, 33))
+                                .build(),
                         extendAction.extendToPosition(350)
 
 //                        clawAction.clawOpen(),
@@ -67,14 +67,13 @@ public final class AlbastruGalben extends LinearOpMode {
                         clawAction.clawOpen(),
                         liftAction.liftToPosition(1300),
                         extendAction.extendToPosition(0)
-
                 )
         );
 
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(4.8,38,Math.toRadians(-90)))
-                                .strafeTo(new Vector2d(50,46))
+                        drive.actionBuilder(new Pose2d(4.8, 38, Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(50, 46))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -86,9 +85,9 @@ public final class AlbastruGalben extends LinearOpMode {
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
                         extendAction.extendToPosition(270),
-                        new SleepAction(0.5),
+                        new SleepAction(0.3),
                         clawAction.clawClose(),
-                        new SleepAction(0.5),
+                        new SleepAction(0.3),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
 
@@ -97,26 +96,28 @@ public final class AlbastruGalben extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4450),
-                        drive.actionBuilder(new Pose2d(50,46,Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
+                        drive.actionBuilder(new Pose2d(50, 46, Math.toRadians(-90)))
+                                .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
                                 .build()
 
                 ));
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(150),
-                        clawRotateAction.clawRotateCollect(),
+                        extendAction.extendToPosition(100),
+                        clawRotateAction.clawRotateDown(),
                         clawAction.clawOpen(),
+                        new SleepAction(0.3),
+                        clawRotateAction.clawRotateUp(),
+                        new SleepAction(0.3),
                         extendAction.extendToPosition(0),
-                        new SleepAction(0.3)
-
+                        new SleepAction(0.5)
                 )
         );
 
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(44.78)))
-                         .strafeToLinearHeading(new Vector2d(60,46),Math.toRadians(-88))
+                        drive.actionBuilder(new Pose2d(54, 50, Math.toRadians(45)))
+                                .strafeToLinearHeading(new Vector2d(60, 45.5), Math.toRadians(-92.5))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -128,8 +129,7 @@ public final class AlbastruGalben extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-
-                        extendAction.extendToPosition(270),
+                        extendAction.extendToPosition(250),
                         new SleepAction(0.3),
                         clawAction.clawClose(),
                         clawRotateAction.clawRotateUp(),
@@ -139,31 +139,31 @@ public final class AlbastruGalben extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(60,46,Math.toRadians(-88)))
-                                .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
-
+                        drive.actionBuilder(new Pose2d(60, 45.5, Math.toRadians(-90)))
+                                .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
                                 .build(),
                         liftAction.liftToPosition(4450)
 
                 ));
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(150),
-                        clawRotateAction.clawRotateCollect(),
+                        extendAction.extendToPosition(100),
+                        clawRotateAction.clawRotateDown(),
                         clawAction.clawOpen(),
+                        new SleepAction(0.3),
+                        clawRotateAction.clawRotateUp(),
+                        new SleepAction(0.3),
                         extendAction.extendToPosition(0),
-                        new SleepAction(0.3)
-
+                        new SleepAction(0.5)
                 )
         );
         Actions.runBlocking(
-                new ParallelAction(
-                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(44.78)))
-                        .strafeToLinearHeading(new Vector2d(55,40),Math.toRadians(-45))
-                                .build(),
-                        liftAction.liftToPosition(0)
-
-                )
+                        new ParallelAction(
+                                drive.actionBuilder(new Pose2d(54, 50, Math.toRadians(45)))
+                                        .strafeToLinearHeading(new Vector2d(55, 40), Math.toRadians(-45))
+                                        .build(),
+                                liftAction.liftToPosition(0)
+                        )
         );
 
 
@@ -171,25 +171,29 @@ public final class AlbastruGalben extends LinearOpMode {
                 new SequentialAction(
                         clawRotateAction.clawRotateDown(),
                         clawAction.clawOpen(),
-                        extendAction.extendToPosition(380),
-                        new SleepAction(1),
+                        extendAction.extendToPosition(340),
+                        new SleepAction(0.3),
                         clawAction.clawClose(),
                         extendAction.extendToPosition(0),
                         clawRotateAction.clawRotateUp()
+                )
+        );
+        Actions.runBlocking(
+                        new ParallelAction(
+                                drive.actionBuilder(new Pose2d(55, 40, Math.toRadians(-45)))
+                                        .strafeToLinearHeading(new Vector2d(55, 50), Math.toRadians(45))
+                                        .build(),
+                                liftAction.liftToPosition(4450)
                         )
         );
         Actions.runBlocking(
-                new ParallelAction(
-                drive.actionBuilder(new Pose2d(55,40,Math.toRadians(-45)))
-                        .strafeToLinearHeading(new Vector2d(55,50),Math.toRadians(44.78))
-                        .build(),
-                liftAction.liftToPosition(4450)
-        ));
-        Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(150),
-                        clawRotateAction.clawRotateCollect(),
+                        extendAction.extendToPosition(100),
+                        clawRotateAction.clawRotateDown(),
                         clawAction.clawOpen(),
+                        new SleepAction(0.3),
+                        clawRotateAction.clawRotateUp(),
+                        new SleepAction(0.3),
                         extendAction.extendToPosition(0),
                         new SleepAction(0.3)
 
