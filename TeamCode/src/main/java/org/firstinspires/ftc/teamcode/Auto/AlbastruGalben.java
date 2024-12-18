@@ -90,6 +90,7 @@ public final class AlbastruGalben extends LinearOpMode {
                         extendAction.extendToPosition(270),
                         new SleepAction(0.5),
                         clawAction.clawClose(),
+                        new SleepAction(0.5),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
 
@@ -101,20 +102,20 @@ public final class AlbastruGalben extends LinearOpMode {
                                 .strafeToLinearHeading(new Vector2d(54,50),Math.toRadians(44.78))
 
                                 .build(),
-                        liftAction.liftToPosition(1000)
+                        liftAction.liftToPosition(4200)
                 ));
-//        Actions.runBlocking(
-//                new SequentialAction(
-//                        extendAction.extendToPosition(150),
-//                        clawRotateAction.clawRotateCollect(),
-//                        clawAction.clawOpen(),
-//                        extendAction.extendToPosition(0),
-//                        new SleepAction(0.3)
-//
-//
-//                )
-//        );
-//
+        Actions.runBlocking(
+                new SequentialAction(
+                        extendAction.extendToPosition(150),
+                        clawRotateAction.clawRotateCollect(),
+                        clawAction.clawOpen(),
+                        extendAction.extendToPosition(0),
+                        new SleepAction(0.3)
+
+
+                )
+        );
+
 //        Actions.runBlocking(
 //                new ParallelAction(
 //                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(44.78)))
