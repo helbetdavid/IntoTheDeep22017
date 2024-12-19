@@ -39,10 +39,11 @@ public class TeleOpMariusRosu extends LinearOpMode {
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
     public static double servo = 0;
-    public static double const1 = 1;
+    public static double const1 = 3.8;
     public static double const2 = 0;
-    double inches = 0;
-    double ticks = 0;
+    public static double inches = 0;
+    public static double ticks = 0;
+    public static double const3 = 0.45;
     double anglecam;
     public static double kPsasiu = 0.04, kIsasiu = 0.00001, kDsasiu = 0.0001;
 
@@ -104,15 +105,15 @@ public class TeleOpMariusRosu extends LinearOpMode {
             telemetry.addData("State", robotState);
             telemetry.update();
 
-//            xCam = limeLight.getTargetTx();
-//            yCam = limeLight.getTargetTy();
-////
-//            xReal = 0.42 * xCam; //0.135
+            xCam = limeLight.getTargetTx();
+            yCam = limeLight.getTargetTy();
 //
-//            inches = 0.3937 * xReal;
-//            ticks = inches / 0.0010494745962278;
-//
-//            target1 = const1 * yCam + const2;
+            xReal = const3 * xCam; //0.135
+
+            inches = 0.3937 * xReal;
+            ticks = inches / 0.0010494745962278;
+
+            target1 = const1 * yCam + const2;
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
@@ -175,7 +176,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.openSum();
                     clawRotate.rotateDown();
                     servoCam.straight();
-                    extend.setTarget(250);
+                    extend.setTarget(200);
                     lift.setTarget(750);
 
                     if (gamepad2.start) {
@@ -185,56 +186,60 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
                 case RetractCollectingSubmersible:
                     // Intai ne miscam pe x
-                    while (Math.abs(limeLight.getTargetTx()) > 0.5 && !done1) {
-                        double currentPos = limeLight.getTargetTx();
-                        double target = 0;
-                        double power = pidSasiu.calculate(currentPos, target);
+                    double targetPosition = perp.getCurrentPosition() + ticks;
 
-                        leftFront.setPower(-power*1.1);
-                        leftBack.setPower(power*1.1);
-                        rightFront.setPower(power*1.1);
-                        rightBack.setPower(-power*1.1);
-                        telemetry.addData("tx: ", limeLight.getTargetTx());
-                        telemetry.addData("ty: ", limeLight.getTargetTy());
+                    // Loop until the encoder value is within ±300 ticks of the target
+                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 1100 && !isStopRequested() && !done3) {
+                        double error = targetPosition - perp.getCurrentPosition();
+
+                        // Determine motor power based on the error direction
+                        double power = 0.4 * Math.signum(error); // Positive for right, negative for left
+
+                        // Set motor powers for strafing
+                        hwMap.rightFront.setPower(-power * 1.1);
+                        hwMap.leftFront.setPower(power * 1.1);
+                        hwMap.rightBack.setPower(power);
+                        hwMap.leftBack.setPower(-power);
+
+                        // Telemetry for debugging
+                        telemetry.addData("Current Position", perp.getCurrentPosition());
+                        telemetry.addData("Target Position", targetPosition);
+                        telemetry.addData("Error", error);
                         telemetry.update();
                     }
-                    if (Math.abs(limeLight.getTargetTx()) <= 0.5) {
-                        done1 = true;
+                    hwMap.rightFront.setPower(0);
+                    hwMap.leftFront.setPower(0);
+                    hwMap.rightBack.setPower(0);
+                    hwMap.leftBack.setPower(0);
+                    done3 = true;
+                    telemetry.addData("ycam", yCam);
+                    telemetry.addData("xcam", xCam);
+                    telemetry.update();
+                    if (!done4) {
+                        extend.setTarget(extend.getPosition() + target1);
+                        done4 = true;
                     }
-                    leftFront.setPower(0);
-                    leftBack.setPower(0);
-                    rightFront.setPower(0);
-                    rightBack.setPower(0);
-
-                    // Apoi ne miscam pe y, la fel ca inainte
-                    // doar ca mergem pana la o eroare mult mai mica
-
-                    while (Math.abs(limeLight.getTargetTy()) > 0.5 && !done2) {
-                        double target = const1 * limeLight.getTargetTy();
-                        extend.setTarget(extend.getPosition() + target);
-                        extend.setPower();
-                        telemetry.addData("tx: ", limeLight.getTargetTx());
-                        telemetry.addData("ty: ", limeLight.getTargetTy());
-                        telemetry.update();
-                    }
-                    if (Math.abs(limeLight.getTargetTy()) <= 0.5) {
-                        done2 = true;
+                    if (!done5) {
                         servoCam.trackTarget();
+                        done5 = true;
                     }
-
-                    // Coboram, prindem si ne intoarcem
-                    lift.setTarget(0);
-
-                    if (gamepad2.dpad_down) {
-//                        clawRotate.rotateInit();
+                    if (done5 && !done6) {
+                        sleep(500);
+                        lift.setTarget(0);
+                        done6 = true;
+                    }
+                    if (Math.abs(lift.getPosition()) <= 20) {
+                        sleep(200);
                         claw.close();
-                        extend.setTarget(0);
-                        servoCam.straight();
+                        done7 = true;
+                    }
+                    if (done7) {
+                        clawRotate.rotateInit();
+                        done7 = false;
+                    }
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
-                    telemetry.addData("tx: ", limeLight.getTargetTx());
-                    telemetry.addData("ty: ", limeLight.getTargetTy());
-                    telemetry.update();
                     break;
 
                 case CollectingGate:
