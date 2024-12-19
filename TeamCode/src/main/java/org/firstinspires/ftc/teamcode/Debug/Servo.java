@@ -13,6 +13,7 @@ public class Servo extends LinearOpMode {
     private HwMap hwmap;
     public static double rotat =0;
     public static double cheata =0;
+    public static double cam=0;
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -22,6 +23,7 @@ public class Servo extends LinearOpMode {
         while(opModeIsActive()){
             hwmap.clawRotator.setPosition(rotat);
             hwmap.claw.setPosition(cheata);
+            hwmap.servoCam.setPosition(cam);
         }
     }
 }
