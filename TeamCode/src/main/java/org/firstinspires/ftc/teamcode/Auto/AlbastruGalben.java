@@ -202,8 +202,8 @@ public final class AlbastruGalben extends LinearOpMode {
 //        Actions.runBlocking(
 //                new ParallelAction(
 //                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(0)))
-//                                .strafeToLinearHeading(new Vector2d(31, 8),Math.toRadians(0))
-//                                .strafeTo(new Vector2d(28, 8))
+//                    .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
+//                    .strafeTo(new Vector2d(28, 8))
 //                                .build(),
 //                        liftAction.liftToPosition(0)
 //

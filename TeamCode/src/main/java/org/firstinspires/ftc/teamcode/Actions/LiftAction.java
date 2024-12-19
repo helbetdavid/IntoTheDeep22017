@@ -29,7 +29,6 @@ public class LiftAction {
 
                 // Set the target position
                 lift.setTarget(targetPosition);
-
                 // Stop when the target is reached
                 if (Math.abs(targetPosition - currentPosition) <= 20) {
                     lift.setTarget(currentPosition);
