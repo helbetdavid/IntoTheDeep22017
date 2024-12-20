@@ -80,9 +80,9 @@ public final class AlbastruAlbastru extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
-                                .strafeTo(new Vector2d(-5,34))
+                                .strafeTo(new Vector2d(-5,33))
                                 .build(),
-                        extendAction.extendToPosition(325)
+                        extendAction.extendToPosition(315)
                 )
         );
         Actions.runBlocking(
@@ -106,12 +106,64 @@ public final class AlbastruAlbastru extends LinearOpMode {
                                 .strafeToLinearHeading(new Vector2d(-61, 13), Math.toRadians(0))
                                 .strafeTo(new Vector2d(-69,13))
                                 .strafeTo(new Vector2d(-69, 50))
-                                .strafeToLinearHeading(new Vector2d(-23.33, 57.5), Math.toRadians(180))
+                                .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
 
                                 .build(),
                         liftAction.liftToPosition(0)
                 )
         );
+        Actions.runBlocking(
+                new SequentialAction(
+                        //roatate trebuie pe 0.7
+                        clawRotateAction.clawRotateSpec(),
+                        clawAction.clawOpen(),
+                        extendAction.extendToPosition(270),
+                        new SleepAction(0.3),
+                        clawAction.clawClose(),
+                        extendAction.extendToPosition(0),
+                        clawRotateAction.clawRotateUp()
+                )
+        );
+
+                        Actions.runBlocking(
+                                new ParallelAction(
+                                        liftAction.liftToPosition(1450),
+                                        drive.actionBuilder(new Pose2d(-33,57.5,Math.toRadians(180)))
+                                                .strafeToLinearHeading(new Vector2d(-6, 37), Math.toRadians(-90))
+                                                .build()
+                                )
+                        );
+
+                        Actions.runBlocking(
+                                new ParallelAction(
+                                        drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
+                                                .strafeTo(new Vector2d(-6,34))
+                                                .build(),
+                                        extendAction.extendToPosition(320)
+                                )
+                        );
+        Actions.runBlocking(
+                new SequentialAction(
+                        clawAction.clawOpen(),
+                        liftAction.liftToPosition(1300),
+                        extendAction.extendToPosition(0)
+                )
+        );
+        Actions.runBlocking(
+                        new ParallelAction(
+                                liftAction.liftToPosition(0),
+                                drive.actionBuilder(new Pose2d(-6,34,Math.toRadians(180)))
+                                        .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
+                                        .build()
+                        )
+                );
+//                                .strafeToLinearHeading(new Vector2d(-7, 37), Math.toRadians(-90))
+//                                .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
+//                                .strafeToLinearHeading(new Vector2d(-8, 37), Math.toRadians(-90))
+//                                .strafeTo(new Vector2d(-49, 60))
+//                                .build()
+//
+//
 
     }
 }

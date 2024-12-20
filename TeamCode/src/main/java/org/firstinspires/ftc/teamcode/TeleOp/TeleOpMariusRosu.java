@@ -92,7 +92,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
         claw = new Claw(hwMap.claw);
         clawRotate = new ClawRotate(hwMap.clawRotator);
-        ExtendNou extenderSubsystem = new ExtendNou(hwMap.extendo);
+        ExtendNou extender = new ExtendNou(hwMap.extendo);
         lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
         limeLight = new LimeLight(hwMap.limelight, telemetry);
         servoCam = new ServoCam(hwMap.servoCam, limeLight);
@@ -101,8 +101,8 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             lift.setPower();
-            extenderSubsystem.updatePID();
-            extenderSubsystem.runToTarget(targetExt);
+            extender.updatePID();
+            extender.runToTarget(targetExt);
             telemetry.addData("State", robotState);
             telemetry.update();
 
@@ -152,7 +152,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     clawRotate.rotateInit();
                     servoCam.straight();
                     lift.setTarget(0);
-                    targetExt=0;
+                    targetExt = 0;
                     if (gamepad2.a) {
                         robotState = RobotState.CollectingSubmersible;
                     } else if (gamepad2.b) {
@@ -178,7 +178,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.openSum();
                     clawRotate.rotateDown();
                     servoCam.straight();
-                    targetExt=200;
+                    targetExt = 200;
                     lift.setTarget(750);
 
                     if (gamepad2.start) {
@@ -209,16 +209,16 @@ public class TeleOpMariusRosu extends LinearOpMode {
                         telemetry.addData("Error", error);
                         telemetry.update();
                     }
+                    done3 = true;
                     hwMap.rightFront.setPower(0);
                     hwMap.leftFront.setPower(0);
                     hwMap.rightBack.setPower(0);
                     hwMap.leftBack.setPower(0);
-                    done3 = true;
                     telemetry.addData("ycam", yCam);
                     telemetry.addData("xcam", xCam);
                     telemetry.update();
                     if (!done4) {
-                        targetExt=extenderSubsystem.getCurrentPosition()+target1;
+                        targetExt = extender.getCurrentPosition() + target1;
                         done4 = true;
                     }
                     if (!done5) {
@@ -248,7 +248,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateCollect();
                     servoCam.straight();
-                    lift.setTarget(150);
+                    lift.setTarget(300);
                     if (gamepad2.start) {
                         timer.reset();
                         robotState = RobotState.RetractCollectingGate;
@@ -268,24 +268,20 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     claw.close();
                     clawRotate.rotateUp();
                     servoCam.straight();
-                    lift.setTarget(1460);
+                    lift.setTarget(1480);
                     if (gamepad2.start) {
-                        targetExt=350;
+                        targetExt = 150;
                         robotState = RobotState.RetractScoringSubmersible;
                     }
                     break;
 
                 case RetractScoringSubmersible:
-                    // nu ma mai obosesc sa schimb, oricum trb modificat pt prins sampleuri orizontal
-                    // va rog eu sa gasiti o modalitate sa nu mai faceti cu done
-                    if (Math.abs(extenderSubsystem.getCurrentPosition() - 350) <= 30 && !done) {
+                    if (Math.abs(extender.getCurrentPosition() - 150) <= 30) {
                         claw.open();
-                        done = true;
+                        targetExt = 0;
+                        lift.setTarget(1300);
                     }
-                    if(done)
-                        targetExt=0;
                     if (gamepad2.dpad_down) {
-                        lift.setTarget(0);
                         robotState = RobotState.Neutral;
                     }
                     break;
@@ -299,20 +295,11 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     break;
 
                 case RetractScoringBasket:
-                    clawRotate.rotateUp();
+                    clawRotate.rotateCollect();
                     if (timer.milliseconds() > 200)
                         claw.open();
                     if (timer.milliseconds() > 400)
                         clawRotate.rotateInit();
-
-//                    if (Math.abs(lift.getPosition() - 4450) <= 50 && !done2) {
-//                        sleep(200);
-//                        claw.open();
-//                        sleep(200);
-//                        done2 = true;
-//                        clawRotate.rotateInit();
-//                    }
-
                     if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }

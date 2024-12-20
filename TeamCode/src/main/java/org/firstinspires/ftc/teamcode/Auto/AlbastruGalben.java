@@ -25,7 +25,7 @@ public final class AlbastruGalben extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(7.61, 62.8, Math.toRadians(-90));
+        Pose2d beginPose = new Pose2d(8.61, 65, Math.toRadians(-90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
         ClawAction clawAction = new ClawAction(hardwareMap);
         ClawRotateAction clawRotateAction = new ClawRotateAction(hardwareMap);
@@ -57,7 +57,7 @@ public final class AlbastruGalben extends LinearOpMode {
                         drive.actionBuilder(new Pose2d(4.8, 34, Math.toRadians(-90)))
                                 .strafeTo(new Vector2d(4.8, 33))
                                 .build(),
-                        extendAction.extendToPosition(350)
+                        extendAction.extendToPosition(220)
 
 //                        clawAction.clawOpen(),
 //                        new SleepAction(10000)
@@ -161,7 +161,7 @@ public final class AlbastruGalben extends LinearOpMode {
         Actions.runBlocking(
                         new ParallelAction(
                                 drive.actionBuilder(new Pose2d(54, 50, Math.toRadians(45)))
-                                        .strafeToLinearHeading(new Vector2d(55, 40), Math.toRadians(-45))
+                                        .strafeToLinearHeading(new Vector2d(55, 40), Math.toRadians(-44))
                                         .build(),
                                 liftAction.liftToPosition(0)
                         )
@@ -172,7 +172,7 @@ public final class AlbastruGalben extends LinearOpMode {
                 new SequentialAction(
                         clawRotateAction.clawRotateDown(),
                         clawAction.clawOpen(),
-                        extendAction.extendToPosition(340),
+                        extendAction.extendToPosition(350),
                         new SleepAction(0.3),
                         clawAction.clawClose(),
                         extendAction.extendToPosition(0),

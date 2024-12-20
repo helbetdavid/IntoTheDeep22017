@@ -56,6 +56,16 @@ public class ClawRotateAction {
         };
     }
 
+    public Action clawRotateSpec(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                clawRotate.rotateSpec();
+                return false;
+            }
+        };
+    }
+
 
     public Action  clawRotateUp(){
         return new ClawRotateUp();
