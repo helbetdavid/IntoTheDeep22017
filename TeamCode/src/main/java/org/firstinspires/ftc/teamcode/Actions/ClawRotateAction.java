@@ -50,7 +50,7 @@ public class ClawRotateAction {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                clawRotate.rotateInit();
+                clawRotate.rotateCollect();
                 return false;
             }
         };

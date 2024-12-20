@@ -41,6 +41,7 @@ public final class AlbastruGalben extends LinearOpMode {
                         servoCamAction.straight()
                 )
         );
+        sleep(50);
         waitForStart();
 
         Actions.runBlocking(
@@ -117,7 +118,7 @@ public final class AlbastruGalben extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(54, 50, Math.toRadians(45)))
-                                .strafeToLinearHeading(new Vector2d(60, 45.5), Math.toRadians(-92.5))
+                                .strafeToLinearHeading(new Vector2d(60, 45.5), Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -199,14 +200,23 @@ public final class AlbastruGalben extends LinearOpMode {
 
                 )
         );
-//        Actions.runBlocking(
-//                new ParallelAction(
-//                        drive.actionBuilder(new Pose2d(54,50,Math.toRadians(0)))
-//                    .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
-//                    .strafeTo(new Vector2d(28, 8))
-//                                .build(),
-//                        liftAction.liftToPosition(0)
-//
-//                ));
+        Actions.runBlocking(
+                new ParallelAction(
+                        drive.actionBuilder(new Pose2d(55,50,Math.toRadians(45)))
+                                .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
+                                .build(),
+                        liftAction.liftToPosition(1430),
+                        clawRotateAction.clawRotateCollect()
+
+
+                ));
+        Actions.runBlocking(
+                new SequentialAction(
+                        drive.actionBuilder(new Pose2d(35,8 ,Math.toRadians(180)))
+                                .strafeTo(new Vector2d(31, 8))
+                                .build(),
+                        new SleepAction(10)
+                )
+        );
     }
 }
