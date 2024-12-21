@@ -46,7 +46,7 @@ public final class AlbastruGalben extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        liftAction.liftToPosition(1440),
+                        liftAction.liftToPosition(1480),
                         drive.actionBuilder(beginPose)
                                 .strafeTo(new Vector2d(4.8, 34.5))
                                 .build()
@@ -57,7 +57,7 @@ public final class AlbastruGalben extends LinearOpMode {
                         drive.actionBuilder(new Pose2d(4.8, 34, Math.toRadians(-90)))
                                 .strafeTo(new Vector2d(4.8, 33))
                                 .build(),
-                        extendAction.extendToPosition(220)
+                        extendAction.extendToPosition(250)
 
 //                        clawAction.clawOpen(),
 //                        new SleepAction(10000)

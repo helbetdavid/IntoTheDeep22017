@@ -39,7 +39,6 @@ public final class AlbastruAlbastru extends LinearOpMode {
                         clawAction.clawClose(),
                         clawRotateAction.clawRotateInit(),
                         servoCamAction.straight()
-
                 )
         );
         waitForStart();
@@ -70,9 +69,9 @@ public final class AlbastruAlbastru extends LinearOpMode {
 //        );
         Actions.runBlocking(
                 new ParallelAction(
-                        liftAction.liftToPosition(1450),
+                        liftAction.liftToPosition(1480),
                         drive.actionBuilder(beginPose)
-                                .strafeTo(new Vector2d(-5, 37))
+                                .strafeTo(new Vector2d(-5, 34))
                                 .build()
 
                 )
@@ -80,9 +79,9 @@ public final class AlbastruAlbastru extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
-                                .strafeTo(new Vector2d(-5,33))
+                                .strafeTo(new Vector2d(-5,30.5))
                                 .build(),
-                        extendAction.extendToPosition(315)
+                        extendAction.extendToPosition(280)
                 )
         );
         Actions.runBlocking(
@@ -106,7 +105,7 @@ public final class AlbastruAlbastru extends LinearOpMode {
                                 .strafeToLinearHeading(new Vector2d(-61, 13), Math.toRadians(0))
                                 .strafeTo(new Vector2d(-69,13))
                                 .strafeTo(new Vector2d(-69, 50))
-                                .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
+                                .strafeToLinearHeading(new Vector2d(-33, 55.5), Math.toRadians(180))
 
                                 .build(),
                         liftAction.liftToPosition(0)
@@ -116,9 +115,10 @@ public final class AlbastruAlbastru extends LinearOpMode {
                 new SequentialAction(
                         //roatate trebuie pe 0.7
                         clawRotateAction.clawRotateSpec(),
+//                        new SleepAction(0.3),
                         clawAction.clawOpen(),
-                        extendAction.extendToPosition(270),
-                        new SleepAction(0.3),
+                        extendAction.extendToPosition(290),
+                        new SleepAction(0.5 ),
                         clawAction.clawClose(),
                         extendAction.extendToPosition(0),
                         clawRotateAction.clawRotateUp()
@@ -128,20 +128,20 @@ public final class AlbastruAlbastru extends LinearOpMode {
                         Actions.runBlocking(
                                 new ParallelAction(
                                         liftAction.liftToPosition(1450),
-                                        drive.actionBuilder(new Pose2d(-33,57.5,Math.toRadians(180)))
-                                                .strafeToLinearHeading(new Vector2d(-6, 37), Math.toRadians(-90))
+                                        drive.actionBuilder(new Pose2d(-33,55.5,Math.toRadians(180)))
+                                                .strafeToLinearHeading(new Vector2d(-6.5, 34), Math.toRadians(-90))
                                                 .build()
                                 )
                         );
 
-                        Actions.runBlocking(
-                                new ParallelAction(
-                                        drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
-                                                .strafeTo(new Vector2d(-6,34))
-                                                .build(),
-                                        extendAction.extendToPosition(320)
-                                )
-                        );
+        Actions.runBlocking(
+                new ParallelAction(
+                        drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(-6.5,30.5))
+                                .build(),
+                        extendAction.extendToPosition(280)
+                )
+        );
         Actions.runBlocking(
                 new SequentialAction(
                         clawAction.clawOpen(),
@@ -157,9 +157,9 @@ public final class AlbastruAlbastru extends LinearOpMode {
                                         .build()
                         )
                 );
-//                                .strafeToLinearHeading(new Vector2d(-7, 37), Math.toRadians(-90))
-//                                .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
 //                                .strafeToLinearHeading(new Vector2d(-8, 37), Math.toRadians(-90))
+//                                .strafeToLinearHeading(new Vector2d(-33, 57.5), Math.toRadians(180))
+//                                .strafeToLinearHeading(new Vector2d(-9.5, 37), Math.toRadians(-90))
 //                                .strafeTo(new Vector2d(-49, 60))
 //                                .build()
 //
