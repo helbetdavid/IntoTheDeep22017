@@ -53,7 +53,6 @@ public class MeepMeepTesting {
 //                            .strafeTo(new Vector2d(-37,50))
 //                            .strafeTo(new Vector2d(-37,55))
 
-
                     .strafeTo(new Vector2d(-4.8, 34.5))
                     .strafeTo(new Vector2d(-31, 43))
                     .setTangent(60)

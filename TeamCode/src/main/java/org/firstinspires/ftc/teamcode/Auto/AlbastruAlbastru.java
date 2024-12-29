@@ -67,15 +67,38 @@ public final class AlbastruAlbastru extends LinearOpMode {
 //                                .build()
 //                )
 //        );
-        Actions.runBlocking(
-                new ParallelAction(
-                        liftAction.liftToPosition(1480),
-                        drive.actionBuilder(beginPose)
-                                .strafeTo(new Vector2d(-5, 34))
-                                .build()
 
+
+
+
+//        Actions.runBlocking(
+//                new ParallelAction(
+//                        liftAction.liftToPosition(1480),
+//                        drive.actionBuilder(beginPose)
+//                                .strafeTo(new Vector2d(-5, 34))
+//                                .build()
+//
+//                )
+//        );
+
+        Actions.runBlocking(
+                new SequentialAction(
+                        liftAction.liftToPosition(2000),
+                        clawRotateAction.clawRotateCollect(),
+                        drive.actionBuilder(new Pose2d(-14, 62.8,Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(-14, 62.8))
+                                .build(),
+                        new SleepAction(10),
+                        liftAction.liftToPosition(2900),
+                        clawAction.clawOpen(),
+                        drive.actionBuilder(new Pose2d(-14, 62.8,Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(-14, 64))
+                                .build(),
+                         new SleepAction(999999999)
                 )
         );
+
+
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(-5,37,Math.toRadians(-90)))
