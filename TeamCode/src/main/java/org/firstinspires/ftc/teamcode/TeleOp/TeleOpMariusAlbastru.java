@@ -44,7 +44,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
     public static double const2 = 0;
     public static double inches = 0;
     public static double ticks = 0;
-    public static double const3 = 0.47;
+    public static double const3 = 0.48;
     public static double targetExt = 0;
     double anglecam;
     public static double kPsasiu = 0.04, kIsasiu = 0.00001, kDsasiu = 0.0001;
@@ -250,7 +250,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     claw.open();
                     clawRotate.rotateCollect();
                     servoCam.straight();
-                    lift.setTarget(150);
+                    lift.setTarget(250);
                     if (gamepad2.start) {
                         timer.reset();
                         robotState = RobotState.RetractCollectingGate;
@@ -301,20 +301,11 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     break;
 
                 case RetractScoringBasket:
-                    clawRotate.rotateUp();
+                    clawRotate.rotateCollect();
                     if (timer.milliseconds() > 200)
                         claw.open();
                     if (timer.milliseconds() > 400)
                         clawRotate.rotateInit();
-
-//                    if (Math.abs(lift.getPosition() - 4450) <= 50 && !done2) {
-//                        sleep(200);
-//                        claw.open();
-//                        sleep(200);
-//                        done2 = true;
-//                        clawRotate.rotateInit();
-//                    }
-
                     if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }

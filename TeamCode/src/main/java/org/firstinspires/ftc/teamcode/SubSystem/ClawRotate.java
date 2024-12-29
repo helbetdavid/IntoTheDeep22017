@@ -18,7 +18,7 @@ public class ClawRotate extends SubsystemBase {
         clawRotate.setPosition(0.05);
     }
     public void rotateSpec() {
-        clawRotate.setPosition(0.7);
+        clawRotate.setPosition(0.82);
     }
 
     public void rotateCollect(){
