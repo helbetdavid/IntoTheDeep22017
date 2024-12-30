@@ -52,6 +52,8 @@ public final class AlbastruGalben extends LinearOpMode {
                                 .build()
                 )
         );
+
+
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(4.8, 34, Math.toRadians(-90)))
