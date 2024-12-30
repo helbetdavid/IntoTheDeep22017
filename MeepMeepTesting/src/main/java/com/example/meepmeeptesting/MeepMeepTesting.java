@@ -14,15 +14,12 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 16.14)
                 .build();
-        int x = 2;
+        int x = 1;
         if (x == 1)
         {
-            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(7.61, 62.8, Math.toRadians(-90)))
-                    .strafeTo(new Vector2d(4.8, 34.5))
-                    .strafeTo(new Vector2d(4.8, 33))
-                    .strafeTo(new Vector2d(50, 46))
+            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(40.3, 65, Math.toRadians(0)))
                     .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
-                    .strafeToLinearHeading(new Vector2d(60, 45.5), Math.toRadians(-92.5))
+                    .strafeToLinearHeading(new Vector2d(59, 45.5), Math.toRadians(-90))
                     .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
                     .strafeToLinearHeading(new Vector2d(55, 40), Math.toRadians(-45))
                     .strafeToLinearHeading(new Vector2d(55, 50), Math.toRadians(45))
