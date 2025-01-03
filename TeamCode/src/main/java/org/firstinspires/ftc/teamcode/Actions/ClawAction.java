@@ -34,9 +34,20 @@ public class ClawAction {
             return false;
         }
     }
+    public class ClawOpenAuto implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            claw.openAuto();
+            return false;
+        }
+    }
     public Action clawOpen(){
         return new ClawOpen();
     }
+    public Action clawOpenAuto(){
+        return new ClawOpenAuto();
+    }
+
     public Action clawClose(){
         return new ClawClose();
     }

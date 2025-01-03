@@ -28,6 +28,13 @@ public class ServoCamAction {
             return false;
         }
     }
+    public class Auto implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            servoCam.setAngle(0.81);
+            return false;
+        }
+    }
     public class Lateral implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket){
@@ -45,6 +52,8 @@ public class ServoCamAction {
     public Action straight(){
         return new Straigt();
     }
+    public Action auto() { return new Auto(); }
+
     public Action lateral(){
         return new Lateral();
     }

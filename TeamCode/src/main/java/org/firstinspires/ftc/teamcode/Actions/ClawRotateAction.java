@@ -36,6 +36,7 @@ public class ClawRotateAction {
             return false;
         }
     }
+
     public Action clawRotateInit(){
         return new Action() {
             @Override

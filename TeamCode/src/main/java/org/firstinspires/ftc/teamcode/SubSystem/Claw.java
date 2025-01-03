@@ -23,6 +23,10 @@ public class Claw extends SubsystemBase {
     public void openSum(){
         claw.setPosition(0.55);
     }
+    public void openAuto(){
+        claw.setPosition(0.71);
+    }
+
 
 
 }
