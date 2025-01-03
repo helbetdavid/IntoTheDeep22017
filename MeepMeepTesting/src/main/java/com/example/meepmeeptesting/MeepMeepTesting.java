@@ -8,16 +8,17 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(800);
+        MeepMeep meepMeep = new MeepMeep(700);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 16.14)
                 .build();
-        int x = 1;
+        int x = 2;
         if (x == 1)
         {
-            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(40.3, 65, Math.toRadians(0)))
+            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(40.3, 60, Math.toRadians(0)))
+                            .waitSeconds(100)
                     .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
                     .strafeToLinearHeading(new Vector2d(47.5, 42), Math.toRadians(-88))
                     .strafeToLinearHeading(new Vector2d(54, 50), Math.toRadians(45))
@@ -37,21 +38,9 @@ public class MeepMeepTesting {
         }
         else if(x==2)
         {
-            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-14, 62.8, Math.toRadians(-90)))
-//                    .strafeToLinearHeading(new Vector2d(-3.8, 33.3), -89.54)
-//                    .strafeTo(new Vector2d(-31, 43))
-//                    .setTangent(60)
-//                    .splineToSplineHeading(new Pose2d(-46, 13, 89.54), Math.PI)
-//                            .strafeTo(new Vector2d(-45, 55))
-//                            .setTangent(-1)
-//                            .splineToLinearHeading(new Pose2d(-58, 13, 89.54), Math.PI)
-//                            .strafeTo(new Vector2d(-58, 50))
-//                            .setTangent(-1)
-//                            .splineToLinearHeading(new Pose2d(-60, 13, 89.54), Math.PI)
-//                            .strafeTo(new Vector2d(-60, 50))
-//                            .strafeTo(new Vector2d(-37,50))
-//                            .strafeTo(new Vector2d(-37,55))
+            myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-14, 61, Math.toRadians(-90)))
 
+                    .waitSeconds(100)
                     .strafeTo(new Vector2d(-4.8, 34.5))
                     .strafeTo(new Vector2d(-31, 43))
                     .setTangent(60)
@@ -70,32 +59,6 @@ public class MeepMeepTesting {
                     .strafeToLinearHeading(new Vector2d(-23.33, 57.5), Math.toRadians(180))
                     .strafeToLinearHeading(new Vector2d(-4.8, 34.5), Math.toRadians(-90))
                     .strafeTo(new Vector2d(-49, 60))
-//                    .strafeTo(new Vector2d(-37, 50))
-//                    .strafeTo(new Vector2d(-37, 55))
-
-
-
-
-
-
-
-//                    .build()
-//                    .strafeTo(new Vector2d(-46, 13))
-//                    .strafeTo(new Vector2d(-46, 54))
-//                    .waitSeconds(3)
-//                    //.setTangent(1)
-//                    //.splineToSplineHeading(new Pose2d(-3.8, 33.3,-90), Math.PI/ 2)
-//                    .strafeToLinearHeading(new Vector2d(-3.8, 33.3), -89.54)
-//                    .setTangent(1)
-//                    .splineToSplineHeading(new Pose2d(-48, 54, 89.54), Math.PI / 2)
-//                    .strafeToLinearHeading(new Vector2d(-3.8, 33.3), -89.54)
-//                    .strafeTo(new Vector2d(-54, 59))
-
-//              .turn(Math.toRadians(90))
-//              .lineToY(30)
-//              .turn(Math.toRadians(90))
-//              .lineToX(0)
-//              .turn(Math.toRadians(90))
                     .waitSeconds(999999999)
                             .turn(Math.toRadians(90))
 

@@ -25,7 +25,7 @@ public class ServoCam extends SubsystemBase {
     public void straight() {
         servo.setPosition(0.5);
     }
-    public void auto() { servo.setPosition(0.81); }
+    public void auto() { servo.setPosition(0.74); }
 
     public void lateral() {
         servo.setPosition(0.0);
