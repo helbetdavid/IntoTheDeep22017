@@ -26,6 +26,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
     public enum RobotState {
         Neutral,
         CollectingSubmersible,
+        AlignSample,
         RetractCollectingSubmersible,
         CollectingGate,
         RetractCollectingGate,
@@ -40,15 +41,15 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
     RobotState robotState = RobotState.Neutral;
     private FtcDashboard dash = FtcDashboard.getInstance();
     public static double servo = 0;
-//    public static double const1 = 3.9;
+    //    public static double const1 = 3.9;
 //    public static double const2 = 0;
     public static double inches = 0;
     public static double ticks = 0;
-    public static double ticksext =0;
+    public static double ticksext = 0;
     public static double const3 = 0.48;
     public static double targetExt = 0;
     double anglecam;
-    public static double kPsasiu = 0.04, kIsasiu = 0.00001, kDsasiu = 0.0001;
+    public static double kPsasiu = 0.00045, kIsasiu = 0.000000007, kDsasiu = 0.000000004;
 
     Claw claw;
     ClawRotate clawRotate;
@@ -67,6 +68,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
         timer = new ElapsedTime();
 
+        double targetPosition = 0;
         pidSasiu = new PIDController(kPsasiu, kIsasiu, kDsasiu);
         boolean did = false;
         boolean did1 = false;
@@ -79,7 +81,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         boolean done5 = false;
         boolean done6 = false;
         boolean done7 = false;
-        boolean done8=false;
+        boolean done8 = false;
         boolean mihneaserv = false;
 
         hwMap = new HwMap();
@@ -105,20 +107,10 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             lift.setPower();
-            extenderSubsystem.updatePID();
+//            extenderSubsystem.updatePID();        ????????????????????????????????????????? david???????????????????????????????????
             extenderSubsystem.runToTarget(targetExt);
             telemetry.addData("State", robotState);
             telemetry.update();
-
-            xCam = limeLight.getTargetTx();
-            yCam = limeLight.getTargetTy();
-//
-            xReal = Math.tan(Math.toRadians(limeLight.getTargetTx()))*23;
-            yReal = Math.tan(Math.toRadians(limeLight.getTargetTy()))*23;
-
-            inches = 0.3937 * xReal;
-            ticks = inches / 0.0010494745962278;
-            ticksext = yReal / 0.10790979;
 
 //            target1 = const1 * yCam + const2;
 
@@ -158,7 +150,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     clawRotate.rotateInit();
                     servoCam.straight();
                     lift.setTarget(0);
-                    targetExt=0;
+                    targetExt = 0;
                     if (gamepad2.a) {
                         robotState = RobotState.CollectingSubmersible;
                     } else if (gamepad2.b) {
@@ -177,7 +169,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     done5 = false;
                     done6 = false;
                     done7 = false;
-                    done8=false;
+                    done8 = false;
 
                     break;
 
@@ -185,72 +177,54 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     claw.openSum();
                     clawRotate.rotateDown();
                     servoCam.straight();
-                    targetExt=200;
+                    targetExt = 200;
                     lift.setTarget(750);
+                    xCam = limeLight.getTargetTx();
+                    yCam = limeLight.getTargetTy();
+//
+                    xReal = Math.tan(Math.toRadians(limeLight.getTargetTx())) * 23;
+                    yReal = Math.tan(Math.toRadians(limeLight.getTargetTy())) * 23;
+
+
+                    ticks = xReal * 341.3;
+                    ticksext = (yReal - 2.7) * 11.76;
+
+                    targetPosition = perp.getCurrentPosition() + ticks;
 
                     if (gamepad2.start) {
-                        robotState = RobotState.RetractCollectingSubmersible;
-
+                        servoCam.trackTarget();
+                        robotState = RobotState.AlignSample;
                     }
                     break;
 
+                case AlignSample:
+                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 120 && !isStopRequested()) {
+                        double power = pidSasiu.calculate(perp.getCurrentPosition() - targetPosition);
+                        hwMap.rightFront.setPower(-power);
+                        hwMap.leftFront.setPower(power);
+                        hwMap.rightBack.setPower(power);
+                        hwMap.leftBack.setPower(-power);
+                    }
+                    hwMap.rightFront.setPower(0);
+                    hwMap.leftFront.setPower(0);
+                    hwMap.rightBack.setPower(0);
+                    hwMap.leftBack.setPower(0);
+                    sleep(200);
+                    if (gamepad2.dpad_down || Math.abs(perp.getCurrentPosition() - targetPosition) < 120) {
+                        robotState = RobotState.RetractCollectingSubmersible;
+                        targetExt = extenderSubsystem.getCurrentPosition() + ticksext;
+                        timer.reset();
+                    }
+                    break;
+
+
                 case RetractCollectingSubmersible:
-
-                    if(!done8){
-                        targetExt=extenderSubsystem.getCurrentPosition()+ticksext;
-                        done8=true;
-
-                    }
-                    if(targetExt-extenderSubsystem.getCurrentPosition()>5 && !done3){
-                        double targetPosition = perp.getCurrentPosition() + ticks;
-
-                        // Loop until the encoder value is within ±300 ticks of the target
-                        while (Math.abs(perp.getCurrentPosition() - targetPosition) > 1100 && !isStopRequested() && !done3) {
-                            double error = targetPosition - perp.getCurrentPosition();
-
-                            // Determine motor power based on the error direction
-                            double power = 0.4 * Math.signum(error); // Positive for right, negative for left
-
-                            // Set motor powers for strafing
-                            hwMap.rightFront.setPower(-power * 1.05);
-                            hwMap.leftFront.setPower(power * 1.05);
-                            hwMap.rightBack.setPower(power);
-                            hwMap.leftBack.setPower(-power);
-
-                            // Telemetry for debugging
-                            telemetry.addData("Current Position", perp.getCurrentPosition());
-                            telemetry.addData("Target Position", targetPosition);
-                            telemetry.addData("Error", error);
-                            telemetry.update();
-                        }
-                        hwMap.rightFront.setPower(0);
-                        hwMap.leftFront.setPower(0);
-                        hwMap.rightBack.setPower(0);
-                        hwMap.leftBack.setPower(0);
-                        done3 = true;
-                    }
-
-                    // Intai ne miscam pe x
-
-                    if (!done5) {
-                        servoCam.trackTarget();
-                        done5 = true;
-                    }
-                    if (done5 && !done6) {
-                        sleep(500);
-                        lift.setTarget(0);
-                        done6 = true;
-                    }
-                    if (Math.abs(lift.getPosition()) <= 20) {
-                        sleep(200);
+                    lift.setTarget(0);
+                    if (gamepad2.dpad_down){
                         claw.close();
-                        done7 = true;
-                    }
-                    if (done7) {
+                        sleep(100);
                         clawRotate.rotateInit();
-                        done7 = false;
-                    }
-                    if (gamepad2.dpad_down) {
+                        targetExt = 0;
                         robotState = RobotState.Neutral;
                     }
                     break;
@@ -281,7 +255,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     servoCam.straight();
                     lift.setTarget(1460);
                     if (gamepad2.start) {
-                        targetExt=350;
+                        targetExt = 350;
                         robotState = RobotState.RetractScoringSubmersible;
                     }
                     break;
@@ -293,8 +267,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         claw.open();
                         done = true;
                     }
-                    if(done)
-                        targetExt=0;
+                    if (done)
+                        targetExt = 0;
                     if (gamepad2.dpad_down) {
                         lift.setTarget(0);
                         robotState = RobotState.Neutral;
