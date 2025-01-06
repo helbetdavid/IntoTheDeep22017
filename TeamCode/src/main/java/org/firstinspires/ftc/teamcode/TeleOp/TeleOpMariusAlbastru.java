@@ -198,7 +198,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     break;
 
                 case AlignSample:
-                    while (Math.abs(perp.getCurrentPosition() - targetPosition) > 120 && !isStopRequested()) {
+                    while ((gamepad2.dpad_down || Math.abs(perp.getCurrentPosition() - targetPosition) > 120) && !isStopRequested()) {
                         double power = pidSasiu.calculate(perp.getCurrentPosition() - targetPosition);
                         hwMap.rightFront.setPower(-power);
                         hwMap.leftFront.setPower(power);
@@ -220,7 +220,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
-                    if (gamepad2.dpad_down){
+                    if (gamepad2.dpad_down && timer.milliseconds() > 1000){
                         claw.close();
                         sleep(100);
                         clawRotate.rotateInit();
