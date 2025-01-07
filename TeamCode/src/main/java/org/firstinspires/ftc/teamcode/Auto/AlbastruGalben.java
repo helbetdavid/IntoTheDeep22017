@@ -196,7 +196,6 @@ public final class AlbastruGalben extends LinearOpMode {
 
                 )
         );
-
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4450),
