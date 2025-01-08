@@ -213,7 +213,7 @@ public class TeleOpChatGPT extends LinearOpMode {
 
     private void executeCollectingGate() {
         claw.open();
-        clawRotate.rotateCollect();
+        clawRotate.rotateBasket();
         servoCam.straight();
         lift.setTarget(250);
         if (gamepad2.start) robotState = RobotState.RetractCollectingGate;
@@ -257,7 +257,7 @@ public class TeleOpChatGPT extends LinearOpMode {
     }
 
     private void executeRetractScoringBasket() {
-        clawRotate.rotateCollect();
+        clawRotate.rotateBasket();
         if (timer.milliseconds() > 200) claw.open();
         if (timer.milliseconds() > 400) clawRotate.rotateInit();
         if (gamepad2.dpad_down) robotState = RobotState.Neutral;

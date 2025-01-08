@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.SubSystem.Claw;
 import org.firstinspires.ftc.teamcode.SubSystem.ClawRotate;
-import org.firstinspires.ftc.teamcode.SubSystem.Extend;
 import org.firstinspires.ftc.teamcode.SubSystem.ExtendNou;
 import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
@@ -246,7 +245,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
                 case CollectingGate:
                     claw.open();
-                    clawRotate.rotateCollect();
+                    clawRotate.rotateBasket();
                     servoCam.straight();
                     lift.setTarget(300);
                     if (gamepad2.start) {
@@ -295,7 +294,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     break;
 
                 case RetractScoringBasket:
-                    clawRotate.rotateCollect();
+                    clawRotate.rotateBasket();
                     if (timer.milliseconds() > 200)
                         claw.open();
                     if (timer.milliseconds() > 400)

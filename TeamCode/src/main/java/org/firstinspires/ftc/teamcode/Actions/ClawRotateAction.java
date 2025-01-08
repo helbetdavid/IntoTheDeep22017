@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Actions;
 
-import android.content.pm.ActivityInfo;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -51,7 +49,7 @@ public class ClawRotateAction {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                clawRotate.rotateCollect();
+                clawRotate.rotateBasket();
                 return false;
             }
         };
