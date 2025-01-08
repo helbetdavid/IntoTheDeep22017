@@ -34,6 +34,13 @@ public class ClawRotateAction {
             return false;
         }
     }
+    public class ClawRotateSub implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            clawRotate.rotateSub();
+            return false;
+        }
+    }
 
     public Action clawRotateInit(){
         return new Action() {
@@ -55,6 +62,7 @@ public class ClawRotateAction {
         };
     }
 
+
     public Action clawRotateSpec(){
         return new Action() {
             @Override
@@ -72,4 +80,8 @@ public class ClawRotateAction {
     public Action clawRotateDown(){
         return new ClawRotateDown();
     }
+    public Action clawRotateSub(){
+        return new ClawRotateSub();
+    }
+
 }
