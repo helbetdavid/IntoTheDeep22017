@@ -44,24 +44,51 @@ public final class AlbastruAlbastru extends LinearOpMode {
         waitForStart();
 
 
-//2200
-//1500
         Actions.runBlocking(
                 new ParallelAction(
+                        clawAction.clawClose(),
+                        clawRotateAction.clawRotateUp(),
+                        servoCamAction.straight(),
                         drive.actionBuilder(new Pose2d(-14, 62.8, Math.toRadians(-90)))
-                                .strafeTo(new Vector2d(-4.8, 36.5))
+                                .strafeTo(new Vector2d(-4.8, 36))
                                 .build(),
-                        liftAction.liftToPosition(2200)
+                        liftAction.liftToPosition(1460)
+                        )
+        );
+
+        Actions.runBlocking(
+                new ParallelAction(
+                        drive.actionBuilder(new Pose2d(-4.8, 36, Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(-4.8, 33))
+                                .build(),
+                        extendAction.extendToPosition(326)
                         )
         );
 
         Actions.runBlocking(
                 new SequentialAction(
-                        liftAction.liftToPosition(1400),
-                        clawAction.clawOpen()
-                        )
+                        clawAction.clawOpen(),
+                        liftAction.liftToPosition(1360),
+                        extendAction.extendToPosition(0),
+                        liftAction.liftToPosition(0)
+                )
         );
 
+        Actions.runBlocking(
+                new SequentialAction(
+                        drive.actionBuilder(new Pose2d(-4.8, 33, Math.toRadians(-90)))
+                                .strafeTo(new Vector2d(-31, 43))
+                        .setTangent(60)
+                        .splineToSplineHeading(new Pose2d(-50, 12, Math.toRadians(0)), Math.PI*1.15)
+                        .strafeTo(new Vector2d(-50, 55))
+                        .strafeToLinearHeading(new Vector2d(-56,12),Math.toRadians(0))
+                        .strafeTo(new Vector2d(-61,12))
+                        .strafeTo(new Vector2d(-61, 50))
+                                .strafeToLinearHeading(new Vector2d(-39.53, 50), Math.toRadians(90))
+
+                                .build()
+                )
+        );
 
 
         Actions.runBlocking(
