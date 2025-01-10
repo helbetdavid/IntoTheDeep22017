@@ -214,39 +214,35 @@ public final class AlbastruGalben extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0),
-                        new SleepAction(0.5)
+                        new SleepAction(0.5),
+                        liftAction.liftToPosition(0)
                 )
         );
 
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        new SleepAction(999999)
-                )
-        );
 
 
 ///STOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
 
 
 
-//        Actions.runBlocking(
-//                new ParallelAction(
-//                        drive.actionBuilder(new Pose2d(55,50,Math.toRadians(45)))
-//                                .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
-//                                .build(),
-//                        liftAction.liftToPosition(1430),
-//                        clawRotateAction.clawRotateCollect()
-//
-//
-//                ));
-//        Actions.runBlocking(
-//                new SequentialAction(
-//                        drive.actionBuilder(new Pose2d(35,8 ,Math.toRadians(180)))
-//                                .strafeTo(new Vector2d(30.5, 8))
-//                                .build(),
-//                        new SleepAction(10)
-//                )
-//        );
+        Actions.runBlocking(
+                new ParallelAction(
+                        drive.actionBuilder(new Pose2d(52.5,51.5,Math.toRadians(45)))
+                                .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
+                                .build(),
+                        liftAction.liftToPosition(1430),
+                        clawRotateAction.clawRotateCollect()
+
+
+                ));
+        Actions.runBlocking(
+                new SequentialAction(
+                        drive.actionBuilder(new Pose2d(35,8 ,Math.toRadians(180)))
+                                .strafeTo(new Vector2d(30.5, 8))
+                                .build(),
+                        new SleepAction(10)
+                )
+        );
     }
 }
