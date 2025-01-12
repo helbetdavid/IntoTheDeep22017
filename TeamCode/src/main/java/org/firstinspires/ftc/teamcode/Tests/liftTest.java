@@ -29,8 +29,8 @@ public class liftTest extends LinearOpMode {
     public static double kP = 0.006, kI=0, kD=0, kF=0.0001;
     public static double target=0;
 
-    public static double kPcam = 0, kIcam=0, kDcam=0;
-    public static double targetcam=30;
+    public static double kPcam = 0.02, kIcam=0.00025, kDcam=0.0007;
+    public static double targetcam=34;
 
 
 
@@ -63,16 +63,22 @@ public class liftTest extends LinearOpMode {
         limeLight.setPipeline(0);
 
         waitForStart();
-
+        double done =0;
         while(opModeIsActive()){
-            controller.setPIDF(kP,kI,kD,kF);
-            controllercam.setPID(kPcam,kIcam,kDcam);
-
-            double poscam = limeLight.getTargetArea();
-            double calculcam = controllercam.calculate(poscam,targetcam);
-
+            controller.setPIDF(kP, kI, kD, kF);
             double pos = rightLift.getCurrentPosition();
-            double calcul = controller.calculate(pos,target);
+            double calcul = controller.calculate(pos, target);
+
+            rightLift.setPower(calcul);
+            leftLift.setPower(calcul);
+
+            while (done!=1) {
+                controllercam.setPID(kPcam, kIcam, kDcam);
+
+                double poscam = limeLight.getTargetArea();
+                double calculcam = controllercam.calculate(poscam, targetcam);
+
+
 //            Actions.runBlocking(
 //                    new SequentialAction(
 //                            clawAction.clawOpen(),
@@ -81,12 +87,11 @@ public class liftTest extends LinearOpMode {
 //                    )
 //            );
 
-            rightLift.setPower(calcul);
-            leftLift.setPower(calcul);
-
-            extendo.setPower(calculcam);
-
-
+                extendo.setPower(calculcam);
+                if (poscam<targetcam+0.25 || targetcam-0.25<poscam) {
+                    done=1;
+                }
+                }
 
 
             telemetry.addData("Target Area", targetcam);
