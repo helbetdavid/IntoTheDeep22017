@@ -46,6 +46,13 @@ public class LimeLight extends SubsystemBase {
         return 0;
     }
 
+    public double getTargetArea() {
+        if(limelight.getLatestResult() != null) {
+            return limelight.getLatestResult().getTa();
+        }
+        return 0;
+    }
+
     public  double getAngle(){
         LLResult result = limelight.getLatestResult();
         if(result != null) {
@@ -54,6 +61,7 @@ public class LimeLight extends SubsystemBase {
         }
         return 0;
     }
+
 
     public void logPipelineData() {
         LLResult result = limelight.getLatestResult();
