@@ -41,6 +41,17 @@ public class ClawAction {
             return false;
         }
     }
+    public class ClawOpenSum implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            claw.openSum();
+            return false;
+        }
+    }
+
+    public Action clawOpenSum(){
+        return new ClawOpenSum();
+    }
     public Action clawOpen(){
         return new ClawOpen();
     }
