@@ -91,7 +91,7 @@ public class liftTest extends LinearOpMode {
                 if (poscam<targetcam+0.25 || targetcam-0.25<poscam) {
                     done=1;
                 }
-                }
+            }
 
 
             telemetry.addData("Target Area", targetcam);
