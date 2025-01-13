@@ -36,9 +36,13 @@ public class AlignSpeci extends SubsystemBase {
 
     public void alignToTarget(double targetArea) {
 
-        double power = controllercam.calculate(targetArea, targetcam);
-        extendo.setPower(power);
-
+        double error = targetArea - targetcam;
+        if (Math.abs(error) < 0.5) { // Deadband threshold
+            extendo.setPower(0);
+        } else {
+            double power = controllercam.calculate(targetArea, targetcam);
+            extendo.setPower(power);
+        }
 
     }
 }

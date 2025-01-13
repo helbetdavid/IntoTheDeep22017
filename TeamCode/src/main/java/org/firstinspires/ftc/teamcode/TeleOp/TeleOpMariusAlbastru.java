@@ -45,6 +45,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
     public static double ticksext = 0;
     public static double targetExt = 0;
     double anglecam;
+    double getTA=0;
     public static double kPsasiu = 0.00045, kIsasiu = 0.000000007, kDsasiu = 0.000000004;
 
     Claw claw;
@@ -91,11 +92,11 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             lift.setPower();
             extenderSubsystem.runToTarget(targetExt);
-            double getTA = limeLight.getTargetArea();
+            alignSpeci.alignToTarget(getTA);
+
 
             telemetry.addData("State", robotState);
-            telemetry.addData("TA",getTA);
-            telemetry.update();
+            alignSpeci.updatePID();
 
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
@@ -228,7 +229,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     break;
 
                 case RetractCollectingGate:
-                    alignSpeci.alignToTarget(getTA);
+                    getTA = limeLight.getTargetArea();
 //
 //                    claw.close();
 //                    if (timer.milliseconds() > 300)
