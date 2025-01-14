@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift extends SubsystemBase {
     private PIDFController controller;
-    public double kP = 0.006, kI = 0, kD = 0, kF = 0.0001;
+    public double kP = 0.007, kI = 0.005, kD = 0.00001, kF = 0.00009;
     public double target = 0;
     private DcMotor motorStanga, motorDreapta;
     private final Telemetry telemetry;
