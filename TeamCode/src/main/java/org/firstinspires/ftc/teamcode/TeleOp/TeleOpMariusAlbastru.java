@@ -168,7 +168,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
 
                     ticks = xReal * 341.3;
-                    ticksext = (yReal - 2.7) * 11.76;
+                    ticksext = (yReal - 2.6) * 11.76;
 
                     targetPosition = perp.getCurrentPosition() + ticks;
 
