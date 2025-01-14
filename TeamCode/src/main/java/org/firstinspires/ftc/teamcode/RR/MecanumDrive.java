@@ -74,7 +74,7 @@ public final class MecanumDrive {
         public double kA = 0.0000247;
 
         // path profile parameters (in inches)
-        public double maxWheelVel = 50;
+        public double maxWheelVel = 60;
         public double minProfileAccel = -30;
         public double maxProfileAccel = 50;
 
@@ -297,18 +297,20 @@ public final class MecanumDrive {
             Pose2d error = txWorldTarget.value().minusExp(pose);
 
 
-            if ((t >= timeTrajectory.duration && error.position.norm() < 1
+            if ((t >= timeTrajectory.duration && error.position.norm() < 2
                     && robotVelRobot.linearVel.norm() < 0.5 && error.heading.toDouble() < 2)
-                    || t >= timeTrajectory.duration + 1) {
+                    || t >= timeTrajectory.duration + 0.8) {
                 leftFront.setPower(0);
                 leftBack.setPower(0);
                 rightBack.setPower(0);
                 rightFront.setPower(0);
 
                 return false;
-            }
+}
+
 
             targetPoseWriter.write(new PoseMessage(txWorldTarget.value()));
+
 
 
             PoseVelocity2dDual<Time> command = new HolonomicController(
