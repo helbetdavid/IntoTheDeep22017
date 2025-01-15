@@ -63,7 +63,9 @@ public final class GalbenHuman extends LinearOpMode {
                         new SleepAction(0.2),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
-                        extendAction.extendToPosition(0)
+                        extendAction.extendToPosition(0),
+                        liftAction.liftToPosition(0)
+
                 )
         );
 
@@ -73,9 +75,8 @@ public final class GalbenHuman extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(51.5, 54.5, Math.toRadians(45)))
-                                .strafeToLinearHeading(new Vector2d(-20, 60), Math.toRadians(-90))
-                                .build(),
-                        liftAction.liftToPosition(0)
+                                .strafeToLinearHeading(new Vector2d(-30, 60), Math.toRadians(-180))
+                                .build()
 
 
                 )
@@ -86,7 +87,7 @@ public final class GalbenHuman extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(190),
+                        extendAction.extendToPosition(250),
                         new SleepAction(0.2),
                         clawAction.clawClose(),
                         new SleepAction(0.2),
@@ -98,19 +99,32 @@ public final class GalbenHuman extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        liftAction.liftToPosition(4400),
-                        drive.actionBuilder(new Pose2d(-20, 60, Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(51.5, 54.5), Math.toRadians(45))
+                        drive.actionBuilder(new Pose2d(-30, 60, Math.toRadians(-180)))
+                                .strafeToLinearHeading(new Vector2d(53.5, 57.5), Math.toRadians(45))
                                 .build()
 
                 )
         );
+        Actions.runBlocking(
+                new SequentialAction(
+                        liftAction.liftToPosition(4400),
+                        extendAction.extendToPosition(70),
+                        clawRotateAction.clawRotateDown(),
+                        new SleepAction(0.2),
+                        clawAction.clawOpen(),
+                        clawRotateAction.clawRotateUp(),
+                        extendAction.extendToPosition(0),
+                        liftAction.liftToPosition(0)
+
+                )
+        );
+
 ///lasat human
 
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(51.5, 54.5, Math.toRadians(45)))
-                                .strafeToLinearHeading(new Vector2d(47.5, 41.8), Math.toRadians(-90))
+                        drive.actionBuilder(new Pose2d(53.5, 57.5, Math.toRadians(45)))
+                                .strafeToLinearHeading(new Vector2d(48, 46.8), Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -135,8 +149,8 @@ public final class GalbenHuman extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
-                        drive.actionBuilder(new Pose2d(47.5, 41.8, Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(51.5, 54.5), Math.toRadians(45))
+                        drive.actionBuilder(new Pose2d(48, 46.8, Math.toRadians(-90)))
+                                .strafeToLinearHeading(new Vector2d(53.5, 57.5), Math.toRadians(45))
                                 .build()
 
                 )
@@ -156,8 +170,8 @@ public final class GalbenHuman extends LinearOpMode {
 ///lasat 2
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(51.5, 54.5, Math.toRadians(45)))
-                                .strafeToLinearHeading(new Vector2d(59, 41), Math.toRadians(-90))
+                        drive.actionBuilder(new Pose2d(53.5, 57.5, Math.toRadians(45)))
+                                .strafeToLinearHeading(new Vector2d(59.5, 46), Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -182,7 +196,7 @@ public final class GalbenHuman extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
-                        drive.actionBuilder(new Pose2d(59, 41, Math.toRadians(-90)))
+                        drive.actionBuilder(new Pose2d(59.5, 46, Math.toRadians(-90)))
                                 .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
                                 .build()
 

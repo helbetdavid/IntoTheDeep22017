@@ -62,7 +62,7 @@ public final class Colorate extends LinearOpMode {
                         drive.actionBuilder(new Pose2d(2.7, 36, Math.toRadians(-90)))
                                 .strafeTo(new Vector2d(2.7, 33))
                                 .build(),
-                        extendAction.extendToPosition(324)
+                        extendAction.extendToPosition(320)
                         )
         );
 
