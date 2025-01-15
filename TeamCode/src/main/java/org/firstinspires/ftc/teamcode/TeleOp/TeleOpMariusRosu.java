@@ -198,7 +198,6 @@ public class TeleOpMariusRosu extends LinearOpMode {
                     }
                     break;
 
-
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
                     if (gamepad2.dpad_down && timer.milliseconds() > 1000) {
