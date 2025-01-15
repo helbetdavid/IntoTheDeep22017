@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HwMap;
-import org.firstinspires.ftc.teamcode.SubSystem.AlignSpeci;
 import org.firstinspires.ftc.teamcode.SubSystem.Claw;
 import org.firstinspires.ftc.teamcode.SubSystem.ClawRotate;
 import org.firstinspires.ftc.teamcode.SubSystem.ExtendNou;
@@ -45,7 +44,6 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
     public static double ticksext = 0;
     public static double targetExt = 0;
     double anglecam;
-    double getTA=0;
     public static double kPsasiu = 0.00045, kIsasiu = 0.000000007, kDsasiu = 0.000000004;
 
     Claw claw;
@@ -83,7 +81,6 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
         limeLight = new LimeLight(hwMap.limelight, telemetry);
         servoCam = new ServoCam(hwMap.servoCam, limeLight);
-        AlignSpeci alignSpeci = new AlignSpeci(hwMap.extendo,telemetry);
 
         limeLight.setPipeline(1);
 
@@ -92,12 +89,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             lift.setPower();
             extenderSubsystem.runToTarget(targetExt);
-            alignSpeci.alignToTarget(getTA);
-
-
             telemetry.addData("State", robotState);
-            alignSpeci.updatePID();
-
+            telemetry.update();
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
@@ -169,7 +162,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     lift.setTarget(750);
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
-
+//
                     xReal = Math.tan(Math.toRadians(limeLight.getTargetTx())) * 23;
                     yReal = Math.tan(Math.toRadians(limeLight.getTargetTy())) * 23;
 
@@ -205,7 +198,6 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     }
                     break;
 
-
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
                     if (gamepad2.dpad_down && timer.milliseconds() > 1000) {
@@ -219,9 +211,9 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
                 case CollectingGate:
                     claw.open();
-                    clawRotate.rotatepid();
+                    clawRotate.rotateBasket();
                     servoCam.straight();
-                    lift.setTarget(350);
+                    lift.setTarget(250);
                     if (gamepad2.start) {
                         timer.reset();
                         robotState = RobotState.RetractCollectingGate;
@@ -229,11 +221,9 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     break;
 
                 case RetractCollectingGate:
-                    getTA = limeLight.getTargetArea();
-//
-//                    claw.close();
-//                    if (timer.milliseconds() > 300)
-//                        lift.setTarget(700);
+                    claw.close();
+                    if (timer.milliseconds() > 300)
+                        lift.setTarget(700);
                     if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
