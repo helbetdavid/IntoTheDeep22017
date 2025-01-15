@@ -33,7 +33,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         ScoringSubmersible,
         RetractScoringSubmersible,
         ScoringBasket,
-        RetractScoringBasket
+        RetractScoringBasket,
+        Manual
     }
 
     PIDController pidSasiu;
@@ -64,6 +65,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         double targetPosition = 0;
         pidSasiu = new PIDController(kPsasiu, kIsasiu, kDsasiu);
         boolean done = false;
+        boolean open = false;
 
         hwMap = new HwMap();
         hwMap.init(hardwareMap);
@@ -128,7 +130,9 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     servoCam.straight();
                     lift.setTarget(0);
                     targetExt = 0;
-                    if (gamepad2.a) {
+                    if (gamepad2.dpad_left) {
+                        robotState = RobotState.Manual;
+                    } else if (gamepad2.a) {
                         robotState = RobotState.CollectingSubmersible;
                     } else if (gamepad2.b) {
                         robotState = RobotState.CollectingGate;
@@ -136,7 +140,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         robotState = RobotState.ScoringSubmersible;
                     } else if (gamepad2.y) {
                         robotState = RobotState.ScoringBasket;
-                    } else if (gamepad2.dpad_up || gamepad1.dpad_up) {
+                    } else if (gamepad2.dpad_up) {
                         robotState = RobotState.Scuipa;
                         timer.reset();
                     }
@@ -271,8 +275,46 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         robotState = RobotState.Neutral;
                     }
                     break;
+
+                case Manual:
+                    if (gamepad2.left_bumper) {
+                        lift.setPower(-0.4);
+                    }
+                    if (gamepad2.right_bumper) {
+                        lift.setPower(0.4);
+                    }
+                    if (gamepad2.left_trigger > 0.6) {
+                        targetExt -= 1;
+                    }
+                    if (gamepad2.right_trigger > 0.6) {
+                        targetExt += 1;
+                    }
+                    if (gamepad2.a) {
+                        open = !open;
+                    }
+                    if (open) {
+                        claw.open();
+                    } else claw.close();
+                    if (gamepad2.left_stick_y > 0.1) {
+                        clawRotate.setPosition(gamepad2.left_stick_y);
+                    }
+                    if (gamepad2.left_stick_button) {
+                        clawRotate.rotateInit();
+                    }
+                    if (gamepad2.right_stick_x > 0.1) {
+                        servoCam.setAngle(gamepad2.right_stick_x);
+                    }
+                    if (gamepad2.right_stick_button) {
+                        servoCam.straight();
+                    }
+                    if (gamepad2.dpad_down) {
+                        robotState = RobotState.Neutral;
+                    }
+                    break;
             }
         }
-
+{
+                        servoCam.setAngle(gamepad2.right_stick_x);
+                    }
     }
 }
