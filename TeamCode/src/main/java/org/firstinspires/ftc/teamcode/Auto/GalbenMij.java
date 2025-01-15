@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
-import android.graphics.SweepGradient;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -28,7 +26,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @Autonomous
 @Config
-public final class AlbastruGalbenCAUTION extends LinearOpMode {
+public final class GalbenMij extends LinearOpMode {
     public static double target = 0;
 
     double scan = 0;
