@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -20,7 +19,7 @@ import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
 
 @Autonomous
 @Config
-public final class AlbastruAlbastru extends LinearOpMode {
+public final class Colorate extends LinearOpMode {
     public static double target = 0;
 
     @Override
