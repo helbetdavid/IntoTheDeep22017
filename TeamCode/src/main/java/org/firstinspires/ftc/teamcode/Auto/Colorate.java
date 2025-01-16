@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -52,7 +53,7 @@ public final class Colorate extends LinearOpMode {
                                 .strafeTo(new Vector2d(2.7, 36))
                                 .build(),
                         liftAction.liftToPosition(1460)
-                        )
+                )
         );
 ///-2.3
 ///0.2
@@ -63,7 +64,7 @@ public final class Colorate extends LinearOpMode {
                                 .strafeTo(new Vector2d(2.7, 33))
                                 .build(),
                         extendAction.extendToPosition(320)
-                        )
+                )
         );
 
         Actions.runBlocking(
@@ -79,12 +80,12 @@ public final class Colorate extends LinearOpMode {
                 new SequentialAction(
                         drive.actionBuilder(new Pose2d(2.7, 33, Math.toRadians(-90)))
                                 .strafeTo(new Vector2d(-31, 43))
-                        .setTangent(60)
-                        .splineToSplineHeading(new Pose2d(-50, 12, Math.toRadians(0)), Math.PI*1.15)
-                        .strafeTo(new Vector2d(-50, 55))
-                        .strafeToLinearHeading(new Vector2d(-56,12),Math.toRadians(0))
-                        .strafeTo(new Vector2d(-61,12))
-                        .strafeTo(new Vector2d(-61, 50))
+                                .setTangent(60)
+                                .splineToSplineHeading(new Pose2d(-50, 12, Math.toRadians(0)), Math.PI*1.15)
+                                .strafeTo(new Vector2d(-50, 55))
+                                .strafeToLinearHeading(new Vector2d(-56,12),Math.toRadians(0))
+                                .strafeTo(new Vector2d(-61,12))
+                                .strafeTo(new Vector2d(-61, 50))
                                 .strafeToLinearHeading(new Vector2d(-41.5, 50), Math.toRadians(91))
                                 .build()
                 )
@@ -102,7 +103,7 @@ public final class Colorate extends LinearOpMode {
                 new ParallelAction(
                         extendAction.extendToPosition(127),
                         liftAction.liftToPosition(330)
-                        )
+                )
         );
 
         Actions.runBlocking(
@@ -116,7 +117,7 @@ public final class Colorate extends LinearOpMode {
                                 .turnTo(Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(0)
-                        )
+                )
         );
 
         Actions.runBlocking(
@@ -126,7 +127,7 @@ public final class Colorate extends LinearOpMode {
                                 .strafeTo(new Vector2d(0.2, 36))
                                 .build(),
                         liftAction.liftToPosition(1460)
-                        )
+                )
         );
 
         Actions.runBlocking(

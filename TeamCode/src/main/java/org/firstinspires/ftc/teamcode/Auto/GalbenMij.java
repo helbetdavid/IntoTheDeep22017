@@ -36,7 +36,6 @@ public final class GalbenMij extends LinearOpMode {
     double xReal = 0;
     double yReal = 0;
     double currentExt = 0;
-    double curentPos=0;
     double angle = 0;
 
     @Override
@@ -153,10 +152,10 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(190),
+                        extendAction.extendToPosition(191),
                         new SleepAction(0.1),
                         clawAction.clawClose(),
-                        new SleepAction(0.05),
+                        new SleepAction(0.1),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
 
@@ -200,7 +199,7 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),
-                        extendAction.extendToPosition(344),
+                        extendAction.extendToPosition(343),
                         new SleepAction(0.25),
                         clawAction.clawClose(),
                         new SleepAction(0.1),
@@ -232,7 +231,6 @@ public final class GalbenMij extends LinearOpMode {
         );
 
 
-
 ///STOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOP
 
 
@@ -240,9 +238,9 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(52.5,53.5,Math.toRadians(45)))
+                        drive.actionBuilder(new Pose2d(52.5, 53.5, Math.toRadians(45)))
                                 .setTangent(-2)
-                                .splineToLinearHeading(new Pose2d(25, 3,Math.toRadians(180)),Math.PI*1.2)
+                                .splineToLinearHeading(new Pose2d(25, 3, Math.toRadians(180)), Math.PI * 1.2)
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -256,53 +254,26 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenSum(),
                         extendAction.extendToPosition(220),
                         liftAction.liftToPosition(750),
-                        new SleepAction(0.5)
+                        new SleepAction(1)
                 )
         );
 
 
-
         Actions.runBlocking(
                 new InstantAction(() -> {
-                    xReal = (Math.tan(Math.toRadians(limeLight.getTargetTx())) * lift.getPosition()*0.0238356164383) * 0.394;
-                    if (Math.signum(xReal) == 1.0)
-                        xReal += 1;
-                    else xReal -= 1;
-                    yReal = ((Math.tan(Math.toRadians(limeLight.getTargetTy())) * lift.getPosition()*0.0238356164383) - 2.6) * 11.76;
-                    telemetry.addData("xreal", xReal);
-                    telemetry.addData("yreal", yReal);
-                    telemetry.update();
-                })
-        );
-
-
-
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        new InstantAction(() -> {
-                            angle = limeLight.getAngle();
-                            telemetry.addData("Computed Angle", angle / 180);
-                            telemetry.update();
-                        })
-                )
-        );
-
-        Actions.runBlocking(
-                new InstantAction(() -> {
-                    currentExt = extenderSubsystem.getCurrentPosition();
-                    telemetry.addData("cure", currentExt);
-                    telemetry.update();
+                    xReal = (Math.tan(Math.toRadians(limeLight.getTargetTx())) * 24) * 0.394;
+                    xReal += Math.signum(xReal);
+                    yReal = ((Math.tan(Math.toRadians(limeLight.getTargetTy())) * 24) - 2.4) * 11.76;
+                    angle = limeLight.getAngle();
                 })
         );
 
         Actions.runBlocking(
                 new SequentialAction(
-                        drive.actionBuilder(new Pose2d(25, 3,Math.toRadians(180)))
+                        drive.actionBuilder(new Pose2d(25, 3, Math.toRadians(180)))
                                 .strafeTo(new Vector2d(25, 3 + xReal))
                                 .build(),
-                        extendAction.extendToPosition(220 + yReal)
-
+                        extendAction.extendToPosition(extenderSubsystem.getCurrentPosition() + yReal)
                 )
         );
         Actions.runBlocking(
@@ -328,15 +299,15 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        drive.actionBuilder(new Pose2d(25, 3+xReal, Math.toRadians(180)))
-                                .strafeToLinearHeading(new Vector2d(45,8),Math.toRadians(180))
+                        drive.actionBuilder(new Pose2d(25, 3 + xReal, Math.toRadians(180)))
+                                .strafeToLinearHeading(new Vector2d(45, 8), Math.toRadians(180))
                                 .build()
                 )
         );
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(45,8,Math.toRadians(180)))
-                                .strafeToLinearHeading(new Vector2d(52.5, 53.5),Math.toRadians(45))
+                        drive.actionBuilder(new Pose2d(45, 8, Math.toRadians(180)))
+                                .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
                                 .build(),
                         liftAction.liftToPosition(4400)
                 )
@@ -344,7 +315,9 @@ public final class GalbenMij extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(150),
+                        extendAction.extendToPosition(140),
+                        clawRotateAction.clawRotateDown(),
+                        new SleepAction(0.1),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
