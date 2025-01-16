@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Actions.LiftAction;
 import org.firstinspires.ftc.teamcode.Actions.ServoCamAction;
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
+import org.firstinspires.ftc.teamcode.SubSystem.Claw;
 import org.firstinspires.ftc.teamcode.SubSystem.ExtendNou;
 import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
@@ -81,7 +83,7 @@ public final class GalbenMij extends LinearOpMode {
                 new SequentialAction(
                         extendAction.extendToPosition(70),
                         clawRotateAction.clawRotateDown(),
-                        new SleepAction(0.2),
+                        new SleepAction(0.1),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
@@ -105,9 +107,9 @@ public final class GalbenMij extends LinearOpMode {
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
                         extendAction.extendToPosition(190),
-                        new SleepAction(0.2),
+                        new SleepAction(0.1),
                         clawAction.clawClose(),
-                        new SleepAction(0.2),
+                        new SleepAction(0.05),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
 
@@ -128,7 +130,7 @@ public final class GalbenMij extends LinearOpMode {
                 new SequentialAction(
                         extendAction.extendToPosition(70),
                         clawRotateAction.clawRotateDown(),
-                        new SleepAction(0.2),
+                        new SleepAction(0.1),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
@@ -152,9 +154,9 @@ public final class GalbenMij extends LinearOpMode {
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
                         extendAction.extendToPosition(190),
-                        new SleepAction(0.2),
+                        new SleepAction(0.1),
                         clawAction.clawClose(),
-                        new SleepAction(0.2),
+                        new SleepAction(0.05),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
 
@@ -198,10 +200,10 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),
-                        extendAction.extendToPosition(347),
-                        new SleepAction(0.3),
+                        extendAction.extendToPosition(344),
+                        new SleepAction(0.25),
                         clawAction.clawClose(),
-                        new SleepAction(0.15),
+                        new SleepAction(0.1),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0),
                         servoCamAction.straight()
@@ -222,7 +224,7 @@ public final class GalbenMij extends LinearOpMode {
                 new SequentialAction(
                         extendAction.extendToPosition(70),
                         clawRotateAction.clawRotateDown(),
-                        new SleepAction(0.2),
+                        new SleepAction(0.1),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
@@ -254,7 +256,7 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenSum(),
                         extendAction.extendToPosition(220),
                         liftAction.liftToPosition(750),
-                        new SleepAction(2)
+                        new SleepAction(0.5)
                 )
         );
 
@@ -274,13 +276,7 @@ public final class GalbenMij extends LinearOpMode {
         );
 
 
-        Actions.runBlocking(
-                new InstantAction(() -> {
-                    currentExt = extenderSubsystem.getCurrentPosition();
-                    telemetry.addData("cure", currentExt);
-                    telemetry.update();
-                })
-        );
+
 
         Actions.runBlocking(
                 new SequentialAction(
@@ -293,11 +289,19 @@ public final class GalbenMij extends LinearOpMode {
         );
 
         Actions.runBlocking(
+                new InstantAction(() -> {
+                    currentExt = extenderSubsystem.getCurrentPosition();
+                    telemetry.addData("cure", currentExt);
+                    telemetry.update();
+                })
+        );
+
+        Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(new Pose2d(25, 3,Math.toRadians(180)))
                                 .strafeTo(new Vector2d(25, 3 + xReal))
                                 .build(),
-                        extendAction.extendToPosition(currentExt + yReal)
+                        extendAction.extendToPosition(220 + yReal)
 
                 )
         );
@@ -313,9 +317,9 @@ public final class GalbenMij extends LinearOpMode {
                 new SequentialAction(
                         clawRotateAction.clawRotateDown(),
                         clawAction.clawOpenSum(),
-                        new SleepAction(0.3),
+                        new SleepAction(0.2),
                         liftAction.liftToPosition(0),
-                        new SleepAction(1),
+                        new SleepAction(0.6),
                         clawAction.clawClose(),
                         clawRotateAction.clawRotateInit(),
                         extendAction.extendToPosition(0)
@@ -323,21 +327,24 @@ public final class GalbenMij extends LinearOpMode {
         );
 
         Actions.runBlocking(
-                new ParallelAction(
-                        liftAction.liftToPosition(4400),
+                new SequentialAction(
                         drive.actionBuilder(new Pose2d(25, 3+xReal, Math.toRadians(180)))
-                                .setTangent(-2)
-                                .splineToLinearHeading(new Pose2d(51, 52,Math.toRadians(45)),Math.PI*1.2)
-
+                                .strafeToLinearHeading(new Vector2d(45,8),Math.toRadians(180))
                                 .build()
-
+                )
+        );
+        Actions.runBlocking(
+                new ParallelAction(
+                        drive.actionBuilder(new Pose2d(45,8,Math.toRadians(180)))
+                                .strafeToLinearHeading(new Vector2d(52.5, 53.5),Math.toRadians(45))
+                                .build(),
+                        liftAction.liftToPosition(4400)
                 )
         );
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(90),
-                        clawRotateAction.clawRotateDown(),
-                        new SleepAction(0.3),
+                        servoCamAction.straight(),
+                        extendAction.extendToPosition(150),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
                         extendAction.extendToPosition(0)
