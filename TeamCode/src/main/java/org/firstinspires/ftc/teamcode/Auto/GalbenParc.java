@@ -230,9 +230,8 @@ public final class GalbenParc extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(new Pose2d(35,8 ,Math.toRadians(180)))
-                                .strafeTo(new Vector2d(30.5, 8))
-                                .build(),
-                        new SleepAction(10)
+                                .strafeTo(new Vector2d(29.5, 8))
+                                .build()
                 )
         );
 

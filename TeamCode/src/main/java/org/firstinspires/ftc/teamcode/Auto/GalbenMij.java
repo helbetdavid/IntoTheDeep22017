@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Actions.ServoCamAction;
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubSystem.ExtendNou;
+import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
 import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
@@ -33,6 +34,7 @@ public final class GalbenMij extends LinearOpMode {
     double xReal = 0;
     double yReal = 0;
     double currentExt = 0;
+    double curentPos=0;
     double angle = 0;
 
     @Override
@@ -50,6 +52,7 @@ public final class GalbenMij extends LinearOpMode {
         ExtendNou extenderSubsystem = new ExtendNou(hwMap.extendo);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         ServoCam servoCam = new ServoCam(hwMap.servoCam, limeLight);
+        Lift lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
 
 
         Actions.runBlocking(
@@ -136,7 +139,7 @@ public final class GalbenMij extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(51.5, 54.5, Math.toRadians(45)))
-                                .strafeToLinearHeading(new Vector2d(59, 41), Math.toRadians(-90))
+                                .strafeToLinearHeading(new Vector2d(59, 41.8), Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -161,7 +164,7 @@ public final class GalbenMij extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
-                        drive.actionBuilder(new Pose2d(59, 41, Math.toRadians(-90)))
+                        drive.actionBuilder(new Pose2d(59, 41.8, Math.toRadians(-90)))
                                 .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
                                 .build()
 
@@ -195,7 +198,7 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),
-                        extendAction.extendToPosition(350),
+                        extendAction.extendToPosition(347),
                         new SleepAction(0.3),
                         clawAction.clawClose(),
                         new SleepAction(0.15),
@@ -237,7 +240,7 @@ public final class GalbenMij extends LinearOpMode {
                 new ParallelAction(
                         drive.actionBuilder(new Pose2d(52.5,53.5,Math.toRadians(45)))
                                 .setTangent(-2)
-                                .splineToLinearHeading(new Pose2d(28, 3,Math.toRadians(180)),Math.PI*1.2)
+                                .splineToLinearHeading(new Pose2d(25, 3,Math.toRadians(180)),Math.PI*1.2)
                                 .build(),
                         liftAction.liftToPosition(0)
 
@@ -249,20 +252,21 @@ public final class GalbenMij extends LinearOpMode {
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
                         clawAction.clawOpenSum(),
-                        extendAction.extendToPosition(250),
+                        extendAction.extendToPosition(220),
                         liftAction.liftToPosition(750),
                         new SleepAction(2)
                 )
         );
 
 
+
         Actions.runBlocking(
                 new InstantAction(() -> {
-                    xReal = (Math.tan(Math.toRadians(limeLight.getTargetTx())) * 23) * 0.394;
+                    xReal = (Math.tan(Math.toRadians(limeLight.getTargetTx())) * lift.getPosition()*0.0238356164383) * 0.394;
                     if (Math.signum(xReal) == 1.0)
                         xReal += 1;
                     else xReal -= 1;
-                    yReal = ((Math.tan(Math.toRadians(limeLight.getTargetTy())) * 23) - 2.6) * 11.76;
+                    yReal = ((Math.tan(Math.toRadians(limeLight.getTargetTy())) * lift.getPosition()*0.0238356164383) - 2.6) * 11.76;
                     telemetry.addData("xreal", xReal);
                     telemetry.addData("yreal", yReal);
                     telemetry.update();
@@ -290,8 +294,8 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        drive.actionBuilder(new Pose2d(28, 3,Math.toRadians(180)))
-                                .strafeTo(new Vector2d(28, 3 + xReal))
+                        drive.actionBuilder(new Pose2d(25, 3,Math.toRadians(180)))
+                                .strafeTo(new Vector2d(25, 3 + xReal))
                                 .build(),
                         extendAction.extendToPosition(currentExt + yReal)
 
@@ -311,33 +315,34 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenSum(),
                         new SleepAction(0.3),
                         liftAction.liftToPosition(0),
-                        new SleepAction(0.3),
+                        new SleepAction(1),
                         clawAction.clawClose(),
                         clawRotateAction.clawRotateInit(),
                         extendAction.extendToPosition(0)
                 )
         );
-//
-//        Actions.runBlocking(
-//                new ParallelAction(
-//                        liftAction.liftToPosition(4400),
-//                        drive.actionBuilder(new Pose2d(30.5+xReal, 8, Math.toRadians(180)))
-//                                .strafeToLinearHeading(new Vector2d(51, 52), Math.toRadians(45))
-//                                .build()
-//
-//                )
-//        );
-//        Actions.runBlocking(
-//                new SequentialAction(
-//                        extendAction.extendToPosition(90),
-//                        clawRotateAction.clawRotateDown(),
-//                        new SleepAction(0.3),
-//                        clawAction.clawOpen(),
-//                        clawRotateAction.clawRotateUp(),
-//                        extendAction.extendToPosition(0),
-//                        new SleepAction(0.5)
-//                )
-//        );
+
+        Actions.runBlocking(
+                new ParallelAction(
+                        liftAction.liftToPosition(4400),
+                        drive.actionBuilder(new Pose2d(25, 3+xReal, Math.toRadians(180)))
+                                .setTangent(-2)
+                                .splineToLinearHeading(new Pose2d(51, 52,Math.toRadians(45)),Math.PI*1.2)
+
+                                .build()
+
+                )
+        );
+        Actions.runBlocking(
+                new SequentialAction(
+                        extendAction.extendToPosition(90),
+                        clawRotateAction.clawRotateDown(),
+                        new SleepAction(0.3),
+                        clawAction.clawOpen(),
+                        clawRotateAction.clawRotateUp(),
+                        extendAction.extendToPosition(0)
+                )
+        );
 //        Actions.runBlocking(
 //                new ParallelAction(
 //                        drive.actionBuilder(new Pose2d(52.5,51.5,Math.toRadians(45)))
