@@ -27,8 +27,8 @@ public class MeepMeepTesting {
 //                    .strafeToLinearHeading(new Vector2d(55, 50), Math.toRadians(45))
 //                    .strafeToLinearHeading(new Vector2d(35, 8),Math.toRadians(180))
 //                    .strafeTo(new Vector2d(28, 8))
-                    .setTangent(-2)
-                    .splineToLinearHeading(new Pose2d(51, 52,Math.toRadians(45)),Math.PI*1.2)
+                    .setTangent(-1)
+                    .splineToLinearHeading(new Pose2d(52.5, 53.5,Math.toRadians(45)),Math.PI/1.8)
 
                     .build());
 

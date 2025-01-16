@@ -98,12 +98,15 @@ public final class Colorate extends LinearOpMode {
                         new SleepAction(0.7)
                 )
         );
-        Actions.runBlocking(
-                new ParallelAction(
-                        extendAction.extendToPosition(127),
-                        liftAction.liftToPosition(330)
-                        )
-        );
+
+Actions.runBlocking(
+        new ParallelAction(
+                liftAction.liftToPosition(330),
+                extendAction.extendToPosition(127)
+        )
+);
+
+        //127;330
 
         Actions.runBlocking(
                 new SequentialAction(
