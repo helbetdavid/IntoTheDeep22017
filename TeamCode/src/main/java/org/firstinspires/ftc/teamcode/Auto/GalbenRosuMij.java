@@ -101,7 +101,7 @@ public final class GalbenRosuMij extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(190),
+                        extendAction.extendToPosition(195),
                         new SleepAction(0.1),
                         clawAction.clawClose(),
                         new SleepAction(0.1),
@@ -148,7 +148,7 @@ public final class GalbenRosuMij extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(191),
+                        extendAction.extendToPosition(195),
                         new SleepAction(0.1),
                         clawAction.clawClose(),
                         new SleepAction(0.1),
@@ -194,7 +194,7 @@ public final class GalbenRosuMij extends LinearOpMode {
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),
-                        extendAction.extendToPosition(333),
+                        extendAction.extendToPosition(335),
                         new SleepAction(0.2),
                         clawAction.clawClose(),
                         new SleepAction(0.1),
@@ -215,7 +215,7 @@ public final class GalbenRosuMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(45 ),
+                        extendAction.extendToPosition(45),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
@@ -256,7 +256,6 @@ public final class GalbenRosuMij extends LinearOpMode {
                 new InstantAction(() -> {
                     sleep(500);
                     xReal = (Math.tan(Math.toRadians(limeLight.getTargetTx())) * 24) * 0.394;
-//                    xReal += Math.signum(xReal);
                     yReal = ((Math.tan(Math.toRadians(limeLight.getTargetTy())) * 24) - 2.4) * 11.76;
                     angle = limeLight.getAngle();
                 })
@@ -325,7 +324,8 @@ public final class GalbenRosuMij extends LinearOpMode {
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateUp(),
-                        extendAction.extendToPosition(0)
+                        extendAction.extendToPosition(0),
+                        liftAction.liftToPosition(0)
                 )
         );
     }
