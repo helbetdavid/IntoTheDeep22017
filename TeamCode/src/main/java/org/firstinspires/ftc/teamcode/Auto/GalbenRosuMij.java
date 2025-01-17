@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Auto;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -21,7 +20,6 @@ import org.firstinspires.ftc.teamcode.Actions.LiftAction;
 import org.firstinspires.ftc.teamcode.Actions.ServoCamAction;
 import org.firstinspires.ftc.teamcode.HwMap;
 import org.firstinspires.ftc.teamcode.RR.MecanumDrive;
-import org.firstinspires.ftc.teamcode.SubSystem.Claw;
 import org.firstinspires.ftc.teamcode.SubSystem.ExtendNou;
 import org.firstinspires.ftc.teamcode.SubSystem.Lift;
 import org.firstinspires.ftc.teamcode.SubSystem.LimeLight;
@@ -29,7 +27,7 @@ import org.firstinspires.ftc.teamcode.SubSystem.ServoCam;
 
 @Autonomous
 @Config
-public final class GalbenMij extends LinearOpMode {
+public final class GalbenRosuMij extends LinearOpMode {
     public static double target = 0;
 
     double scan = 0;
@@ -40,7 +38,7 @@ public final class GalbenMij extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(29, 63, Math.toRadians(0));
+        Pose2d beginPose = new Pose2d(29, 62, Math.toRadians(0));
         HwMap hwMap = new HwMap();
         hwMap.init(hardwareMap);
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
@@ -70,7 +68,7 @@ public final class GalbenMij extends LinearOpMode {
         Actions.runBlocking(
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
-                        drive.actionBuilder(new Pose2d(29, 63, Math.toRadians(0)))
+                        drive.actionBuilder(new Pose2d(29, 62, Math.toRadians(0)))
                                 .strafeToLinearHeading(new Vector2d(51.5, 54.5), Math.toRadians(45))
                                 .build()
                 )
@@ -78,7 +76,7 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(70),
+                        extendAction.extendToPosition(60),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
@@ -125,7 +123,7 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(70),
+                        extendAction.extendToPosition(45),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
@@ -172,7 +170,7 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(70),
+                        extendAction.extendToPosition(45),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
@@ -196,7 +194,7 @@ public final class GalbenMij extends LinearOpMode {
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),
-                        extendAction.extendToPosition(343),
+                        extendAction.extendToPosition(333),
                         new SleepAction(0.2),
                         clawAction.clawClose(),
                         new SleepAction(0.1),
@@ -217,7 +215,7 @@ public final class GalbenMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        extendAction.extendToPosition(70),
+                        extendAction.extendToPosition(45 ),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),

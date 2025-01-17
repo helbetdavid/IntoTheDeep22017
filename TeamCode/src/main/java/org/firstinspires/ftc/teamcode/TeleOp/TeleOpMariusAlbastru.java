@@ -63,6 +63,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         timer = new ElapsedTime();
 
         double targetPosition = 0;
+        double manualRotate = 0;
+        double manualCam = 0;
         pidSasiu = new PIDController(kPsasiu, kIsasiu, kDsasiu);
         boolean done = false;
         boolean open = false;
@@ -172,7 +174,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
 
                     ticks = xReal * 341.3;
-                    ticksext = (yReal - 2.6) * 11.76;
+                    ticksext = (yReal - 2.8) * 11.76;
 
                     targetPosition = perp.getCurrentPosition() + ticks;
 
@@ -204,9 +206,9 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
 
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
-                    if (gamepad2.dpad_down && timer.milliseconds() > 1000) {
+                    if (gamepad2.dpad_down && timer.milliseconds() > 500) {
                         claw.close();
-                        sleep(100);
+                        sleep(50);
                         clawRotate.rotateInit();
                         targetExt = 0;
                         robotState = RobotState.Neutral;
@@ -295,14 +297,22 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     if (open) {
                         claw.open();
                     } else claw.close();
-                    if (gamepad2.left_stick_y > 0.1) {
-                        clawRotate.setPosition(gamepad2.left_stick_y);
+                    if (gamepad2.left_stick_y > 0.2) {
+                        manualRotate += 0.1;
+                        clawRotate.setPosition(manualRotate);
+                    } else if (gamepad2.left_stick_y < 0.2) {
+                        manualRotate += 0.1;
+                        clawRotate.setPosition(manualRotate);
                     }
                     if (gamepad2.left_stick_button) {
                         clawRotate.rotateInit();
                     }
-                    if (gamepad2.right_stick_x > 0.1) {
-                        servoCam.setAngle(gamepad2.right_stick_x);
+                    if (gamepad2.left_stick_y > 0.2) {
+                        manualRotate += 0.1;
+                        clawRotate.setPosition(manualRotate);
+                    } else if (gamepad2.left_stick_y < 0.2) {
+                        manualRotate += 0.1;
+                        clawRotate.setPosition(manualRotate);
                     }
                     if (gamepad2.right_stick_button) {
                         servoCam.straight();
