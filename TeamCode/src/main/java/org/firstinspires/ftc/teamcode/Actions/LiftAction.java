@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.HwMap;
@@ -30,7 +31,7 @@ public class LiftAction {
                 // Set the target position
                 lift.setTarget(targetPosition);
                 // Stop when the target is reached
-                if (Math.abs(targetPosition - currentPosition) <= 25) {
+                if (Math.abs(targetPosition - currentPosition) <= 30) {
                     lift.setTarget(currentPosition);
                     lift.setPower(); // Maintain position
                     telemetryPacket.put("Reached Target", currentPosition);

@@ -13,7 +13,7 @@ public class Claw extends SubsystemBase {
         claw.setPosition(position);
     }
     public void open() {
-        claw.setPosition(0.59);
+        claw.setPosition(0.65);
     }
     public void close() {
         claw.setPosition(0.4);
