@@ -29,7 +29,7 @@ public class ExtendAction {
                 extend.setTarget(targetPosition);
 
                 // Stop when the target is reached
-                if (Math.abs(targetPosition - currentPosition) <= 5) {
+                if (Math.abs(targetPosition - currentPosition) <= 3) {
                     extend.setPower(0); // Stop the motor
                     telemetryPacket.put("Reached Target", currentPosition);
                     return false; // Action completed

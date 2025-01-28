@@ -168,7 +168,7 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
 
                     ticks = xReal * 341.3;
-                    ticksext = (yReal - 2.6) * 11.76;
+                    ticksext = (yReal - 2.8) * 11.76;
 
                     targetPosition = perp.getCurrentPosition() + ticks;
 
@@ -200,9 +200,9 @@ public class TeleOpMariusRosu extends LinearOpMode {
 
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
-                    if (gamepad2.dpad_down && timer.milliseconds() > 1000) {
+                    if (gamepad2.dpad_down && timer.milliseconds() > 500) {
                         claw.close();
-                        sleep(100);
+                        sleep(50);
                         clawRotate.rotateInit();
                         targetExt = 0;
                         robotState = RobotState.Neutral;
