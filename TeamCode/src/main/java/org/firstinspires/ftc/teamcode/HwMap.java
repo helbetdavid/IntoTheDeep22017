@@ -61,7 +61,7 @@ public class HwMap {
         clawRotator = hwMap.get(Servo.class, "clawRotator");
 
         //Lift
-        rightLift = hwMap.get(DcMotor.class, "rightLift");
+        rightLift = hwMap.get(DcMotor.class, "par2");
         leftLift = hwMap.get(DcMotor.class, "perp");
 
         leftLift.setDirection(DcMotorSimple.Direction.REVERSE);

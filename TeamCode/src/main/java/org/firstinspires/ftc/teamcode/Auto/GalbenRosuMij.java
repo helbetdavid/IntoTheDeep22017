@@ -102,7 +102,7 @@ public final class GalbenRosuMij extends LinearOpMode {
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(195),
+                        extendAction.extendToPosition(200),
                         new SleepAction(0.2),
                         clawAction.clawClose(),
                         new SleepAction(0.2),
@@ -313,7 +313,7 @@ public final class GalbenRosuMij extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(130),
+                        extendAction.extendToPosition(105),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),

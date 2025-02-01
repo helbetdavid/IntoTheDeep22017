@@ -119,7 +119,7 @@ public final class GalbenAlbMij extends LinearOpMode {
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
                         drive.actionBuilder(new Pose2d(47.5, 41.8, Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
+                                .strafeToLinearHeading(new Vector2d(53, 53), Math.toRadians(45))
                                 .build()
 
                 )
@@ -139,7 +139,7 @@ public final class GalbenAlbMij extends LinearOpMode {
 ///lasat 2
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(52.5, 53.5, Math.toRadians(45)))
+                        drive.actionBuilder(new Pose2d(53, 53, Math.toRadians(45)))
                                 .strafeToLinearHeading(new Vector2d(59, 41.8), Math.toRadians(-90))
                                 .build(),
                         liftAction.liftToPosition(120)
@@ -166,7 +166,7 @@ public final class GalbenAlbMij extends LinearOpMode {
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
                         drive.actionBuilder(new Pose2d(59, 41.8, Math.toRadians(-90)))
-                                .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
+                                .strafeToLinearHeading(new Vector2d(53, 53), Math.toRadians(45))
                                 .build()
 
                 )
@@ -185,7 +185,7 @@ public final class GalbenAlbMij extends LinearOpMode {
 ///lasa 3
         Actions.runBlocking(
                 new ParallelAction(
-                        drive.actionBuilder(new Pose2d(52.5, 53.5, Math.toRadians(45)))
+                        drive.actionBuilder(new Pose2d(53, 53, Math.toRadians(45)))
                                 .strafeToLinearHeading(new Vector2d(57, 38.5), Math.toRadians(-45))
                                 .build(),
                         liftAction.liftToPosition(120)
@@ -211,7 +211,7 @@ public final class GalbenAlbMij extends LinearOpMode {
                 new ParallelAction(
                         liftAction.liftToPosition(4400),
                         drive.actionBuilder(new Pose2d(57, 38.5, Math.toRadians(-45)))
-                                .strafeToLinearHeading(new Vector2d(52.5, 53.5), Math.toRadians(45))
+                                .strafeToLinearHeading(new Vector2d(53, 53), Math.toRadians(45))
                                 .build()
 
                 )
@@ -278,7 +278,7 @@ public final class GalbenAlbMij extends LinearOpMode {
                 new SequentialAction(
                         clawAction.clawOpenSum(),
                         new SleepAction(0.2),
-                        liftAction.liftToPosition(100),
+                        liftAction.liftToPosition(120),
                         new SleepAction(0.4),
                         clawAction.clawClose(),
                         clawRotateAction.clawRotateInit(),
@@ -316,7 +316,7 @@ public final class GalbenAlbMij extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         servoCamAction.straight(),
-                        extendAction.extendToPosition(130),
+                        extendAction.extendToPosition(105),
                         clawRotateAction.clawRotateDown(),
                         new SleepAction(0.1),
                         clawAction.clawOpen(),
