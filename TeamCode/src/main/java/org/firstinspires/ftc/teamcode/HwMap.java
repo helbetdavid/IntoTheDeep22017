@@ -65,6 +65,7 @@ public class HwMap {
         leftLift = hwMap.get(DcMotor.class, "perp");
 
         leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
     public HardwareMap getHwMap() {

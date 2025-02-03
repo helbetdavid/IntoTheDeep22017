@@ -10,16 +10,18 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Lift extends SubsystemBase {
+
     private PIDFController controller;
-    public double kP = 0.007, kI = 0.006, kD = 0.00001, kF = 0.0001; // testam sa vedem daca rezolvam overshootul
+    public double kP = 0.008, kI = 0.007, kD = 0.0003, kF = 0.000096; // testam sa vedem daca rezolvam overshootul
     public double target = 0;
-    private DcMotor motorStanga, motorDreapta;
+    private DcMotor motorStanga, motorDreapta,rightFront;
     private final Telemetry telemetry;
 
-    public Lift(DcMotor stanga, DcMotor dreapta, Telemetry telemetry) {
+    public Lift(DcMotor stanga, DcMotor dreapta,DcMotor rightFront, Telemetry telemetry) {
         this.telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.motorDreapta = dreapta;
         this.motorStanga = stanga;
+        this.rightFront = rightFront;
         this.controller = new PIDFController(kP, kI, kD, kF);
 
 //        this.motorStanga.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -46,10 +48,10 @@ public class Lift extends SubsystemBase {
     }
 
     public void setPower() {
-        double position = motorDreapta.getCurrentPosition();
+        double position = rightFront.getCurrentPosition();
         double output = controller.calculate(position, target);
 
-        motorStanga.setPower(output);
+        motorStanga.setPower(-output);
         motorDreapta.setPower(output);
 
         telemetry.addData("target", target);
@@ -58,10 +60,10 @@ public class Lift extends SubsystemBase {
     }
 
     public void setPower(double power) {
-        double position = motorDreapta.getCurrentPosition();
+        double position = rightFront.getCurrentPosition();
 
         motorDreapta.setPower(power);
-        motorStanga.setPower(power);
+        motorStanga.setPower(-power);
 
         telemetry.addData("target", target);
         telemetry.addData("pos", position);
@@ -69,7 +71,7 @@ public class Lift extends SubsystemBase {
     }
 
     public double getPosition(){
-        return motorDreapta.getCurrentPosition();
+        return rightFront.getCurrentPosition();
     }
 
     private boolean isMovingToTarget = false; // Track if the motor is moving
@@ -87,7 +89,7 @@ public class Lift extends SubsystemBase {
             return; // Do nothing if not actively moving to target
         }
 
-        double currentPosition = motorDreapta.getCurrentPosition();
+        double currentPosition = rightFront.getCurrentPosition();
 
         // Check if the target is reached
         if (Math.abs(targetPosition - currentPosition) <= 10) {

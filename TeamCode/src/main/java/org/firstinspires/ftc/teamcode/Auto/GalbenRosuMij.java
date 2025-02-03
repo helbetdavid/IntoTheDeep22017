@@ -51,7 +51,7 @@ public final class GalbenRosuMij extends LinearOpMode {
         ExtendNou extenderSubsystem = new ExtendNou(hwMap.extendo);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         ServoCam servoCam = new ServoCam(hwMap.servoCam, limeLight);
-        Lift lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
+        Lift lift = new Lift(hwMap.leftLift, hwMap.rightLift, hwMap.rightFront, telemetry);
 
 
         Actions.runBlocking(

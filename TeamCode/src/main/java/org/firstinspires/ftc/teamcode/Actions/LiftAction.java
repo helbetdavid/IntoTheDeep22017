@@ -20,7 +20,7 @@ public class LiftAction {
     public LiftAction(HardwareMap hardwareMap, Telemetry telemetry) {
         HwMap hwMap = new HwMap();
         hwMap.init(hardwareMap);
-        this.lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
+        this.lift = new Lift(hwMap.leftLift, hwMap.rightLift, hwMap.rightFront,telemetry);
     }
     public Action liftToPosition(double targetPosition) {
         return new Action() {

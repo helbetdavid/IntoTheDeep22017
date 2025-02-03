@@ -53,7 +53,7 @@ public class liftTest extends LinearOpMode {
         DcMotor extendo = hardwareMap.get(DcMotor.class, "extendo");
         extendo.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftLift.setDirection(DcMotorSimple.Direction.REVERSE);
         rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         hwMap = new HwMap();
@@ -67,7 +67,7 @@ public class liftTest extends LinearOpMode {
             double calcul = controller.calculate(pos, target);
 
             rightLift.setPower(calcul);
-            leftLift.setPower(calcul);
+            leftLift.setPower(-calcul);
 
 
 
