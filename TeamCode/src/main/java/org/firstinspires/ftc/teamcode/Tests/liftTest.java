@@ -24,7 +24,7 @@ public class liftTest extends LinearOpMode {
 
     private PIDFController controller;
     private HwMap hwMap;
-    public static double kP = 0, kI=0, kD=0, kF=0;
+    public static double kP = 0.01, kI=0, kD=0, kF=0;
     public static double target=0;
 
     public static double stanga=0;
