@@ -82,7 +82,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         claw = new Claw(hwMap.claw);
         clawRotate = new ClawRotate(hwMap.clawRotator);
         ExtendNou extenderSubsystem = new ExtendNou(hwMap.extendo);
-        lift = new Lift(hwMap.leftLift, hwMap.rightLift, telemetry);
+        lift = new Lift(hwMap.leftLift, hwMap.rightLift, hwMap.rightFront, telemetry);
         limeLight = new LimeLight(hwMap.limelight, telemetry);
         servoCam = new ServoCam(hwMap.servoCam, limeLight);
 
