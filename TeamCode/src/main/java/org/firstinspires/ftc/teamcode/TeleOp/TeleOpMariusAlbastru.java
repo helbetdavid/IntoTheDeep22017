@@ -101,9 +101,6 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
 
-            // Denominator is the largest motor power (absolute value) or 1
-            // This ensures all the powers maintain the same ratio,
-            // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
             double frontLeftPower = (y + x + rx) / denominator;
             double backLeftPower = (y - x + rx) / denominator;
@@ -172,8 +169,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
 //
-                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * (11.2/384)*lift.getPosition());
-                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * (11.2/384)*lift.getPosition());
+                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * (11.2 / 384.5) * lift.getPosition());
+                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * (11.2 / 384.5) * lift.getPosition());
 
                     ticks = xReal * 341.3;
                     ticksext = (yReal - 2.8) * 11.76;
@@ -201,8 +198,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
 //
-                    xReal = Math.tan(Math.toRadians(limeLight.getTargetTx())) * 19;
-                    yReal = Math.tan(Math.toRadians(limeLight.getTargetTy())) * 19;
+                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * (11.2/384)*lift.getPosition());
+                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * (11.2/384)*lift.getPosition());
 
                     ticks = xReal * 341.3;
                     ticksext = (yReal - 2.8) * 11.76;
@@ -362,8 +359,5 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     break;
             }
         }
-{
-                        servoCam.setAngle(gamepad2.right_stick_x);
-                    }
     }
 }
