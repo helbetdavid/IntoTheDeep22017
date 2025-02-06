@@ -172,8 +172,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
 //
-                    xReal = Math.tan(Math.toRadians(limeLight.getTargetTx())) * 29;
-                    yReal = Math.tan(Math.toRadians(limeLight.getTargetTy())) * 29;
+                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * (11.2/384)*lift.getPosition());
+                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * (11.2/384)*lift.getPosition());
 
                     ticks = xReal * 341.3;
                     ticksext = (yReal - 2.8) * 11.76;
