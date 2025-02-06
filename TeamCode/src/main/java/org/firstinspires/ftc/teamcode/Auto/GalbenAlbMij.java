@@ -102,6 +102,7 @@ public final class GalbenAlbMij extends LinearOpMode {
 ///51,45
         Actions.runBlocking(
                 new SequentialAction(
+                        liftAction.liftToPosition(0),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
@@ -149,6 +150,7 @@ public final class GalbenAlbMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        liftAction.liftToPosition(0),
                         clawAction.clawOpen(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.straight(),
@@ -195,6 +197,7 @@ public final class GalbenAlbMij extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        liftAction.liftToPosition(0),
                         clawAction.clawOpenAuto(),
                         clawRotateAction.clawRotateDown(),
                         servoCamAction.auto(),

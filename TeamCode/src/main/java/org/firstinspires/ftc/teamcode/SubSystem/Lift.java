@@ -14,10 +14,10 @@ public class Lift extends SubsystemBase {
     private PIDFController controller;
     public double kP = 0.008, kI = 0.007, kD = 0.0003, kF = 0.000096; // testam sa vedem daca rezolvam overshootul
     public double target = 0;
-    private DcMotor motorStanga, motorDreapta,rightFront;
+    private DcMotor motorStanga, motorDreapta, rightFront;
     private final Telemetry telemetry;
 
-    public Lift(DcMotor stanga, DcMotor dreapta,DcMotor rightFront, Telemetry telemetry) {
+    public Lift(DcMotor stanga, DcMotor dreapta, DcMotor rightFront, Telemetry telemetry) {
         this.telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         this.motorDreapta = dreapta;
         this.motorStanga = stanga;
@@ -48,7 +48,7 @@ public class Lift extends SubsystemBase {
     }
 
     public void setPower() {
-        double position = rightFront.getCurrentPosition();
+        double position = - rightFront.getCurrentPosition();
         double output = controller.calculate(position, target);
 
         motorStanga.setPower(-output);
@@ -70,7 +70,7 @@ public class Lift extends SubsystemBase {
         telemetry.update();
     }
 
-    public double getPosition(){
+    public double getPosition() {
         return rightFront.getCurrentPosition();
     }
 
