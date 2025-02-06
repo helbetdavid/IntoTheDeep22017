@@ -24,7 +24,7 @@ public class liftTest extends LinearOpMode {
 
     private PIDFController controller;
     private HwMap hwMap;
-    public static double kP = 0.01, kI=0, kD=0, kF=0;
+    public static double kP = 0.008, kI=0.007, kD=0.0003, kF=0.000096;
     public static double target=0;
 
     public static double stanga=0;
@@ -63,7 +63,7 @@ public class liftTest extends LinearOpMode {
         double done =0;
         while(opModeIsActive()){
             controller.setPIDF(kP, kI, kD, kF);
-            double pos = rightFront.getCurrentPosition();
+            double pos = - rightFront.getCurrentPosition();
             double calcul = controller.calculate(pos, target);
 
             rightLift.setPower(calcul);
@@ -72,6 +72,7 @@ public class liftTest extends LinearOpMode {
 
 
 
+            telemetry.addData("Calcul", calcul);
             telemetry.addData("Target Area", target);
             telemetry.addData("Current Area", rightFront.getCurrentPosition());
             telemetry.update();
