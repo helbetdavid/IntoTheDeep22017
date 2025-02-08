@@ -29,6 +29,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         CollectingSubmersiblePlastic,
         AlignSample,
         RetractCollectingSubmersible,
+        RetractCollectingSubmersbilePlastic,
         CollectingGate,
         RetractCollectingGate,
         ScoringSubmersible,
@@ -169,8 +170,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
 //
-                    xReal = - (Math.tan(Math.toRadians(limeLight.getTargetTx())) * ((12 / 384.5) * lift.getPosition()));
-                    yReal = - (Math.tan(Math.toRadians(limeLight.getTargetTy())) * ((12 / 384.5) * lift.getPosition()));
+                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * ((12 / 384.5) * lift.getPosition()));
+                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * ((12 / 384.5) * lift.getPosition()));
 
                     ticks = xReal * 341.3;
                     ticksext = (yReal - 2.8) * 11.76;
@@ -198,8 +199,8 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     xCam = limeLight.getTargetTx();
                     yCam = limeLight.getTargetTy();
 //
-                    xReal = - (Math.tan(Math.toRadians(limeLight.getTargetTx())) * ((12 / 384.5) * lift.getPosition()));
-                    yReal = - (Math.tan(Math.toRadians(limeLight.getTargetTy())) * ((12 / 384.5) * lift.getPosition()));
+                    xReal = -(Math.tan(Math.toRadians(limeLight.getTargetTx())) * ((12 / 384.5) * lift.getPosition()));
+                    yReal = -(Math.tan(Math.toRadians(limeLight.getTargetTy())) * ((12 / 384.5) * lift.getPosition()));
 
                     ticks = xReal * 341.3;
                     ticksext = (yReal - 2.8) * 11.76;
@@ -216,8 +217,10 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     if (gamepad2.start) {
                         servoCam.trackTarget();
                         robotState = RobotState.AlignSample;
+
                     }
                     break;
+
 
                 case AlignSample:
                     while ((!gamepad2.dpad_down && Math.abs(perp.getCurrentPosition() - targetPosition) > 150) && !isStopRequested()) {
@@ -237,15 +240,33 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         targetExt = extenderSubsystem.getCurrentPosition() + ticksext;
                         timer.reset();
                     }
+                    if (gamepad2.dpad_up || Math.abs(perp.getCurrentPosition() - targetPosition) < 150) {
+                        robotState = RobotState.RetractCollectingSubmersbilePlastic;
+                        targetExt = extenderSubsystem.getCurrentPosition() + ticksext;
+                        timer.reset();
+                    }
                     break;
 
                 case RetractCollectingSubmersible:
                     lift.setTarget(0);
-                    if (gamepad2.dpad_down && timer.milliseconds() > 500) {
+                    if (gamepad2.dpad_down) {
                         claw.close();
                         sleep(50);
                         clawRotate.rotateBasket();
                         targetExt = 0;
+                        robotState = RobotState.RetractCollectingSubmersbilePlastic;
+                    }
+                    if (gamepad2.left_bumper) {
+                        targetExt -= 3;
+                    }
+                    if (gamepad2.right_bumper) {
+                        targetExt += 3;
+                    }
+                    break;
+
+                case RetractCollectingSubmersbilePlastic:
+                    clawRotate.rotateBasket();
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     break;
@@ -258,6 +279,12 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     if (gamepad2.start) {
                         timer.reset();
                         robotState = RobotState.RetractCollectingGate;
+                    }
+                    if (gamepad2.left_bumper) {
+                        targetExt -= 3;
+                    }
+                    if (gamepad2.right_bumper) {
+                        targetExt += 3;
                     }
                     break;
 
