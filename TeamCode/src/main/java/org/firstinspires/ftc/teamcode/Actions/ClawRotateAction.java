@@ -68,6 +68,14 @@ public class ClawRotateAction {
             }
         };
     }
+    public class ClawRotateBasketFull implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket){
+            clawRotate.rotateBasket();
+            return false;
+        }
+    }
+
 
 
     public Action clawRotateSpec(){
@@ -92,6 +100,9 @@ public class ClawRotateAction {
     }
     public Action clawRotateBasket(){
         return new ClawRotateBasket();
+    }
+    public Action clawRotateBasketFull(){
+        return new ClawRotateBasketFull();
     }
 
 }
