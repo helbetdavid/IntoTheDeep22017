@@ -29,6 +29,7 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
         CollectingSubmersiblePlastic,
         AlignSample,
         RetractCollectingSubmersible,
+        RetractCollectingSubmersbilePlastic,
         CollectingGate,
         RetractCollectingGate,
         ScoringSubmersible,
@@ -254,6 +255,19 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         sleep(50);
                         clawRotate.rotateBasket();
                         targetExt = 0;
+                        robotState = RobotState.RetractCollectingSubmersbilePlastic;
+                    }
+                    if (gamepad2.left_bumper) {
+                        targetExt -= 3;
+                    }
+                    if (gamepad2.right_bumper) {
+                        targetExt += 3;
+                    }
+                    break;
+
+                case RetractCollectingSubmersbilePlastic:
+                    clawRotate.rotateBasket();
+                    if (gamepad2.dpad_down) {
                         robotState = RobotState.Neutral;
                     }
                     if (gamepad2.left_bumper) {
@@ -272,6 +286,12 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                     if (gamepad2.start) {
                         timer.reset();
                         robotState = RobotState.RetractCollectingGate;
+                    }
+                    if (gamepad2.left_bumper) {
+                        targetExt -= 3;
+                    }
+                    if (gamepad2.right_bumper) {
+                        targetExt += 3;
                     }
                     break;
 
@@ -339,8 +359,6 @@ public class TeleOpMariusAlbastru extends LinearOpMode {
                         robotState = RobotState.Neutral;
                     }
                     break;
-
-
 
                 case Manual:
                     lift.setTarget(targetLift);
